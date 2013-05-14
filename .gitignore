@@ -4,3 +4,11 @@
 *.jar
 *.war
 *.ear
+
+# LaTeX temporary files #
+*.log
+*.aux
+*.pdf
+
+# OS-specific junk #
+.DS_Store
