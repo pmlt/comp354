@@ -1,12 +1,7 @@
+// Manipulation of the vessel information
+// is made here
+
 
 public class VMS {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
