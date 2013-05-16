@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{graphicx}
 
 \begin{document}
 \title{Overview of COMP354 Project}
@@ -14,7 +15,10 @@ To accomplish this, the system will generate appropriate alarms when a dangerous
 
 For the sake of testing, the system will also include a \emph{Radar Simulator} which will emulate the behavior of a real vessel. When invoked, the simulator will send fake (but valid) data read from a file to the VMS.
 
-\section{High-level Use Case Diagram}
+\begin{figure}[h]
+\caption{High-level use case of whole system}
+\includegraphics[width=\linewidth]{usecase.eps}
+\end{figure}
 
 \section{Team}
 Here is the make-up of the team which will implement the system.
