@@ -15,6 +15,9 @@ public class VMS {
 	private int count;
 	private int time;
 	private int range;
+	private int starttime;
+	private String vsf;
+	private int timestep;
 	VMS() {
 		range = time = count = 0;
 		
@@ -23,30 +26,35 @@ public class VMS {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
 					new FileReader(
-							new File("cino354_vessel.vsf")));
+							new File("C:/Users/kentaurus/Documents/GitHub/comp354/src/src/comp354_vessel.txt")));
+//							new File("comp354_vessel.vsf")));
 			
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
-				String[] splitArray = line.split(" ");
+
+				String[] a = line.split(" ");
 				
-				// If first string is "//" ignore line
-				if (splitArray[0].compareToIgnoreCase("//") == 0) {}
+				if (a[0].compareToIgnoreCase("VSF") == 0)
+					vsf = a[1];
+
+				else if (a[0].compareToIgnoreCase("STARTTIME") == 0)			
+					starttime = Integer.parseInt(a[1]);
 				
-				// If first element is TIME it will set the timer in which it will repeat the update
-				else if (splitArray[0].compareToIgnoreCase("time") == 0) { time = Integer.parseInt(splitArray[1]); }
+				else if (a[0].compareToIgnoreCase("TIMESTEP") == 0)
+					timestep = Integer.parseInt(a[1]);
 				
-				// If first element is RANGE then it will determine the default scale of the map
-				else if (splitArray[0].compareToIgnoreCase("range") == 0) { range = Integer.parseInt(splitArray[1]); }
+				else if (a[0].compareToIgnoreCase("TIME") == 0)
+					time = Integer.parseInt(a[1]);
 				
-				// If first element is NEWT then it will insert the information
-				else if (splitArray[0].compareToIgnoreCase("NEWT") == 0) { 
-					boat[count++] = new Vessel(	Integer.parseInt(splitArray[1]),		// Vessel ID 
-												Integer.parseInt(splitArray[2]), 							// Type
-												Double.parseDouble(splitArray[3]), 		// xPos
-												Double.parseDouble(splitArray[4]), 		// yPos
-												Double.parseDouble(splitArray[5]), 		// xVel
-												Double.parseDouble(splitArray[6]) );	// yVel
-				} // END OF ELSE IF
+				else if (a[0].compareToIgnoreCase("RANGE") == 0)
+					range = Integer.parseInt(a[1]);
+				
+				else if (a[0].compareToIgnoreCase("NEWT") == 0) {
+//					Integer.parseInt(word(3, endStep(4, inputLength, line), line));
+					System.out.println(a[0]);
+					System.out.println(a[1]);
+				}
+
 				
 				
 			} // END OF WHILE LOOP
@@ -100,7 +108,8 @@ public class VMS {
 	}
 	
 	int getCount() 				{	return count; }
-	int getVesselId(int i)		{	return boat[i].getVesselId(); }
+	String getVesselId(int i)		{	return boat[i].getVesselId(); }
 	double getXPosition(int i)	{	return boat[i].getXPosition(); }
 	double getYPosition(int i)	{	return boat[i].getYPosition(); }
-}
+} // END IF ,java
+

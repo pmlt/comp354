@@ -1,6 +1,6 @@
 
 public class Vessel {
-	private int vesselId;
+	private String vesselId;
 	private int type;
 	private double xPos;
 	private double yPos;
@@ -8,7 +8,7 @@ public class Vessel {
 	private double yVel;
 	private double speed;
 	
-	Vessel(int id, int t, double cx, double cy, double vx, double vy){
+	Vessel(String id, int t, double cx, double cy, double vx, double vy){
 		vesselId 	= id;
 		type 		= t;
 		xPos		= cx;
@@ -31,7 +31,7 @@ public class Vessel {
 		yPos += yVel;
 	}
 	
-	int getVesselId() 		{	return vesselId;	}
+	String getVesselId() 		{	return vesselId;	}
 	int getType()			{	return type;		}
 	double getXPosition() 	{	return xPos;		}
 	double getYPosition() 	{	return yPos;		}
