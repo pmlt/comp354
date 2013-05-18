@@ -5,21 +5,20 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 public class TablePanel extends JPanel {
-	 
+	private JTable table;
+    final private String[] columnNames = {"Vessel ID",
+            "Type",
+            "X Position",
+            "Y Position",
+            "Speed",
+            "Course",
+            "Distance",
+            "Update Time"};
+
     public TablePanel(VMS v) {
         super(new GridLayout(1,0));
  
-        String[] columnNames = {"Vessel ID",
-                                "Type",
-                                "X Position",
-                                "Y Position",
-                                "Speed",
-                                "Course",
-                                "Distance",
-                                "Update Time"};
-
- 
-        final JTable table = new JTable(v.getData(), columnNames);
+        table = new JTable(v.getData(), columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
   
@@ -28,6 +27,10 @@ public class TablePanel extends JPanel {
  
         //Add the scroll pane to this panel.
         add(scrollPane);
+    }
+    
+    void update(VMS v) {
+        table = new JTable(v.getData(), columnNames);
     }
   
 }

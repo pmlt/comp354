@@ -2,6 +2,8 @@
 import java.awt.GridLayout;
 import java.util.Scanner; 
 import javax.swing.JFrame;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Driver {
 	public static void main(String[] args) {
@@ -14,11 +16,22 @@ public class Driver {
 		GUITesting(v);
 	}
 	static void GUITesting(VMS v) {
+		Timer timer = new Timer("Update");
+		TablePanel tp = new TablePanel(v);
+		
 		JFrame f = new JFrame("TESTING VMS");
+
+		UpdateTask ut = new UpdateTask(v, tp, f); 
+		
 		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
-		f.add(new TablePanel(v));
-	    f.setVisible(true);
+	
+		f.add(tp);
+
+		f.setVisible(true);
+
+		timer.schedule(ut, v.getStartTime(), v.getTime());// (FUNCTION, START, END)
+
 	}
 	
 	static void consoleTesting(VMS v) {
@@ -51,3 +64,30 @@ public class Driver {
 				readUserInput.close();
 	}
 }
+
+class UpdateTask extends TimerTask {
+    //times member represent calling times.
+    private int times = 0;
+    private VMS v;
+    private JFrame f;
+    private TablePanel tp;
+    UpdateTask(VMS v, TablePanel tp, JFrame f) {
+    	this.v = v;
+    	this.f = f;
+    	this.tp = tp;
+    }
+ 
+    public void run() {
+        System.out.println(times);
+        times++;
+        if (times == v.getTimeStep()) {
+        	v.update();
+        	tp.update(v);
+        	f.repaint();
+        	times = 0;
+        }
+        System.out.println("HERE");
+    }
+
+}
+

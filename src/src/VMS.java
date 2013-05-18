@@ -103,8 +103,11 @@ public class VMS {
 	}
 	
 	private void updateBoats() {
-		for (int i=0; i<count; i++)
+		for (int i=0; i<count; i++) {
 			boat[i].setNextPosition();
+			data[i][2] = boat[i].getXPosition();
+			data[i][3] = boat[i].getYPosition();
+		}
 	}
 		
 	private void updateDistance()  {
@@ -139,21 +142,19 @@ public class VMS {
 		
 	}
 	
-	int getCount() 				{	return count; }
-	String getVSF()				{	return vsf; }
-	String getVesselId(int i)	{	return boat[i].getVesselId(); }
-	double getXPosition(int i)	{	return Math.floor(boat[i].getXPosition() * 1e5) / 1e5; }
-	double getYPosition(int i)	{	return Math.floor(boat[i].getYPosition() * 1e5) / 1e5; }
-//	double getXVelocity(int i)	{	return boat[i].getXVelocity(); }
-//	double getYVelocity(int i)	{	return boat[i].getYVelocity(); }
-	double getSpeed(int i)		{	return Math.floor(boat[i].getSpeed() * 1e5) / 1e5; }
-	boolean getHighRisk(int i)	{	return highRisk[i]; }
-	boolean getLowRisk(int i)	{	return lowRisk[i]; }
-	int getType(int i)			{	return boat[i].getType(); }
-	int getStartTime()			{	return starttime; }
-	int getTime()				{	return time; }
-	int getRange()				{	return range; }
-	int getTimeStep()			{	return timestep; }
-	Object[][] getData()		{ 	return data; }
+	final int getCount() 				{	return count; }
+	final String getVSF()				{	return vsf; }
+	final int getStartTime()			{	return starttime; }
+	final int getTime()					{	return time; }
+	final int getRange()				{	return range; }
+	final int getTimeStep()				{	return timestep; }
+	final String getVesselId(int i)		{	return boat[i].getVesselId(); }
+	final double getXPosition(int i)	{	return Math.floor(boat[i].getXPosition() * 1e5) / 1e5; }
+	final double getYPosition(int i)	{	return Math.floor(boat[i].getYPosition() * 1e5) / 1e5; }
+	final double getSpeed(int i)		{	return Math.floor(boat[i].getSpeed() * 1e5) / 1e5; }
+	final boolean getHighRisk(int i)	{	return highRisk[i]; }
+	final boolean getLowRisk(int i)		{	return lowRisk[i]; }
+	final int getType(int i)			{	return boat[i].getType(); }
+	final Object[][] getData()			{ 	return data; }
 } // END IF ,java
 
