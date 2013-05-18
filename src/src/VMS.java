@@ -6,18 +6,18 @@ import java.io.FileReader;
 
 public class VMS {
 	private final int maxBoat = 100;
-	private Vessel[] boat = new Vessel[maxBoat];
-//	private boolean[] active = new boolean[maxBoat];
-	private double[][] distance = new double[maxBoat][maxBoat];
-	private boolean[] highRisk = new boolean[maxBoat];
-	private boolean[] lowRisk = new boolean[maxBoat];
-//	private int[] orderAsc = new int[maxBoat];
+	private Vessel[] boat;
+	private double[][] distance;
+	private boolean[] highRisk;
+	private boolean[] lowRisk;
 	private int count;
 	private int time;
 	private int range;
 	private int starttime;
 	private String vsf;
 	private int timestep;
+	private Object[][] data;
+
 	VMS() {
 		vsf = "000";
 		starttime = 
@@ -25,6 +25,11 @@ public class VMS {
 				range = 
 				time = 
 				count = 0;
+		boat = new Vessel[maxBoat];
+		distance = new double[maxBoat][maxBoat];
+		highRisk = new boolean[maxBoat];
+		lowRisk  = new boolean[maxBoat];
+		data = new Object[maxBoat][8];
 	}
 	void ini() {
 		try {
@@ -63,12 +68,21 @@ public class VMS {
 				
 				else if (a[0].trim().compareToIgnoreCase("NEWT") == 0) {
 //					Integer.parseInt(word(3, endStep(4, inputLength, line), line));
-					boat[count++] = new Vessel(a[1], 
+					boat[count] = new Vessel(a[1], 
 							Integer.parseInt(a[2]),
 							Double.parseDouble(a[3]),
 							Double.parseDouble(a[4]),
 							Double.parseDouble(a[5]),
 							Double.parseDouble(a[6]));
+					data[count][0] = boat[count].getVesselId();
+					data[count][1] = boat[count].getType();
+					data[count][2] = boat[count].getXPosition();
+					data[count][3] = boat[count].getYPosition();
+					data[count][4] = boat[count].getSpeed();
+					data[count][5] = null;
+					data[count][6] = null;
+					data[count][7] = null;
+					count++;
 				}
 				
 				
@@ -140,5 +154,6 @@ public class VMS {
 	int getTime()				{	return time; }
 	int getRange()				{	return range; }
 	int getTimeStep()			{	return timestep; }
+	Object[][] getData()		{ 	return data; }
 } // END IF ,java
 
