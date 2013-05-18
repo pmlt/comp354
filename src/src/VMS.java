@@ -19,8 +19,12 @@ public class VMS {
 	private String vsf;
 	private int timestep;
 	VMS() {
-		range = time = count = 0;
-		
+		vsf = "000";
+		starttime = 
+				timestep = 
+				range = 
+				time = 
+				count = 0;
 	}
 	void ini() {
 		try {
@@ -32,29 +36,40 @@ public class VMS {
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
 
-				String[] a = line.split(" ");
+				String[] a = line.split("\\s+");
 				
-				if (a[0].compareToIgnoreCase("VSF") == 0)
+				if (a[0].trim().compareToIgnoreCase("VSF") == 0)
 					vsf = a[1];
 
-				else if (a[0].compareToIgnoreCase("STARTTIME") == 0)			
+				else if (a[0].trim().compareToIgnoreCase("STARTTIME") == 0) {
+//					System.out.println(a[2]);
 					starttime = Integer.parseInt(a[1]);
-				
-				else if (a[0].compareToIgnoreCase("TIMESTEP") == 0)
-					timestep = Integer.parseInt(a[1]);
-				
-				else if (a[0].compareToIgnoreCase("TIME") == 0)
-					time = Integer.parseInt(a[1]);
-				
-				else if (a[0].compareToIgnoreCase("RANGE") == 0)
-					range = Integer.parseInt(a[1]);
-				
-				else if (a[0].compareToIgnoreCase("NEWT") == 0) {
-//					Integer.parseInt(word(3, endStep(4, inputLength, line), line));
-					System.out.println(a[0]);
-					System.out.println(a[1]);
 				}
-
+				
+				else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
+//					System.out.println(a[2]);
+					timestep = Integer.parseInt(a[1]);
+				}
+				
+				else if (a[0].trim().compareToIgnoreCase("TIME") == 0) {
+//					System.out.println(a[3]);
+					time = Integer.parseInt(a[1]);
+				}
+				
+				else if (a[0].trim().compareToIgnoreCase("RANGE") == 0) {
+//					System.out.println(a[2]);
+					range = Integer.parseInt(a[1]);
+				}
+				
+				else if (a[0].trim().compareToIgnoreCase("NEWT") == 0) {
+//					Integer.parseInt(word(3, endStep(4, inputLength, line), line));
+					boat[count++] = new Vessel(a[1], 
+							Integer.parseInt(a[2]),
+							Double.parseDouble(a[3]),
+							Double.parseDouble(a[4]),
+							Double.parseDouble(a[5]),
+							Double.parseDouble(a[6]));
+				}
 				
 				
 			} // END OF WHILE LOOP
@@ -62,10 +77,13 @@ public class VMS {
 		} // END IF TRY
 		catch (Exception e) {        e.printStackTrace();	}
 		
-		update();
+		updateBoats();
+		updateDistance();
 	}
 	
 	void update() {
+		for (int i = 0; i<count; i++)
+			boat[i].setNextPosition();
 		updateBoats();
 		updateDistance();
 	}
@@ -108,8 +126,19 @@ public class VMS {
 	}
 	
 	int getCount() 				{	return count; }
-	String getVesselId(int i)		{	return boat[i].getVesselId(); }
-	double getXPosition(int i)	{	return boat[i].getXPosition(); }
-	double getYPosition(int i)	{	return boat[i].getYPosition(); }
+	String getVSF()				{	return vsf; }
+	String getVesselId(int i)	{	return boat[i].getVesselId(); }
+	double getXPosition(int i)	{	return Math.floor(boat[i].getXPosition() * 1e5) / 1e5; }
+	double getYPosition(int i)	{	return Math.floor(boat[i].getYPosition() * 1e5) / 1e5; }
+//	double getXVelocity(int i)	{	return boat[i].getXVelocity(); }
+//	double getYVelocity(int i)	{	return boat[i].getYVelocity(); }
+	double getSpeed(int i)		{	return Math.floor(boat[i].getSpeed() * 1e5) / 1e5; }
+	boolean getHighRisk(int i)	{	return highRisk[i]; }
+	boolean getLowRisk(int i)	{	return lowRisk[i]; }
+	int getType(int i)			{	return boat[i].getType(); }
+	int getStartTime()			{	return starttime; }
+	int getTime()				{	return time; }
+	int getRange()				{	return range; }
+	int getTimeStep()			{	return timestep; }
 } // END IF ,java
 
