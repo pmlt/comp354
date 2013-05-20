@@ -20,12 +20,11 @@ public class Driver {
 		TablePanel tp = new TablePanel(v);
 		
 		JFrame f = new JFrame("TESTING VMS");
-
 		UpdateTask ut = new UpdateTask(v, tp, f); 
 		
 		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
-	
+		f.setJMenuBar(new MenuBar());
 		f.add(tp);
 
 		f.setVisible(true);
