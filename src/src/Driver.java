@@ -1,7 +1,11 @@
 // Preliminary testing will happen here
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.util.Scanner; 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,20 +19,35 @@ public class Driver {
 		GUITesting(v);
 	}
 	static void GUITesting(VMS v) {
-		Timer timer = new Timer("Update");
+		final String VIEW[] = { "Table view", "Map view"};
+		JFrame f = new JFrame("TESTING VMS");		
+		f.setSize(500,250);
+
+
+		
 		TablePanel tp = new TablePanel(v);
 		
-		JFrame f = new JFrame("TESTING VMS");
-		UpdateTask ut = new UpdateTask(v, tp, f);
+		// This is just to check if it actually switched panels
+		// To be replaced later by the map
+        JPanel card2 = new JPanel();
+        card2.add(new JTextField("TextField", 20));
 		
-		f.setSize(500,250);
-		f.setLayout(new GridLayout(1,1));
-		f.setJMenuBar(new MenuBar());
-		f.add(tp);
+		JPanel cards = new JPanel(new CardLayout());
+        cards.add(tp, VIEW[0]);
+        cards.add(card2,VIEW[1]);
+		f.setJMenuBar(new MenuBar(cards, VIEW));
+		f.add(cards);
+				
+		
+//		Testing demo = new Testing(v, tp);
+//       demo.addComponentToPane(f.getContentPane());
+        
+
+		Timer timer = new Timer("Update");		
+		UpdateTask ut = new UpdateTask(v, tp, f); 
+		timer.schedule(ut, v.getStartTime(), v.getTimeStep()*1000);// (FUNCTION, START, END)
 
 		f.setVisible(true);
-
-		timer.schedule(ut, v.getStartTime(), v.getTimeStep()*1000);// (FUNCTION, START, END)
 	}
 	
 	static void consoleTesting(VMS v) {
