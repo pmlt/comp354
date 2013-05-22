@@ -10,7 +10,6 @@ public class Driver {
 		
 		VMS v = new VMS();
 		v.ini();
-
 		
 //		consoleTesting(v);
 		GUITesting(v);
@@ -20,7 +19,7 @@ public class Driver {
 		TablePanel tp = new TablePanel(v);
 		
 		JFrame f = new JFrame("TESTING VMS");
-		UpdateTask ut = new UpdateTask(v, tp, f); 
+		UpdateTask ut = new UpdateTask(v, tp, f);
 		
 		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
@@ -29,8 +28,7 @@ public class Driver {
 
 		f.setVisible(true);
 
-		timer.schedule(ut, v.getStartTime(), v.getTime());// (FUNCTION, START, END)
-
+		timer.schedule(ut, v.getStartTime(), v.getTimeStep()*1000);// (FUNCTION, START, END)
 	}
 	
 	static void consoleTesting(VMS v) {
@@ -75,17 +73,19 @@ class UpdateTask extends TimerTask {
     	this.f = f;
     	this.tp = tp;
     }
- 
+    
     public void run() {
-        System.out.println(times);
+//		System.out.println(times);
         times++;
-        if (times == v.getTimeStep()) {
+//		if (times == v.getTimeStep()) {
         	v.update();
         	tp.update(v);
         	f.repaint();
-        	times = 0;
-        }
-        System.out.println("HERE");
+//		times = 0;
+//		}
+//		System.out.println("HERE");
+        if (times > v.getTime()/v.getTimeStep())
+        	this.cancel();
     }
 
 }

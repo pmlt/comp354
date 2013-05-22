@@ -8,8 +8,9 @@ public class VMS {
 	private final int maxBoat = 100;
 	private Vessel[] boat;
 	private double[][] distance;
-	private boolean[] highRisk;
-	private boolean[] lowRisk;
+//	private boolean[] highRisk;
+//	private boolean[] lowRisk;
+	private String[] risk;
 	private int count;
 	private int time;
 	private int range;
@@ -27,15 +28,17 @@ public class VMS {
 				count = 0;
 		boat = new Vessel[maxBoat];
 		distance = new double[maxBoat][maxBoat];
-		highRisk = new boolean[maxBoat];
-		lowRisk  = new boolean[maxBoat];
+//		highRisk = new boolean[maxBoat];
+//		lowRisk  = new boolean[maxBoat];
+		risk = new String[maxBoat];
 		data = new Object[maxBoat][8];
 	}
 	void ini() {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
 					new FileReader(
-							new File("C:/Users/kentaurus/Documents/GitHub/comp354/src/src/comp354_vessel.txt")));
+//							new File("C:/Users/kentaurus/Documents/GitHub/comp354/src/src/comp354_vessel.txt")));
+							new File("/Users/Ghislain/Documents/Assignments/Comp354/project/comp354/src/src/comp354_vessel.txt")));
 //							new File("comp354_vessel.vsf")));
 			
 			String line = null;
@@ -96,25 +99,25 @@ public class VMS {
 	}
 	
 	void update() {
-		for (int i = 0; i<count; i++)
-			boat[i].setNextPosition();
+//		for (int i = 0; i<count; i++)
+//			boat[i].setNextPosition();
 		updateBoats();
 		updateDistance();
 	}
 	
 	private void updateBoats() {
 		for (int i=0; i<count; i++) {
-			boat[i].setNextPosition();
+			boat[i].setNextPosition(boat[i].getXPosition() + boat[i].getXVelocity()*timestep, boat[i].getYPosition() + boat[i].getYVelocity()*timestep);
 			data[i][2] = boat[i].getXPosition();
 			data[i][3] = boat[i].getYPosition();
 		}
 	}
 		
 	private void updateDistance()  {
-		for (int i=0; i< count; i++)
-			for (int j=0; j<count; j++) {
-				if (i == j)		distance[i][j] = 0;
-				else {
+		for (int i=0; i<count; i++)
+			for (int j=i+1; j<count; j++) {
+//				if (i == j)		distance[i][j] = 0;
+//				else {
 					double deltaX = boat[i].getXPosition() - boat[j].getXPosition();
 					double deltaY = boat[i].getYPosition() - boat[j].getYPosition();
 					double deltaD = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
@@ -122,11 +125,11 @@ public class VMS {
 					distance[i][j] = deltaD;
 					distance[j][i] = deltaD;
 					
-					if (deltaD < 50.0) {
+/*					if (deltaD < 50.0) {
 						highRisk[i] = true;
 						highRisk[j] = true;
 					}
-					else if (deltaD < 100.0) {
+					else if (deltaD < 200.0) {
 						lowRisk[i] = true;
 						lowRisk[j] = true;
 						
@@ -138,6 +141,24 @@ public class VMS {
 						highRisk[j] = false;
 					}
 				}// END OF ELSE
+*/
+					if (deltaD <= 50) {
+						risk[i] = "high";
+						risk[j] = "high";
+					}
+					else if (deltaD <= 200) {
+						if (risk[i] != "high")
+							risk[i] = "low";
+						if (risk[j] != "high")
+							risk[j] = "low";
+					}
+					else {
+						if (risk[i] != "high" && risk[i] != "low")
+							risk[i] = "none";
+						if (risk[j] != "high" && risk[i] != "low")
+							risk[j] = "low";
+					}
+			
 			}// END OF FOR LOOP
 		
 	}
@@ -152,8 +173,9 @@ public class VMS {
 	final double getXPosition(int i)	{	return Math.floor(boat[i].getXPosition() * 1e5) / 1e5; }
 	final double getYPosition(int i)	{	return Math.floor(boat[i].getYPosition() * 1e5) / 1e5; }
 	final double getSpeed(int i)		{	return Math.floor(boat[i].getSpeed() * 1e5) / 1e5; }
-	final boolean getHighRisk(int i)	{	return highRisk[i]; }
-	final boolean getLowRisk(int i)		{	return lowRisk[i]; }
+//	final boolean getHighRisk(int i)	{	return highRisk[i]; }
+//	final boolean getLowRisk(int i)		{	return lowRisk[i]; }
+	final String getRisk(int i)			{	return risk[i];	}
 	final int getType(int i)			{	return boat[i].getType(); }
 	final Object[][] getData()			{ 	return data; }
 } // END IF ,java
