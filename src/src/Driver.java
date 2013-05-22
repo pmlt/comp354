@@ -21,20 +21,16 @@ public class Driver {
 	static void GUITesting(VMS v) {
 		final String VIEW[] = { "Table view", "Map view"};
 		JFrame f = new JFrame("TESTING VMS");		
-		f.setSize(500,250);
+		f.setSize(520,560);
 
 
 		
 		TablePanel tp = new TablePanel(v);
-		
-		// This is just to check if it actually switched panels
-		// To be replaced later by the map
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
+		MapPanel mp = new MapPanel(v);
 		
 		JPanel cards = new JPanel(new CardLayout());
+        cards.add(mp,VIEW[1]);
         cards.add(tp, VIEW[0]);
-        cards.add(card2,VIEW[1]);
 		f.setJMenuBar(new MenuBar(cards, VIEW));
 		f.add(cards);
 				
