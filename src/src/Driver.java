@@ -1,4 +1,5 @@
 // Preliminary testing will happen here
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.util.Scanner; 
@@ -28,11 +29,11 @@ public class Driver {
 		MapPanel mp = new MapPanel(v);
 		
 		JPanel cards = new JPanel(new CardLayout());
-        cards.add(mp,VIEW[1]);
         cards.add(tp, VIEW[0]);
+        cards.add(mp,VIEW[1]);
 		f.setJMenuBar(new MenuBar(cards, VIEW));
-		f.add(fp);
-		f.add(cards);
+		f.add(fp, BorderLayout.WEST);
+		f.add(cards, BorderLayout.CENTER);
 		
 /*		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));

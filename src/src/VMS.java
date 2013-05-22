@@ -37,8 +37,8 @@ public class VMS {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
 					new FileReader(
-//							new File("C:/Users/kentaurus/Documents/GitHub/comp354/src/src/comp354_vessel.txt")));
-							new File("/Users/Ghislain/Documents/Assignments/Comp354/project/comp354/src/src/comp354_vessel.txt")));
+							new File("C:/Users/kentaurus/Documents/GitHub/comp354/src/src/comp354_vessel.txt")));
+//							new File("/Users/Ghislain/Documents/Assignments/Comp354/project/comp354/src/src/comp354_vessel.txt")));
 //							new File("comp354_vessel.vsf")));
 			
 			String line = null;
@@ -182,28 +182,28 @@ public class VMS {
 	Object[][] filterData(int type) {
 		if (type == 0)
 			return data;
-		else {
-			Object[][] filteredData;
-			int size = 0;
-			for (int i=0; i<count; i++)
-				if ((Integer)data[i][1] == type)
-					size++;
-			System.out.println("Size of new array is: " + size);
-			filteredData = new Object[size][8];
-			int row = 0;
-			for (int i=0; i<count; i++)
-				if ((Integer)data[i][1] == type) {
-					filteredData[row] = data[i];
-					row++;
-				}
-			for (int i=0; i<filteredData.length; i++) {
-				for (int j=0; j<8; j++) {
-					System.out.print(filteredData[i][j] + "\t");
-				}
-				System.out.println();
+		
+		Object[][] filteredData;
+		int size = 0;
+		for (int i=0; i<getCount(); i++)
+			if ((Integer)data[i][1] == type)
+				size++;
+		System.out.println("Size of new array is: " + size);
+
+		filteredData = new Object[size][8];
+		int row = 0;
+		for (int i=0; i<getCount() && row<size; i++)
+			if ((Integer)data[i][1] != type) {
+				filteredData[row] = data[i];
+				row++;
 			}
-			return filteredData;
+		for (int i=0; i<filteredData.length; i++) {
+			for (int j=0; j<8; j++) {
+//				System.out.print(filteredData[i][j] + "\t");
+			}
+			System.out.println();
 		}
+		return filteredData;
 	}
 } // END IF ,java
 
