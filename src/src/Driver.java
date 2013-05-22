@@ -1,7 +1,11 @@
 // Preliminary testing will happen here
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.util.Scanner; 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,22 +19,32 @@ public class Driver {
 		GUITesting(v);
 	}
 	static void GUITesting(VMS v) {
-		Timer timer = new Timer("Update");
+		final String VIEW[] = { "Table view", "Map view"};
+		JFrame f = new JFrame("TESTING VMS");		
+		f.setSize(520,560);
+		
 		FilterPanel fp = new FilterPanel();
 		TablePanel tp = new TablePanel(v);
+		MapPanel mp = new MapPanel(v);
 		
-		JFrame f = new JFrame("TESTING VMS");
-		UpdateTask ut = new UpdateTask(v, tp, fp, f);
+		JPanel cards = new JPanel(new CardLayout());
+        cards.add(mp,VIEW[1]);
+        cards.add(tp, VIEW[0]);
+		f.setJMenuBar(new MenuBar(cards, VIEW));
+		f.add(fp);
+		f.add(cards);
 		
-		f.setSize(500,250);
+/*		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
 		f.setJMenuBar(new MenuBar());
 		f.add(fp);
 		f.add(tp);
-
-		f.setVisible(true);
-
+*/		
+		Timer timer = new Timer("Update");		
+		UpdateTask ut = new UpdateTask(v, tp, fp, f);
 		timer.schedule(ut, v.getStartTime(), v.getTimeStep()*1000);// (FUNCTION, START, END)
+		
+		f.setVisible(true);
 	}
 	
 	static void consoleTesting(VMS v) {
