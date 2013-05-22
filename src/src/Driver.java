@@ -16,14 +16,16 @@ public class Driver {
 	}
 	static void GUITesting(VMS v) {
 		Timer timer = new Timer("Update");
+		FilterPanel fp = new FilterPanel();
 		TablePanel tp = new TablePanel(v);
 		
 		JFrame f = new JFrame("TESTING VMS");
-		UpdateTask ut = new UpdateTask(v, tp, f);
+		UpdateTask ut = new UpdateTask(v, tp, fp, f);
 		
 		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
 		f.setJMenuBar(new MenuBar());
+		f.add(fp);
 		f.add(tp);
 
 		f.setVisible(true);
@@ -68,19 +70,23 @@ class UpdateTask extends TimerTask {
     private VMS v;
     private JFrame f;
     private TablePanel tp;
-    UpdateTask(VMS v, TablePanel tp, JFrame f) {
+    private FilterPanel fp;
+    
+    UpdateTask(VMS v, TablePanel tp, FilterPanel fp, JFrame f) {
     	this.v = v;
     	this.f = f;
     	this.tp = tp;
+    	this.fp = fp;
     }
-    
+
     public void run() {
 //		System.out.println(times);
-        times++;
+    	times++;
 //		if (times == v.getTimeStep()) {
-        	v.update();
-        	tp.update(v);
-        	f.repaint();
+    	v.update();
+//    	tp.update(v, fp.getFilter());
+    	f.repaint();
+    	System.out.println("Filter still set to " + fp.getFilter());
 //		times = 0;
 //		}
 //		System.out.println("HERE");

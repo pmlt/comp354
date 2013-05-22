@@ -178,5 +178,33 @@ public class VMS {
 	final String getRisk(int i)			{	return risk[i];	}
 	final int getType(int i)			{	return boat[i].getType(); }
 	final Object[][] getData()			{ 	return data; }
+
+	Object[][] filterData(int type) {
+		if (type == 0)
+			return data;
+		else {
+			Object[][] filteredData;
+			int size = 0;
+			for (int i=0; i<count; i++)
+				if ((Integer)data[i][1] == type)
+					size++;
+			System.out.println("Size of new array is: " + size);
+			filteredData = new Object[size][8];
+			int row = 0;
+			for (int i=0; i<count; i++)
+				if ((Integer)data[i][1] == type) {
+					filteredData[row] = data[i];
+					row++;
+				}
+			for (int i=0; i<filteredData.length; i++) {
+				for (int j=0; j<8; j++) {
+					System.out.print(filteredData[i][j] + "\t");
+				}
+				System.out.println();
+			}
+			return filteredData;
+		}
+	}
 } // END IF ,java
+
 
