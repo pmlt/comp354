@@ -193,7 +193,7 @@ public class VMS {
 		filteredData = new Object[size][8];
 		int row = 0;
 		for (int i=0; i<getCount() && row<size; i++)
-			if ((Integer)data[i][1] != type) {
+			if ((Integer)data[i][1] == type) {
 				filteredData[row] = data[i];
 				row++;
 			}

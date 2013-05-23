@@ -26,6 +26,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 			group.add(buttons[i]);
 			this.add(buttons[i]);
 		}
+		buttons[0].setSelected(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

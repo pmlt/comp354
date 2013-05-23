@@ -3,9 +3,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.RowFilter.ComparisonType;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.DefaultTableModel;
 
 public class TablePanel extends JPanel {
 	private JTable table;
+	private JScrollPane scrollPane;
     final private String[] columnNames = {"Vessel ID",
             "Type",
             "X Position",
@@ -15,22 +21,25 @@ public class TablePanel extends JPanel {
             "Distance",
             "Update Time"};
 
-    public TablePanel(VMS v) {
+    public TablePanel(VMS v, int filter) {
         super(new GridLayout(1,0));
-		table = new JTable(v.getData(), columnNames);
+        table = new JTable(v.getData(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		table.setFillsViewportHeight(true);
+		table.setAutoCreateRowSorter(true);
+//		table.setFillsViewportHeight(true);
         
         //Create the scroll pane and add the table to it.
-        JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
  
         //Add the scroll pane to this panel.
         add(scrollPane);
     }
     
     void update(VMS v, int filter) {
-//    	table = new JTable(v.getData(), columnNames);
+		scrollPane.remove(table);
         table = new JTable(v.filterData(filter), columnNames);
+        scrollPane.add(table);
+        scrollPane.setViewportView(table);
     }
   
 }
