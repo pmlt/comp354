@@ -13,9 +13,8 @@ import java.awt.event.ItemListener;
 
 public class MenuBar extends JMenuBar {
 	
-	MenuBar(JPanel c, String[] v) {
+	MenuBar() {
 		add(createFileMenu());
-		add(createViewMenu(c, v));
 	}
 
 	JMenu createFileMenu() {
@@ -30,47 +29,6 @@ public class MenuBar extends JMenuBar {
 
 		return menu;
 	}
-	
-	JMenu createViewMenu(JPanel c, String[] v) {
-		JMenu menu = new JMenu("View");
-		ButtonGroup group = new ButtonGroup();
-		JRadioButtonMenuItem rbMenuItem1 = new JRadioButtonMenuItem(v[0]);
-		JRadioButtonMenuItem rbMenuItem2 = new JRadioButtonMenuItem(v[1]);
-
-		rbMenuItem1.setSelected(true);
-
-		menu.add(rbMenuItem1);
-		menu.add(rbMenuItem2);		
-		group.add(rbMenuItem1);
-		group.add(rbMenuItem2);
-
-		
-		ViewSwitch vs = new ViewSwitch(c, v);
-		
-		rbMenuItem1.addItemListener(vs);
-		rbMenuItem2.addItemListener(vs);
-			
-		
-
-		return menu;
-	}
-	
-}
-class ViewSwitch implements ItemListener {
-	JPanel cards;
-	String[] v;
-	int i = 0;
-	ViewSwitch(JPanel c, String[] v) {
-		this.cards = c;
-		this.v = v;
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-        CardLayout cl = (CardLayout)(cards.getLayout());
-        cl.show(cards, (String)e.getItem());
-	}
-	
 }
 
 class AppExit implements ActionListener {

@@ -9,23 +9,24 @@ import javax.swing.JTextField;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.swing.JTabbedPane;
 public class Driver {
-	static void GUITesting(VMS v) {
+	static void GUITesting(VMS v, RadarSimulator rs) {
 		final String VIEW[] = { "Table view", "Map view"};
 		JFrame f = new JFrame("TESTING VMS");		
 		f.setSize(670,560);
 		
 		FilterPanel fp = new FilterPanel();
-		TablePanel tp = new TablePanel(v, fp.getFilter());
-		MapPanel mp = new MapPanel(v);
+		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()));
+		MapPanel mp = new MapPanel(rs);
 		
-		JPanel cards = new JPanel(new CardLayout());
-        cards.add(tp, VIEW[0]);
-        cards.add(mp,VIEW[1]);
-		f.setJMenuBar(new MenuBar(cards, VIEW));
+		JTabbedPane tabbedPane = new JTabbedPane();
+		
+		tabbedPane.add(tp, VIEW[0]);
+		tabbedPane.add(mp,VIEW[1]);
+		f.setJMenuBar(new MenuBar());
 		f.add(fp, BorderLayout.WEST);
-		f.add(cards, BorderLayout.CENTER);
+		f.add(tabbedPane, BorderLayout.CENTER);
 		
 /*		f.setSize(500,250);
 		f.setLayout(new GridLayout(1,1));
@@ -34,15 +35,17 @@ public class Driver {
 		f.add(tp);
 */		
 		Timer timer = new Timer("Update");		
-		UpdateTask ut = new UpdateTask(v, tp, fp, f);
-		timer.schedule(ut, v.getStartTime(), v.getTimeStep()*1000);// (FUNCTION, START, END)
+		UpdateTask ut = new UpdateTask(v, tp, fp, f, rs);
+		timer.schedule(ut, rs.getStartTime(), rs.getTimeStep()*1000);// (FUNCTION, START, END)
 		
 		f.setVisible(true);
 	}
 	public static void main(String[] args) {		
 		VMS v = new VMS();
-		v.ini();
-		GUITesting(v);
+		RadarSimulator rs = new RadarSimulator();
+		rs.ini();
+//		v.ini();
+		GUITesting(v, rs);
 	}
 }
 
@@ -53,26 +56,29 @@ class UpdateTask extends TimerTask {
     private JFrame f;
     private TablePanel tp;
     private FilterPanel fp;
+    private RadarSimulator rs;
     
-    UpdateTask(VMS v, TablePanel tp, FilterPanel fp, JFrame f) {
+    UpdateTask(VMS v, TablePanel tp, FilterPanel fp, JFrame f, RadarSimulator rs) {
     	this.v = v;
     	this.f = f;
     	this.tp = tp;
     	this.fp = fp;
+    	this.rs = rs;
     }
 
     public void run() {
 //		System.out.println(times);
     	times++;
 //		if (times == v.getTimeStep()) {
-    	v.update();
-    	tp.update(v, fp.getFilter());
+    	rs.updateBoats();
+    	v.update(rs);
+    	tp.update(v.filterData(rs, fp.getFilter()));
     	f.repaint();
 //    	System.out.println("Filter still set to " + fp.getFilter());
 //		times = 0;
 //		}
 //		System.out.println("HERE");
-        if (times > v.getTime()/v.getTimeStep())
+        if (times > rs.getTime()/rs.getTimeStep())
         	this.cancel();
     }
 

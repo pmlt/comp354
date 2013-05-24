@@ -21,9 +21,9 @@ public class TablePanel extends JPanel {
             "Distance",
             "Update Time"};
 
-    public TablePanel(VMS v, int filter) {
+    public TablePanel(final Object[][] obj) {
         super(new GridLayout(1,0));
-        table = new JTable(v.getData(), columnNames);
+        table = new JTable(obj, columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setAutoCreateRowSorter(true);
 //		table.setFillsViewportHeight(true);
@@ -35,9 +35,9 @@ public class TablePanel extends JPanel {
         add(scrollPane);
     }
     
-    void update(VMS v, int filter) {
+    void update(final Object[][] obj) {
 		scrollPane.remove(table);
-        table = new JTable(v.filterData(filter), columnNames);
+        table = new JTable(obj, columnNames);
         scrollPane.add(table);
         scrollPane.setViewportView(table);
     }
