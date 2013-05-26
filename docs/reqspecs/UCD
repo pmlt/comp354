@@ -1,0 +1,32 @@
+\documentclass[12pt]{article}
+\author{Pinsonn Laverdure }
+\title{SIM Use Case}
+\begin{document}
+\maketitle
+\section{Definition of Simulator}
+The radar simulator is java based program which emulate the behavior of a real vessel.
+the radar simulator will read the location of different type of vessel in a range of 5000 meters,
+computes the location and directions of each vessels, 
+sends the different informations to the vessel monitoring system ,updates every time the vessels  
+change position or location  
+\section{Features}
+\begin{itemize}
+\item reads from vsf file  
+\item computes speed ,x-positioin and y-position 
+\item refresh evert 2 minutes 
+\item communicates with the vessel monitoring systems(VMS) 
+\item sends location of vessel that are whithin 5000 meters
+\item goal in context: the system request information from the Simulator 
+\item primary actor: systems,vessels
+\item Stakeholders and interests
+ system:sends and receives vessels information 
+ Sim system: computes vessels location 
+ Main sucess scenario: 
+ \begin{enumerate}
+ \item read vessels information from vsf files 
+ \item computes vessels location 
+ \item sends vessels information to VMS
+ \item Programming language: Java
+ \end{enumerate}
+\end{itemize}
+\end{document}
