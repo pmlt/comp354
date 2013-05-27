@@ -1,11 +1,6 @@
 // Preliminary testing will happen here
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import java.util.Scanner; 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import java.util.Timer;
 import java.util.TimerTask;

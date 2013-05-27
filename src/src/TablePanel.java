@@ -56,8 +56,10 @@ public class TablePanel extends JPanel implements ActionListener {
 			System.out.println( table.getValueAt(row, 0));
 			rs.removeFromID(table.getValueAt(row, 0));
 		}			
-		else if (arg0.getSource().equals(adding))
-			System.out.println("ADD");
+		else if (arg0.getSource().equals(adding)) {
+			AddingForm af = new AddingForm(rs);
+			af.setVisible(true);
+		}
 	}
 
 }

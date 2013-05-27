@@ -18,7 +18,6 @@ public class Vessel {
 		yVel		= vy;
 		speed		= Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
 	}
-	
 	void setVelocity(double vx, double vy) {
 		xVel		= vx;
 		yVel		= vy;
@@ -33,15 +32,15 @@ public class Vessel {
 		yPos = cy;
 	}
 	
-	String getVesselId() 		{	return vesselId;	}
-	int getType()			{	return type;		}
+	final String getVesselId() 		{	return vesselId;	}
+	final int getType()				{	return type;		}
 //	double getXPosition() 	{	return xPos + xVel * iteration;		}
 //	double getYPosition() 	{	return yPos + yVel * iteration;		}
-	double getXPosition() 	{	return xPos;		}
-	double getYPosition() 	{	return yPos;		}
-	double getXVelocity()	{	return xVel;		}
-	double getYVelocity()	{	return yVel;		}
-	double getSpeed()		{	return speed;		}
+	final double getXPosition() 	{	return xPos;		}
+	final double getYPosition() 	{	return yPos;		}
+	final double getXVelocity()		{	return xVel;		}
+	final double getYVelocity()		{	return yVel;		}
+	final double getSpeed()			{	return speed;		}
 	
 	
 }

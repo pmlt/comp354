@@ -110,6 +110,17 @@ public class RadarSimulator {
 		count--;
 		return found;
 	}
+	void addVessel(Vessel ve) {
+		boat[count] = ve;
+		data[count][0] = ve.getVesselId();
+		data[count][1] = ve.getType();
+		data[count][2] = ve.getXPosition();
+		data[count][3] = ve.getYPosition();
+		data[count][4] = ve.getSpeed();
+		data[count][5] = null;
+		data[count][6] = null;
+		data[count++][7] = null;
+	}
 	final int getCount() 				{	return count; 		}
 	final String getVSF()				{	return vsf; 		}
 	final int getStartTime()			{	return starttime; 	}
