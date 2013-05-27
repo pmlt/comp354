@@ -84,7 +84,7 @@ public class VMS {
 				size++;
 		System.out.println("Size of new array is: " + size);
 
-		filteredData = new Object[size][8];
+		filteredData = new Object[size][9];
 		int row = 0;
 		for (int i=0; i<rs.getCount() && row<size; i++)
 			if ((Integer)rs.getRow(i)[1] == type) {
