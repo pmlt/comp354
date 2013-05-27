@@ -91,6 +91,25 @@ public class RadarSimulator {
 			data[i][3] = boat[i].getYPosition();
 		}
 	}
+	
+	final boolean removeFromID( Object id ) {
+		int index = 0;
+		boolean found = false;
+		for (int i = 0; i < getCount(); i ++) {
+			if (id == data[i][0]) {
+				index = i;
+				found = true;
+			}
+		}
+		if (!found)
+			return found;
+		for (int i = index; i<getCount()+1; i++) {
+			boat[i] = boat[i+1];
+			data[i] = data[i+1];
+		}
+		count--;
+		return found;
+	}
 	final int getCount() 				{	return count; 		}
 	final String getVSF()				{	return vsf; 		}
 	final int getStartTime()			{	return starttime; 	}

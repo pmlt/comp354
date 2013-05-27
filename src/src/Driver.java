@@ -17,7 +17,7 @@ public class Driver {
 		f.setSize(670,560);
 		
 		FilterPanel fp = new FilterPanel();
-		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()));
+		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()), rs);
 		MapPanel mp = new MapPanel(rs);
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -57,7 +57,7 @@ class UpdateTask extends TimerTask {
     private TablePanel tp;
     private FilterPanel fp;
     private RadarSimulator rs;
-    
+
     UpdateTask(VMS v, TablePanel tp, FilterPanel fp, JFrame f, RadarSimulator rs) {
     	this.v = v;
     	this.f = f;
@@ -72,7 +72,10 @@ class UpdateTask extends TimerTask {
 //		if (times == v.getTimeStep()) {
     	rs.updateBoats();
     	v.update(rs);
-    	tp.update(v.filterData(rs, fp.getFilter()));
+    	if (fp.getScreenStatusUpdate()) {
+    		tp.update(v.filterData(rs, fp.getFilter()));
+    		fp.update();
+    	}
     	f.repaint();
 //    	System.out.println("Filter still set to " + fp.getFilter());
 //		times = 0;

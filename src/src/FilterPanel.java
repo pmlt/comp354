@@ -10,6 +10,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 	private ButtonGroup group = new ButtonGroup();
 	private JRadioButton[] buttons = new JRadioButton[6];
 	private int filter = 0;
+	private boolean screenUpdate;
 	final private String[] buttonNames = {"All",
 			"1 - Human (swimmer)",
 			"2 - Speed Boat",
@@ -19,6 +20,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 	
 	public FilterPanel() {
 		setLayout(new GridLayout(6,1));
+		screenUpdate = true;
 		for (int i=0; i<buttonNames.length; i++) {
 			buttons[i] = new JRadioButton(buttonNames[i]);
 //			buttons[i].setActionCommand(buttonNames[i]);
@@ -34,6 +36,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		for (int i=0; i<buttonNames.length; i++) {
 			if (action.equals(buttonNames[i])) {
 				filter = i;
+				screenUpdate = true;
 				System.out.println("Filter set to " + i);
 				break;
 			}
@@ -41,4 +44,6 @@ public class FilterPanel extends JPanel implements ActionListener {
 	}
 	
 	public int getFilter()	{return filter;	}
+	public boolean getScreenStatusUpdate()	{	return screenUpdate; }
+	public void update() {	screenUpdate = false;	}
 }
