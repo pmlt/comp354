@@ -66,8 +66,14 @@ public class VMS {
 			}// END OF FOR LOOP
 		
 	}
-	
+	void removeRow(int index, int count) {
+		for (int i = index; i<count; i++) {
+			risk[i] = risk[i+1];
+		}
+			
+	}
 	final Object[][] filterData(RadarSimulator rs, int type) {
+		rs.addRisk(risk);
 		if (type == 0)
 			return rs.getData();
 		

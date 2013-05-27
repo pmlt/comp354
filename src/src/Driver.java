@@ -12,7 +12,7 @@ public class Driver {
 		f.setSize(670,560);
 		
 		FilterPanel fp = new FilterPanel();
-		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()), rs);
+		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()), rs, v);
 		MapPanel mp = new MapPanel(rs);
 		
 		JTabbedPane tabbedPane = new JTabbedPane();

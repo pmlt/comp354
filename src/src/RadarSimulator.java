@@ -20,7 +20,7 @@ public class RadarSimulator {
 				time = 
 				count = 0;
 		boat = new Vessel[maxBoat];
-		data = new Object[maxBoat][8];
+		data = new Object[maxBoat][9];
 	}
 	void ini() {
 		try {
@@ -74,6 +74,7 @@ public class RadarSimulator {
 					data[count][5] = null;
 					data[count][6] = null;
 					data[count][7] = null;
+					data[count][8] = null;
 					count++;
 				}
 				
@@ -119,8 +120,10 @@ public class RadarSimulator {
 		data[count][4] = ve.getSpeed();
 		data[count][5] = null;
 		data[count][6] = null;
-		data[count++][7] = null;
+		data[count][7] = null;
+		data[count++][8] = null;
 	}
+	
 	final int getCount() 				{	return count; 		}
 	final String getVSF()				{	return vsf; 		}
 	final int getStartTime()			{	return starttime; 	}
@@ -131,4 +134,9 @@ public class RadarSimulator {
 	final double getXPosBoat(int i)		{	return boat[i].getXPosition();	}
 	final double getYPosBoat(int i)		{	return boat[i].getYPosition();	}
 	final Object[] getRow(int i)		{	return data[i];		}
+	final void addRisk(String[] r)	{
+		for (int i = 0; i<getCount();i++) {
+			data[i][8] = r[i];
+		}
+	}
 }
