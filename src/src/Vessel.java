@@ -6,7 +6,7 @@ public class Vessel {
 	private double yPos;
 	private double xVel;
 	private double yVel;
-	private double speed;
+//	private double speed;
 //	private double iteration;
 	
 	Vessel(String id, int t, double cx, double cy, double vx, double vy){
@@ -16,7 +16,7 @@ public class Vessel {
 		yPos		= cy;
 		xVel		= vx;
 		yVel		= vy;
-		speed		= Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
+//		speed		= Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2));
 	}
 	void setVelocity(double vx, double vy) {
 		xVel		= vx;
@@ -40,7 +40,7 @@ public class Vessel {
 	final double getYPosition() 	{	return yPos;		}
 	final double getXVelocity()		{	return xVel;		}
 	final double getYVelocity()		{	return yVel;		}
-	final double getSpeed()			{	return speed;		}
+//	final double getSpeed()			{	return speed;		}
 	
 	
 }

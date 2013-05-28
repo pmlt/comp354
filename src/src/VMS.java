@@ -73,30 +73,30 @@ public class VMS {
 		}
 			
 	}
-	final Object[][] filterData(RadarSimulator rs, int type) {
-		if (type == 0)
-			return rs.getData();
+	final Object[][] filterData(RadarSimulator rs, boolean[] filter) {
+//		if (type == 0)
+//			return rs.getData();
 		
 		Object[][] filteredData;
 		int size = 0;
 		for (int i=0; i<rs.getCount(); i++)
-			if ((Integer)rs.getRow(i)[1] == type)
+			if (filter[(Integer)rs.getRow(i)[1]-1])
 				size++;
-		System.out.println("Size of new array is: " + size);
+//		System.out.println("Size of new array is: " + size);
 
 		filteredData = new Object[size][9];
 		int row = 0;
 		for (int i=0; i<rs.getCount() && row<size; i++)
-			if ((Integer)rs.getRow(i)[1] == type) {
+			if (filter[(Integer)rs.getRow(i)[1]-1]) {
 				filteredData[row] = rs.getRow(i);
 				row++;
 			}
-		for (int i=0; i<filteredData.length; i++) {
+/*		for (int i=0; i<filteredData.length; i++) {
 			for (int j=0; j<8; j++) {
 //				System.out.print(filteredData[i][j] + "\t");
 			}
 			System.out.println();
-		}
+		}*/
 		return filteredData;
 	}
 } // END IF ,java

@@ -31,7 +31,7 @@ public class Driver {
 */		
 		Timer timer = new Timer("Update");		
 		UpdateTask ut = new UpdateTask(v, tp, fp, f, rs);
-		timer.schedule(ut, rs.getStartTime(), rs.getTimeStep()*1000);// (FUNCTION, START, END)
+		timer.schedule(ut, (int)(rs.getStartTime()*1000), (int)(rs.getTimeStep()*1000));// (FUNCTION, START, END)
 		
 		f.setVisible(true);
 	}
