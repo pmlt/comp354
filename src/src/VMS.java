@@ -8,10 +8,14 @@ public class VMS {
 	private final int maxBoat = 100;
 	private double[][] distance;
 	private String[] risk;
-
+	private int orderColumn;
+	private boolean orderType;
+	private Object[][] temp;
 	VMS() {
 		distance = new double[maxBoat][maxBoat];
 		risk = new String[maxBoat];
+		orderColumn = 0;
+		orderType = true;
 	}
 	void update(RadarSimulator rs) {
 		updateDistance(rs);
@@ -91,6 +95,14 @@ public class VMS {
 				filteredData[row] = rs.getRow(i);
 				row++;
 			}
+		// The following decides in what order the data goes though
+		// Using QuickSort
+		if (rs.getCount() > 1) {
+			temp = filteredData;
+			quicksort(temp,0, size-1);
+			filteredData = temp;
+			temp = null;
+		}
 /*		for (int i=0; i<filteredData.length; i++) {
 			for (int j=0; j<8; j++) {
 //				System.out.print(filteredData[i][j] + "\t");
@@ -98,6 +110,46 @@ public class VMS {
 			System.out.println();
 		}*/
 		return filteredData;
+	}
+	
+	void setOrderBy(int index) {
+		orderColumn = index;
+	}
+	void setOrderType(int x) {
+		if (x == 0)					orderType = true;
+		else if (x == 1)			orderType = false;
+	}
+	private void quicksort(Object[][] obj, int left, int right) {
+		if (left < right) {
+			int pivotindex = right /2;
+			int pivotNewIndex = partition(obj, left, right, pivotindex);
+			quicksort(obj,left,pivotNewIndex-1);
+			quicksort(obj, pivotNewIndex+1, right);
+		}
+	}
+	private int partition( Object[][] obj, int left, int right, int pivot) {
+		Object[] value = obj[pivot];
+		Object[] temp = obj[right];
+		obj[right] = value;
+		obj[pivot] = temp;
+		int store = left;
+		for (int i = left; i < right; i++) {
+			if (compare(Double.parseDouble(obj[i][orderColumn].toString()), Double.parseDouble(value[orderColumn].toString()))) {
+				Object[] temp1 = obj[i];
+				temp = obj[store];
+				obj[i] = temp;
+				obj[store++] = temp1;
+			}
+		}
+		temp = obj[right];
+		obj[right] = obj[store];
+		obj[store] = temp;
+		return store;
+	}
+	
+	private boolean compare(double x, double y) {
+		if (orderType) return (x < y);
+		else return (x > y);
 	}
 } // END IF ,java
 

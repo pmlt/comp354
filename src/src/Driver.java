@@ -9,7 +9,7 @@ public class Driver {
 	static void GUITesting(VMS v, RadarSimulator rs) {
 		final String VIEW[] = { "Table view", "Map view"};
 		JFrame f = new JFrame("TESTING VMS");		
-		f.setSize(670,560);
+		f.setSize(700,600);
 		
 		FilterPanel fp = new FilterPanel();
 		TablePanel tp = new TablePanel(v.filterData(rs, fp.getFilter()), rs, v);
@@ -67,7 +67,7 @@ class UpdateTask extends TimerTask {
 //		if (times == v.getTimeStep()) {
     	rs.updateBoats();
     	v.update(rs);
-    	if (fp.getScreenStatusUpdate()) {
+    	if (fp.getScreenStatusUpdate() || tp.getScreenStatusUpdate()) {
     		tp.update(v.filterData(rs, fp.getFilter()));
     		fp.update();
     	}
