@@ -148,8 +148,8 @@ public class VMS {
 	}
 	
 	private boolean compare(double x, double y) {
-		if (orderType) return (x < y);
-		else return (x > y);
+		if (orderType) return (x <= y);
+		else return (x >= y);
 	}
 } // END IF ,java
 

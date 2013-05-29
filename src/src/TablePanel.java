@@ -117,9 +117,9 @@ public class TablePanel extends JPanel implements ActionListener {
 			else if (column.compareToIgnoreCase(orderListNames[1]) == 0)
 				index = 1;
 			else if (column.compareToIgnoreCase(orderListNames[2]) == 0)
-				index = 6;
-			else if (column.compareToIgnoreCase(orderListNames[3]) == 0)
 				index = 4;
+			else if (column.compareToIgnoreCase(orderListNames[3]) == 0)
+				index = 6;
 			v.setOrderBy(index);
 		}
 		else if (arg0.getSource().equals(orderList)) {
