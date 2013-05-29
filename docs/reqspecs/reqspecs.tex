@@ -51,16 +51,20 @@ Christopher Mukherjee & 0000000 \\
 \clearpage
 
 \section{System}
+The Vessel Monitoring System is a Java-based system which listens to incoming radar data from multiple vessels at sea and keeps track of their type, position, and velocity. The goal of the system is to ensure that no vessel ever collide with one another.
+
+To accomplish this, the system will generate appropriate alarms when a dangerous situation arises. Each alarm has a level which corresponds to the degree of danger.
+
+For the sake of testing, the system will also include a \emph{Radar Simulator} which will emulate the behavior of a real vessel. When invoked, the simulator will send fake (but valid) data read from a file to the VMS.
 
 \subsection{Purpose}
+The primary purpose of VMS is to avoid collision accidents between multiple ships. This is accomplished mainly by issuing alarms whenever a dangerous situation is detected. A human operator is required to react on the alarms in order to avoid collisions.
 
-\subsection{Context}
-
-\subsection{Business Goals}
-
-\section{Domain Concepts}
+The secondary purpose of VMS is to display a visual status of every ship it tracks. There are two views of the situation: a list view and a grid view. The list view simply lists every ship and their metadata. The grid view displays a 2-D map complete with ship positions and their projected course. Both views are updated in real-time.
 
 \section{Actors}
+
+\subsection{Human operator}
 
 \section{Use Cases}
 
