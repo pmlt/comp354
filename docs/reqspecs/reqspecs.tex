@@ -1,33 +1,12 @@
-\documentclass[12pt]{article}
-
-\pagestyle{empty}
-\setcounter{secnumdepth}{2}
-
-\topmargin=0cm
-\oddsidemargin=0cm
-\textheight=22.0cm
-\textwidth=16cm
-\parindent=0cm
-\parskip=0.15cm
-\topskip=0truecm
-\raggedbottom
-\abovedisplayskip=3mm
-\belowdisplayskip=3mm
-\abovedisplayshortskip=0mm
-\belowdisplayshortskip=2mm
-\normalbaselineskip=12pt
-\normalbaselines
+\documentclass{article}
+\usepackage{graphicx}
 
 \begin{document}
+\title{Requirements Specification Document}
+\author{Team D}
+\date{\today}
 
-\vspace*{0.5in}
-\centerline{\bf\Large Requirements Document}
-
-\vspace*{0.5in}
-\centerline{\bf\Large Team D}
-
-\vspace*{0.5in}
-\centerline{\bf\Large \date}
+\maketitle
 
 \vspace*{1.5in}
 \begin{table}[htbp]
@@ -42,7 +21,7 @@ Pinsonn Laverdure & 9684352 \\
 Ghislain Ledoux & 6376320 \\
 Rigil Malubay & 6262732 \\
 Philippe Milot & 9164111 \\
-Christopher Mukherjee & 0000000 \\
+Christopher Mukherjee & 6291929 \\
 \hline
 \end{tabular}
 \end{center}
@@ -50,86 +29,67 @@ Christopher Mukherjee & 0000000 \\
 
 \clearpage
 
-\section{System}
+\section{Introduction}
+This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developped in the context of the COMP354 course. The requirements specifications include an overview of the system and its goals, a detailed description of all functional and non-functional requirements (modelled using Use Case Diagrams and Domain Model Diagrams), as well as a development plan. 
+
+If a requirement appears in this document, the final Vessel Monitoring System \emph{must} conform to this requirement. Inversely, the Vessel Monitoring System is not requirement to conform to any other requirement that is not specified in this document.
+
+\section{Project Description}
 The Vessel Monitoring System is a Java-based system which listens to incoming radar data from multiple vessels at sea and keeps track of their type, position, and velocity. The goal of the system is to ensure that no vessel ever collide with one another.
 
 To accomplish this, the system will generate appropriate alarms when a dangerous situation arises. Each alarm has a level which corresponds to the degree of danger.
 
 For the sake of testing, the system will also include a \emph{Radar Simulator} which will emulate the behavior of a real vessel. When invoked, the simulator will send fake (but valid) data read from a file to the VMS.
 
-\subsection{Purpose}
+\section{Goals and Constraints}
+
+\subsection{Goals}
 The primary purpose of VMS is to avoid collision accidents between multiple ships. This is accomplished mainly by issuing alarms whenever a dangerous situation is detected. A human operator is required to react on the alarms in order to avoid collisions.
 
 The secondary purpose of VMS is to display a visual status of every ship it tracks. There are two views of the situation: a list view and a grid view. The list view simply lists every ship and their metadata. The grid view displays a 2-D map complete with ship positions and their projected course. Both views are updated in real-time.
 
-\section{Actors}
+\subsection{Functional Requirements}
 
-\subsection{Human operator}
+\subsubsection{VMS Use Cases}
 
-\section{Use Cases}
+\subsubsection{Simulator Use Cases}
 
-\subsection{Overview}
+\subsection{Domain Model}
 
-\begin{figure}[htbp]
-%insert diagram here
-\caption{Use Case Diagram}
-\label{fig:use-case-diagram}
-\end{figure}
+\subsection{Constraints}
 
-\subsubsection{Use Case 1} \label{uc:1}
+\subsubsection{Shared constraints}
+Both applications shall run on Windows 7 or later, and Mac OS X 10.8 or later.
 
-\noindent
-{\bf Name}\\
-Give a name.
+Both applications shall require the Java 7 platform to run.
 
-\noindent
-{\bf Summary}\\
-A short summary/description/story.
+\subsubsection{VMS constraints}
+Functionally, the VMS shall be limited to keeping track of 100 unique ships at any time. This is to avoid slowdown as the number of ships increase. If new data comes in that pushes the number of unique ships over that limit, the VMS shall ``forget'' the oldest ship already tracked to make room for the new one, and issue a warning to the human operator.
 
-\noindent
-{\bf Actors}\\
+\subsubsection{Simulator constraints}
+Reading a timestep of less than 0.5 in the VSF file shall issue a parsing error, causing the program to exit immediately.
 
-\noindent
-{\bf Precondition}\\
+\section{Resource Evaluation}
 
-\noindent
-{\bf Main Scenario}\\
-\vspace*{-0.2in}
-\begin{enumerate}
-\item Describe step 1.
-\item Describe step 2.
-\item Describe step 3.
-\end{enumerate}
+\subsection{Human Resources}
 
-\noindent
-{\bf Exceptions}\\
+\subsection{Technical Resources}
 
-\noindent
-{\bf Postcondition}\\
+\section{Scoping}
+Correct functional behavior of the VMS is prioritized over presentation of data. As such, the user interface elements of the VMS will be comparatively spartan, with very little fluff. 
 
-\noindent
-{\bf Priority}\\
+No UI shall be provided to customize the limit of a 100 unique ships. Instead, the limit shall be configurable via a command-line argument when starting the VMS.
 
-\noindent
-{\bf Traces to Test Cases}\\
-Add when test cases done.
+\section{Plan}
 
-\subsubsection{Use Case 2} \label{uc:2}
+\subsection{Activities}
 
-\section{Non-Functional Constraints}
+\subsection{Project Estimates}
 
-\section{Data Dictionary}
+\subsection{Activities Assignments}
 
-\section{References}
+\subsection{Schedule}
 
-\appendix
-
-\section{Description of File Format: Tasks}
-
-Describe input file format.
-
-\section{Description of File Format: Persons}
-
-Describe output file format.
+\subsection{Risk}
 
 \end{document}
