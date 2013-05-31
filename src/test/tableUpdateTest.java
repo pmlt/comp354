@@ -9,11 +9,11 @@ public class tableTest {
 
 	@Test
 	public void testShipAdd() {
-		fail("Not yet implemented");
+		
 	}
 
 	public void testShipRemove() {
-		fail("Not yet implemented");
+		
 	}
 
 }
