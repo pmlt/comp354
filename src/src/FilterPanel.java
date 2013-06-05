@@ -1,14 +1,12 @@
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
 
 public class FilterPanel extends JPanel implements ActionListener {
-//	private ButtonGroup group = new ButtonGroup();
-//	private JRadioButton[] buttons = new JRadioButton[VESSEL_TYPES+1];
 	private boolean[] filter;
-	private JCheckBox[] checkboxes;
 	private boolean screenUpdate;
 	final private int VESSEL_TYPES = 5;
 	final private String[] VESSEL_NAMES = {
@@ -19,20 +17,19 @@ public class FilterPanel extends JPanel implements ActionListener {
 			"5 - Passenger Vessel"};
 	
 	public FilterPanel() {
-		setLayout(new GridLayout(6,1));
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		screenUpdate = true;
 		filter = new boolean[VESSEL_TYPES];
-		checkboxes = new JCheckBox[VESSEL_TYPES];
+		JCheckBox[] checkboxes = new JCheckBox[VESSEL_TYPES];
+		JLabel label = new JLabel("Filter by");
+		this.add(label);
 		for (int i=0; i<VESSEL_TYPES; i++) {
 			checkboxes[i] = new JCheckBox(VESSEL_NAMES[i]);
-//			buttons[i].setActionCommand(buttonNames[i]);
 			checkboxes[i].addActionListener(this);
-//			group.add(buttons[i]);
 			checkboxes[i].setSelected(true);
 			this.add(checkboxes[i]);
 			filter[i] = true;
 		}
-//		buttons[0].setSelected(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -41,7 +38,6 @@ public class FilterPanel extends JPanel implements ActionListener {
 			if (action.equals(VESSEL_NAMES[i])) {
 				filter[i] = !filter[i];
 				screenUpdate = true;
-//				System.out.println("Filter set to " + i);
 				break;
 			}
 		}

@@ -19,7 +19,7 @@ public class TablePanel extends JPanel implements ActionListener {
 	private JButton adding;
 	private JButton remover;
 	private RadarSimulator rs;
-	private VMS v;
+	private VMS vms;
 	private boolean updateScreen = false;
     final private String[] orderTypeNames = {"Ascending",
     		"Descending"    };
@@ -39,15 +39,14 @@ public class TablePanel extends JPanel implements ActionListener {
     final private String[] buttonNames = { "Add New..", "Remove Selected"};
 	JLabel[] label = {	new JLabel("Order by"),
 						new JLabel("Type order")	};
-    public TablePanel(final Object[][] obj, RadarSimulator rs, VMS v) {
+    
+	public TablePanel(final Object[][] obj, RadarSimulator rs, VMS vms) {
     	this.rs = rs;
-    	this.v = v;
-//        super(new GridLayout(1,0));
+    	this.vms = vms;
         table = new JTable(obj, columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setOpaque(true);
 		table.setAutoCreateRowSorter(true);
-//		table.setFillsViewportHeight(true);
         
         //Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table);
@@ -56,6 +55,7 @@ public class TablePanel extends JPanel implements ActionListener {
 		commands.setLayout(new GridLayout(2, 4));
 		JPanel empty1 = new JPanel();
 		JPanel empty2 = new JPanel();
+		
 		//Create Button to add
 		adding = new JButton(buttonNames[0]);
 		adding.addActionListener(this);
@@ -78,31 +78,29 @@ public class TablePanel extends JPanel implements ActionListener {
 		
 		add(scrollPane, BorderLayout.NORTH);
 		add(commands, BorderLayout.SOUTH);
-//        add(adding, BorderLayout.SOUTH);
- //       add(remover, BorderLayout.SOUTH);
-  //      add(nameList, BorderLayout.SOUTH);
-    }
-    
-    void update(final Object[][] obj) {
+	}
+	
+	void update(final Object[][] obj) {
 		scrollPane.remove(table);
-        table = new JTable(obj, columnNames);
-        scrollPane.add(table);
-        for (int i = 0; i<table.getRowCount(); i++){
-        	if (table.getValueAt(i, 8) == "low") {
-        	}
-        	else if (table.getValueAt(i, 8) == "high") {
-        		
-        	}
-    	}
-        scrollPane.setViewportView(table);
-        updateScreen = false;
-    }
+		table = new JTable(obj, columnNames);
+		scrollPane.add(table);
+		for (int i = 0; i<table.getRowCount(); i++){
+			if (table.getValueAt(i, 8) == "low") {
+				
+			}
+			else if (table.getValueAt(i, 8) == "high") {
+				
+			}
+		}
+		scrollPane.setViewportView(table);
+		updateScreen = false;
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(remover)) {
 			int row = table.getSelectedRow();
-			System.out.println( table.getValueAt(row, 0));
-			v.removeRow(row, rs.getCount());
-			rs.removeFromID(table.getValueAt(row, 0)); // Must be done after VMS
+			System.out.println(table.getValueAt(row, 0));
+			rs.removeVessel(table.getValueAt(row, 0).toString());
 		}			
 		else if (arg0.getSource().equals(adding)) {
 			AddingForm af = new AddingForm(rs);
@@ -120,7 +118,7 @@ public class TablePanel extends JPanel implements ActionListener {
 				index = 4;
 			else if (column.compareToIgnoreCase(orderListNames[3]) == 0)
 				index = 6;
-			v.setOrderBy(index);
+			vms.setOrderBy(index);
 		}
 		else if (arg0.getSource().equals(orderList)) {
 			JComboBox cb = (JComboBox)arg0.getSource();
@@ -130,9 +128,9 @@ public class TablePanel extends JPanel implements ActionListener {
 				index = 0;
 			else if (column.compareToIgnoreCase(orderTypeNames[1]) == 0)
 				index = 1;
-			v.setOrderType(index);
+			vms.setOrderType(index);
 		}
-		v.update(rs);
+		vms.update();
 		updateScreen = true;
 	}
 	

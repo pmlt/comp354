@@ -30,7 +30,7 @@ public class AddingForm extends JFrame implements ActionListener{
 	
 	AddingForm(RadarSimulator rs) {
 		this.rs = rs;
-		setName("Addubf Vessel");
+		setName("Adding Vessel");
 		setSize(200,200);
 		setResizable(false);
 		add(Form(),BorderLayout.CENTER);
@@ -63,7 +63,8 @@ public class AddingForm extends JFrame implements ActionListener{
 										Double.parseDouble(fields[2].getText()), 
 										Double.parseDouble(fields[3].getText()),
 										Double.parseDouble(fields[4].getText()),
-										Double.parseDouble(fields[5].getText()));
+										Double.parseDouble(fields[5].getText()),
+										0);
 			rs.addVessel(newVessel);
 		}
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
