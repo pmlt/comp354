@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Component;
+import java.awt.Color;
 
 public class TablePanel extends JPanel implements ActionListener {
 	private JComboBox nameList;
@@ -41,14 +44,14 @@ public class TablePanel extends JPanel implements ActionListener {
 						new JLabel("Type order")	};
     
 	public TablePanel(final Object[][] obj, RadarSimulator rs, VMS vms, int accessLevel) {
-    	this.rs = rs;
-    	this.vms = vms;
-        table = new JTable(obj, columnNames);
+		this.rs = rs;
+		this.vms = vms;
+		table = new JTable(obj, columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setOpaque(true);
 		table.setAutoCreateRowSorter(true);
-        
-        //Create the scroll pane and add the table to it.
+		
+		//Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table);
 		add(scrollPane, BorderLayout.NORTH);
 		
@@ -85,15 +88,9 @@ public class TablePanel extends JPanel implements ActionListener {
 	void update(final Object[][] obj) {
 		scrollPane.remove(table);
 		table = new JTable(obj, columnNames);
+		RiskColor renderer = new RiskColor();
+		table.getColumn(columnNames[8]).setCellRenderer(renderer);
 		scrollPane.add(table);
-		for (int i = 0; i<table.getRowCount(); i++){
-			if (table.getValueAt(i, 8) == "low") {
-				
-			}
-			else if (table.getValueAt(i, 8) == "high") {
-				
-			}
-		}
 		scrollPane.setViewportView(table);
 		updateScreen = false;
 	}
@@ -139,5 +136,22 @@ public class TablePanel extends JPanel implements ActionListener {
 	boolean getScreenStatusUpdate() {
 		return updateScreen;
 	}
-
 }
+
+class RiskColor extends JLabel implements TableCellRenderer {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
+			boolean hasFocus, int row, int column) {
+		setOpaque(true);
+		setText(table.getValueAt(row, column).toString());
+		
+		if (table.getValueAt(row, 8).toString().equals("high"))
+			setBackground(Color.RED);
+		else if (table.getValueAt(row, 8).toString().equals("low"))
+			setBackground(Color.YELLOW);
+		else
+			setBackground(null);
+		
+		return this;
+	}
+}
+

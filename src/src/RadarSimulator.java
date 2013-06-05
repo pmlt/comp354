@@ -114,7 +114,7 @@ public class RadarSimulator {
 		for (int i=0; i<queueCounter; i++)
 			queue.remove();
 		// Adding vessels from timed queue when start time is reached
-		while (timedQueue.size() > 0 && timedQueue.peek().getStartTime() <= timeCounter*timestep)
+		while (timedQueue.size() > 0 && timedQueue.peek().getStartTime() <= timeCounter)
 			addVessel(timedQueue.remove());
 		
 		timeCounter += timestep;
