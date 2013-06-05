@@ -64,9 +64,12 @@ For the sake of testing, the system will also include a \emph{Vessel Simulator} 
 
 The format of the file is that of a standard VSF file. The description of the format is beyond the scope of this document.
 
+\break
 \section{Goals and Constraints} % Status: See subsections.
 
 \subsection{Functional Requirements} % Status: Need to incorporate UCDs from Stefanie and Pinsson.
+
+\input{VMSusecase.tex}
 
 \subsection{Domain Model} % Status: Need to create domain model diagram.
 
@@ -132,12 +135,56 @@ No UI shall be provided to customize the address at which the VMS will listen to
 
 \subsection{Activities}
 
+\emph{Software Design Document}: Describes the software architecture of the VMS and Simulator. Written in \LaTeX. 
+
+\emph{Simulator program}: Self-contained program which acts as a fake datasource for the VMS.
+
+\emph{Communication module}: Java code that handles the communication between the VMS and its data sources (such as the Simulator). 
+
+\emph{Alert computation module}: Java code that calculates the distance between ships and issues alerts to the UI.
+
+\emph{Graphical User Interface}: Java code that manages all GUI components of the VMS in Swing.
+
+\emph{Unit test suite}: A full suite of JUnit test cases.
+
+\emph{Final integration}: Put together all the components into one whole.
+
 \subsection{Project Estimates}
+
+\emph{Software Design Document}: Three weeks of design and documentation. Due date: June 26th, 2013.
+
+\emph{Simulator program}: Two weeks of coding, overlapped with SDD. Due date: June 26th, 2013.
+
+\emph{Communication module}: Three weeks of coding, starting after the SDD is handed in. Due date: July 17th.
+
+\emph{Alert computation module}: Two weeks of coding, starting after the SDD is handed in. Due date: July 10th.
+
+\emph{Graphical User Interface}: Three weeks of coding, starting after the SDD is handed in. Due date: July 17th.
+
+\emph{Unit test suite}: Six weeks of implementation, in parallel with SDD write-up and software implementation. Due date: July 17th.
+
+\emph{Final integration}: Two weeks, after all other deliverables have been produced. Due date: July 31st.
 
 \subsection{Activities Assignments}
 
-\subsection{Schedule}
+\emph{Software Design Document}: Ghislain Ledoux, Rigil Malubay, Chris Mukherjee.
+
+\emph{Simulator program}: Stefanie Lavoie.
+
+\emph{Communication module}: Philippe Milot, Ghislain Ledoux.
+
+\emph{Alert computation module}: Pinsson Laverdure, Rigil Malubay.
+
+\emph{Graphical User Interface}: Chris Mukherjee.
+
+\emph{Unit test suite}: Philippe Milot.
+
+\emph{Final integration}: All hands.
 
 \subsection{Risk}
+
+All due dates have been calculated with a buffer zone in mind to account for lack of availability depending on course load. Still, course load is difficult to predict, therefore there is a risk that some of the team members will not be able to produce their assigned artifact in time. 
+
+Also, writing test cases in parallel with the rest of the software may slightly delay production, although the reliability of the code will be improved.
 
 \end{document}
