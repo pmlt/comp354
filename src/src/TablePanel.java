@@ -40,7 +40,7 @@ public class TablePanel extends JPanel implements ActionListener {
 	JLabel[] label = {	new JLabel("Order by"),
 						new JLabel("Type order")	};
     
-	public TablePanel(final Object[][] obj, RadarSimulator rs, VMS vms) {
+	public TablePanel(final Object[][] obj, RadarSimulator rs, VMS vms, int accessLevel) {
     	this.rs = rs;
     	this.vms = vms;
         table = new JTable(obj, columnNames);
@@ -50,34 +50,36 @@ public class TablePanel extends JPanel implements ActionListener {
         
         //Create the scroll pane and add the table to it.
 		scrollPane = new JScrollPane(table);
-		
-		JPanel commands = new JPanel();
-		commands.setLayout(new GridLayout(2, 4));
-		JPanel empty1 = new JPanel();
-		JPanel empty2 = new JPanel();
-		
-		//Create Button to add
-		adding = new JButton(buttonNames[0]);
-		adding.addActionListener(this);
-		remover = new JButton(buttonNames[1]);
-		remover.addActionListener(this);
-		nameList = new JComboBox(orderListNames);
-		orderList = new JComboBox(orderTypeNames);
-		nameList.setSelectedIndex(0);
-		nameList.addActionListener(this);
-		orderList.setSelectedIndex(0);
-		orderList.addActionListener(this);
-		commands.add(empty1);
-		commands.add(empty2);
-		commands.add(label[0]);
-		commands.add(label[1]);
-		commands.add(adding);
-		commands.add(remover);
-		commands.add(nameList);
-		commands.add(orderList);
-		
 		add(scrollPane, BorderLayout.NORTH);
-		add(commands, BorderLayout.SOUTH);
+		
+		if (accessLevel == 0) {
+			JPanel commands = new JPanel();
+			commands.setLayout(new GridLayout(2, 4));
+			JPanel empty1 = new JPanel();
+			JPanel empty2 = new JPanel();
+			
+			//Create Button to add
+			adding = new JButton(buttonNames[0]);
+			adding.addActionListener(this);
+			remover = new JButton(buttonNames[1]);
+			remover.addActionListener(this);
+			nameList = new JComboBox(orderListNames);
+			orderList = new JComboBox(orderTypeNames);
+			nameList.setSelectedIndex(0);
+			nameList.addActionListener(this);
+			orderList.setSelectedIndex(0);
+			orderList.addActionListener(this);
+			commands.add(empty1);
+			commands.add(empty2);
+			commands.add(label[0]);
+			commands.add(label[1]);
+			commands.add(adding);
+			commands.add(remover);
+			commands.add(nameList);
+			commands.add(orderList);
+			add(commands, BorderLayout.SOUTH);
+		}
+		
 	}
 	
 	void update(final Object[][] obj) {
