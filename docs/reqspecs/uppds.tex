@@ -10,64 +10,60 @@ Radar simulation -Normal Running process
 
 \noindent
 {\bf Actors}\\
-Vessel monitoring system ,java system
+Vessel monitoring system, Java system
 
 \noindent
 {\bf Goals}\\
-to send valid vessels information to the vms 
+To send valid vessel information to the VMS
 
 \noindent
 {\bf Preconditions }\\
-a vsf  file is created and place in the required locations 
-the file has information on different vessels
+A vsf  file is created and placed in the required locations. 
+The file has information on different vessels.
 
 \noindent
 {\bf Summary }\\
-the radar simulator will read the location of different type of vessel in a range of 5000 meters,
-computes the location and directions of each vessels, 
-sends the different informations to the vessel monitoring system ,updates every time the vessels  
-change position or location
+The radar simulator will read the locations of different types of vessel in a range of 5000 meters,
+compute the locations and directions of each vessels, send the different information to the vessel monitoring system, and update every time the vessels change position or location.
 
 \noindent
 {\bf steps }\\ 
 \begin{enumerate}
-\item  read  the vsf file  by the systems 
-\item validate the vsf files by cheking that there is information on the file 
-\item read each line of the file 
-\item disregard any comments that is find in the file.
-\item calculates the speed,location directions
-\item send the different information to the VMS
-\item repeat step three until quit by the system
+\item Open and read the vsf file 
+\item Validate the vsf files by checking that there is valid information in the file 
+\item Read each line of the file 
+\item Disregard any comments that are found in the file
+\item Calculate the speed, location, directions, etc.
+\item Send the information to the VMS.
+\item Repeat steps three to six until the entire file has been read
+\item Close the file and quit
 \end{enumerate} 
 
 \noindent
 {\bf Name}\\
-Radar simulation -File not valid 
+Radar simulation - File not valid 
 
 \noindent
 {\bf Actors}\\
-java system 
+Java system 
 
 \noindent
 {\bf Goals}\\
-to open tht vsf files and make sure that its valid 
+To open the vsf file and make sure that it is valid 
 
 \noindent
 {\bf Preconditions }\\
-a vsf  file is created and place in the required locations 
-
+A vsf file is created and placed in the required locations.
 
 \noindent
 {\bf Summary }\\
-the radar simulator will read the location of different type of vessel in a range of 5000 meters,
-computes the location and directions of each vessels, 
-sends the different informations to the vessel monitoring system ,updates every time the vessels  
-change position or location
+The radar simulator will read the locations of different types of vessel in a range of 5000 meters,
+compute the locations and directions of each vessels, send the different informations to the vessel monitoring system, update every time the vessels change position or location.
 
 \noindent
 {\bf steps }\\
 \begin{enumerate}
-\item open the vsf files, 
-\item tries to see if its possible to open the file 
-\item stop the rader simulator and send handle file not found exception 
+\item Open the vsf file 
+\item Try (and fail) to read the vsf file 
+\item Stop the radar simulator and send File Not Found Exception 
 \end{enumerate} 
