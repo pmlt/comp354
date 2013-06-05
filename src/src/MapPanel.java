@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Paint;
 import javax.swing.JPanel;
 import java.awt.Graphics;
@@ -13,6 +15,8 @@ public class MapPanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.black);
 		super.paintComponent(g);
 		int wWidth = getWidth();
 		int wHeight = getHeight();
@@ -25,10 +29,14 @@ public class MapPanel extends JPanel {
 			g.fillOval(j-3, k-3, 6, 6);
 			g.drawLine(j, k, wWidth/2, wHeight/2);
 			// Draws a circle around the ships if there is a high-risk or low-risk alert
-			if (obj[i][8].toString().equals("high"))
+			if (obj[i][8].toString().equals("high")) {
+				g2.setColor(Color.red);
 				g.drawOval(j-25, k-25, 50, 50);
-			else if (obj[i][8].toString().equals("low"))
+			}
+			else if (obj[i][8].toString().equals("low")) {
+				g2.setColor(Color.yellow);
 				g.drawOval(j-100, k-100, 200, 200);
+			}
 		}
 	}
 
