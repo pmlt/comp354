@@ -11,7 +11,7 @@ Vessel Monitoring System - Normal State
 
 \noindent
 {\bf Summary}\\
-The Vessel Monitoring System is used to show the location of various vessels on a map. This Use Case scenario explains what happens when the Vessel Monitoring System is operation normaly without any alert or problems.
+The Vessel Monitoring System is used to show the location of various vessels on a map. This Use Case scenario explains what happens when the Vessel Monitoring System is operated normally without any alerts or problems.
 
 \noindent
 {\bf Actors}\\
@@ -25,13 +25,13 @@ A new ship is ready to send data from the Radar Simulation to the Monitoring Sys
 {\bf Main Scenario}\\
 \vspace*{-0.2in}
 \begin{enumerate}
-\item User open the monitoring system program to check vessel locations.
+\item User opens the monitoring system program to check vessel locations.
 \item Monitoring System establish a connection with the Radar Simulation.
 \item Radar Simulation sends new information to Vessel Monitoring System.
 \item Vessel Monitoring System obtains the new information from the Radar Simulation and stores the data.
 \item Vessel Monitoring System updates the information shown on the User's screen.
 \item User can filter through different types of vessels and select the ones they want to display.
-\item Monitoring system displays only the vessels choosen by the user.
+\item Monitoring system displays only the vessels chosen by the user.
 \item User closes the Vessel Monitoring System program.
 \end{enumerate}
 
@@ -43,7 +43,7 @@ Vessel Monitoring System is not receiving the data from the Radar Simulation and
 {\bf Postcondition}\\
 \vspace*{-0.2in}
 \begin{enumerate}
-\item The Vessel Monitoring System receives and store the data correctly and the ship's position is updated on the screen.
+\item The Vessel Monitoring System receives and stores the data correctly and the ship's position is updated on the screen.
 \item The System is now waiting for new data to arrive.
 \end{enumerate}
 
@@ -53,7 +53,7 @@ Vessel Monitoring System is not receiving the data from the Radar Simulation and
 
 \noindent
 {\bf Traces to Test Cases}\\
-Add when test cases done.
+Add when test cases are done.
 
 \subsubsection{Use Case 2} \label{uc:2}
 
@@ -78,25 +78,25 @@ A new ship is ready to send data from the Radar Simulation to the Monitoring Sys
 {\bf Main Scenario}\\
 \vspace*{-0.2in}
 \begin{enumerate}
-\item User open the monitoring system program to check vessel locations.
+\item User opens the monitoring system program to check vessel locations.
 \item Monitoring System establish a connection with the Radar Simulation.
 \item Radar Simulation sends new information to Vessel Monitoring System.
 \item Vessel Monitoring System obtains the new information from the Radar Simulation and stores the data.
 \item Vessel Monitoring System updates the information shown on the User's screen.
-\item Vessel Monitoring System detects that two ships are near each other and displays an alert.
+\item Vessel Monitoring System detects that two ships are near each other (within 200m of each other) and displays an alert.
 \item User closes the Vessel Monitoring System program.
 \end{enumerate}
 
 \noindent
 {\bf Exceptions}\\
 Vessel Monitoring System is not receiving the data from the Radar Simulation and cannot display the vessels.\\
-The vessels are not near each other enough to create an alert.
+The vessels are not near enough to each other to create an alert.
 
 \noindent
 {\bf Postcondition}\\
 \vspace*{-0.2in}
 \begin{enumerate}
-\item The Vessel Monitoring System receives and store the data correctly and the ship's position is updated on the screen.
+\item The Vessel Monitoring System receives and stores the data correctly and the ship's position is updated on the screen.
 \item The Vessel Monitoring System hides the warning once the threat is gone.
 \item The System is now waiting for new data to arrive.
 \end{enumerate}
@@ -107,4 +107,4 @@ The vessels are not near each other enough to create an alert.
 
 \noindent
 {\bf Traces to Test Cases}\\
-Add when test cases done.
+Add when test cases are done.
