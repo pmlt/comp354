@@ -27,8 +27,9 @@ public class Driver {
 		log.setJMenuBar(new MenuBar());
 
 		//Creating fields
-		JLabel op = new JLabel("Operator: op1234");
-		JLabel us = new JLabel("User: user123");
+		JLabel label = new JLabel("Enter you password");
+//		JLabel op = new JLabel("Operator: op123");
+//		JLabel us = new JLabel("User: user123");
 		JTextField pass = new JTextField();
 		JButton but[] = {new JButton("Login"), new JButton("Exit")};
 		JPanel output = new JPanel();
@@ -40,8 +41,9 @@ public class Driver {
 		but[0].addActionListener(l);
 		but[1].addActionListener(l);
 		// Adding fields to panels
-		output.add(op);
-		output.add(us);
+//		output.add(op);
+//		output.add(us);
+		output.add(label);
 		output.add(pass);
 		
 		commands.add(but[0]);
@@ -70,7 +72,7 @@ class logging implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(but[0])) {
-			if (pass.getText().compareTo("op1234") == 0) {
+			if (pass.getText().compareTo("op123") == 0) {
 				GUITesting(0);
 				log.dispatchEvent(new WindowEvent(log, WindowEvent.WINDOW_CLOSING));
 			}
