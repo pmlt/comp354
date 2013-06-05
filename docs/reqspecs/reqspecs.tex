@@ -31,17 +31,17 @@ Christopher Mukherjee & 6291929 \\
 
 \section{Introduction} % Status: COMPLETE
 
-This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developped in the context of the COMP354 course. The requirements specifications include an overview of the system and its goals, a detailed description of all functional and non-functional requirements (modelled using Use Case Diagrams and Domain Model Diagrams), as well as a development plan. 
+This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. The requirements specifications include an overview of the system and its goals, a detailed description of all functional and non-functional requirements (modeled using Use Case Diagrams and Domain Model Diagrams), as well as a development plan. 
 
-If a requirement appears in this document, the final Vessel Monitoring System \emph{must} conform to this requirement. Inversely, the Vessel Monitoring System is not requirement to conform to any other requirement that is not specified in this document.
+If a requirement appears in this document, the final Vessel Monitoring System \emph{must} conform to this requirement. Inversely, the Vessel Monitoring System is not required to conform to any other requirement that is not specified in this document.
 
 \section{Project Description} % Status: COMPLETE
 
-The Vessel Monitoring System is a Java-based system which listens to incoming radar data from multiple vessels at sea and keeps track of their type, position, and velocity. The goal of the system is to ensure that no vessel ever collide with one another.
+The Vessel Monitoring System is a Java-based system which listens to incoming radar data from multiple vessels at sea and keeps track of their type, position, and velocity. The goal of the system is to ensure that no vessels ever collide with one another.
 
-To accomplish this, the system tracks ``risk zones'' around each tracked vessel. The \emph{Low-Risk Zone} is defined as the circle area with a 200m radius around the vessel. The \emph{High-Risk Zone} is defined as the circle area with a 50m radius around the vessel. The system shall generate appropriate alarms when a dangerous situation arises, e.g. when two vessels's risk zones start to overlap. The system shall issue a \emph{Low-Risk Alert} whenever two or more Low-Risk Zones overlap. The system shall issue a \emph{High-Risk Alert} whenever two or more High-Risk Zones overlap.
+To accomplish this, the system tracks ``risk zones'' around each tracked vessel. The \emph{Low-Risk Zone} is defined as the circle area with a 200m radius around the vessel. The \emph{High-Risk Zone} is defined as the circle area with a 50m radius around the vessel. The system shall generate appropriate alarms when a dangerous situation arises, e.g. when two vessels' risk zones start to overlap. The system will issue a \emph{Low-Risk Alert} whenever two or more Low-Risk Zones overlap. The system will issue a \emph{High-Risk Alert} whenever two or more High-Risk Zones overlap.
 
-The VMS has a graphical desktop application component. Radar data is visually accessible at all time in two different modes:
+The VMS has a graphical desktop application component. Radar data is visually accessible at all times in two different modes:
 
 The \emph{List Mode} presents a list of all currently-tracked ships. Each row in the list contains all known metadata associated with a single ship: The Vessel ID, the Type, the X-Y coordinates, the Speed (in m/s), the Course, the Distance from starting point, and the time and date of last-received data. The list can be sorted by any of its columns, in both ascending and descending orders.
 
@@ -52,9 +52,9 @@ In this mode, the alerts are represented by highlighting the rows of the vessels
 \includegraphics[width=\linewidth]{gui-proto.eps}
 \end{figure}
 
-The \emph{Map Mode} displays a 2-D grid where each tracked vessel is represented as a dot placed on the grid according to its X-Y coordinates. The colour of the dot represents the Vessel Type. Additionally, two wider circles around each dot represent the vessel's two ``risk zones''. The Low-Risk zone is displayed as an yellow circle. The High-Risk zone is displayed as a red circle.
+The \emph{Map Mode} displays a 2-D grid where each tracked vessel is represented as a dot placed on the grid according to its X-Y coordinates. The colour of the dot represents the Vessel Type. Additionally, two wider circles around each dot represent the vessel's two ``risk zones''. The Low-Risk zone is displayed as a circle of 200m around the ship. The High-Risk zone is displayed as circle of 50m.
 
-In this mode, the alerts are represented by blinking the vessels involved in the alert. Since the zones are constantly represented visually, the type of alert is visible from simply looking at the grid.
+In this mode, the alerts are represented by colour-coding the circles. When two ships have overlapping Low-Risk Zones, the circles will turn yellow. When two ships have overlapping High-Risk Zones, the circles will turn red.
 
 Both view modes update the display in real-time, at a refresh rate which is configurable by the user. Both views can be filtered by Vessel Type. Both views display an ``Alert Icon'' in the top-left corner of the window. This icon is a large, white number against a colored background. The number represents how many alerts are currently in effect. The background color represents the severity of the highest-risk alert currently in effect (red for High-Risk, yellow for Low-Risk, green when no alerts are in effect).
 
@@ -78,7 +78,7 @@ The format of the file is that of a standard VSF file. The description of the fo
 \subsection{Constraints} % Status: Satisfactory, but can keep adding as they are thought up.
 
 \subsubsection{Shared constraints}
-Both applications shall run on Windows 7 or later, and Mac OS X 10.8 or later.
+Both applications shall run on Windows 7 or later, and Mac OS X 10.7 or later.
 
 Both applications shall require the Java 7 platform to run.
 
@@ -89,7 +89,7 @@ Functionally, the VMS shall be limited to keeping track of 100 unique ships at a
 
 No user interface shall be designed for the Simulator. It is strictly a separate command-line tool.
 
-Reading a timestep of less than 0.5 in the VSF file shall issue a parsing error, causing the program to exit immediately.
+If a VSF file has a timestep of less than 0.5 (which is the minimum accepted timestep), the program will read the file and automatically change the timestep to 0.5.
 
 \section{Resource Evaluation} % Status: See subsections.
 
@@ -97,7 +97,7 @@ Reading a timestep of less than 0.5 in the VSF file shall issue a parsing error,
 
 \emph{Pinsson Laverdure} TBD.
 
-\emph{Stefanie Lavoie} has experience with developping on the Java platform (but not using the Swing library for GUI), as well as managing a project's source code using the Git DVCS. Although she has never used \LaTeX before, she will be able to contribute significantly to the design and code of the project.
+\emph{Stefanie Lavoie} has experience with developing on the Java platform (but not using the Swing library for GUI), as well as managing a project's source code using the Git DVCS. Although she has never used \LaTeX before, she will be able to contribute significantly to the design and code of the project.
 
 \emph{Ghislain Ledoux} has a good conciliatory nature which lends itself well to working in teams. He has a good instinct for identifying use cases, which will be useful in the first stages of design. He has no prior experience working with a source control system nor with \LaTeX.
 
@@ -105,15 +105,15 @@ Reading a timestep of less than 0.5 in the VSF file shall issue a parsing error,
 
 \emph{Philippe Milot} has previous work experience with developping on a wide range of platforms and programming languages (C/C++, Java, Haskell, Perl, Python, PHP, \LaTeX, etc.), which will be useful for informing the technological choices that will be made for the project. He is familiar with Subversion and Git VCS. He has never worked with a Java GUI toolkit before.
 
-\emph{Christopher Mukherjee} has experience with the Java platform as well as web programming. He has previous work experience with tech companies such as Trendex Information Systems and Ericsson. His experience with working in larger teams will help the project reach its deadlines on time. He has never worked with \LaTeX before.
+\emph{Christopher Mukherjee} has experience with the Java platform as well as web programming. He has previous work experience with tech companies such as Trendex Information Systems and Ericsson. His experience with working in larger teams will help the project reach its deadlines on time. He has never worked with a source control system or with \LaTeX before.
 
 \subsection{Technical Resources} % Status: COMPLETE
 
 The project can make use of the software that is available in the computer labs of Concordia University. 
 
-The project shall be developped in parallel on both Windows and Mac OS X platforms. Development can be done either on Concordia University's computers or the personal computers of the developers.
+The project shall be developed in parallel on both Windows and Mac OS X platforms. Development can be done either on Concordia University's computers or the personal computers of the developers.
 
-The project shall be developped on the Java platform version 7. All graphical user interfaces shall use the Swing library.
+The project shall be developed on the Java platform version 7. All graphical user interfaces shall use the Swing library.
 
 The project shall use Git as its source-control solution. GitHub shall be used for hosting the repository online.
 
@@ -141,3 +141,5 @@ No UI shall be provided to customize the address at which the VMS will listen to
 \subsection{Risk}
 
 \end{document}
+
+
