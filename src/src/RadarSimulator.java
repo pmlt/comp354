@@ -87,7 +87,7 @@ public class RadarSimulator {
 		String[] ids = new String[MAX_BOATS];
 		int idCount = 0;
 		for (Vessel v : boats.values()) {
-			if (calculateDistance(v) > 5000) {
+			if (calculateDistance(v) > range) {
 				ids[idCount] = v.getVesselId();
 				idCount++;
 			}
@@ -97,14 +97,14 @@ public class RadarSimulator {
 		// Removing vessels that went out of range while in the queue
 		ArrayDeque<Vessel> newQueue = new ArrayDeque<Vessel>();
 		for (Vessel v : queue) {
-			if (calculateDistance(v) <= 5000)
+			if (calculateDistance(v) <= range)
 				newQueue.add(v);
 		}
 		queue = newQueue;
 		// Transferring vessels from queue to radar if there is room
 		int queueCounter = 0;
 		for (Vessel v : queue) {
-			if (boats.size() >= 100)
+			if (boats.size() >= MAX_BOATS)
 				break;
 			else {
 				boats.put(v.getVesselId(), v);

@@ -1,3 +1,4 @@
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -89,7 +90,8 @@ public class TablePanel extends JPanel implements ActionListener {
 		scrollPane.remove(table);
 		table = new JTable(obj, columnNames);
 		RiskColor renderer = new RiskColor();
-		table.getColumn(columnNames[8]).setCellRenderer(renderer);
+		for (int i=0; i<columnNames.length; i++)
+			table.getColumn(columnNames[i]).setCellRenderer(renderer);
 		scrollPane.add(table);
 		scrollPane.setViewportView(table);
 		updateScreen = false;
@@ -142,7 +144,7 @@ class RiskColor extends JLabel implements TableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, 
 			boolean hasFocus, int row, int column) {
 		setOpaque(true);
-		setText(table.getValueAt(row, column).toString());
+		setText(value.toString());
 		
 		if (table.getValueAt(row, 8).toString().equals("high"))
 			setBackground(Color.RED);
