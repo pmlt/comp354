@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ConnectionServer implements Closeable {
 	public interface Observer {
 		public void update(String id, Vessel.VesselType type, Coord newCoords, Course newCourse, Calendar timestamp);
-		public void refresh();
+		public void refresh(Calendar timestamp);
 	}
 	private static long DEFAULT_REFRESH = 500; //Refresh every half second by default
 	
@@ -46,9 +46,9 @@ public class ConnectionServer implements Closeable {
 		_Observers.remove(o); //remove() doesn't fail if object not found 
 	}
 	
-	public void refreshObservers() {
+	public void refreshObservers(Calendar timestamp) {
 		for (int i=0; i < _Observers.size(); i++) {
-			_Observers.get(i).refresh();
+			_Observers.get(i).refresh(timestamp);
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class ConnectionServer implements Closeable {
 			int num = _Selector.select(_RefreshTime);
 			if (num == 0) {
 				// No event happened but select() returned, we reached a timeout
-				refreshObservers();
+				refreshObservers(Calendar.getInstance());
 				continue; //Go again as long as _Continue is true
 			}
 			//Something's on the wire! Let's see what it is...
