@@ -1,3 +1,5 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -13,6 +15,8 @@ public class alertTest {
 	@BeforeClass
 	public static void testSetup() {
 		// Vessel 1 and 2 should generate Low level risk (yellow)
+		// XXX Must rewrite this test to fit new API
+		/*
 		Vessel vessel1 = new Vessel("01",1,0,0,0,0,0);
 		Vessel vessel2 = new Vessel("02",1,100,0,0,0,0);
 		// Vessel 3 and 4 should generate High level risk (red)
@@ -28,12 +32,15 @@ public class alertTest {
 		boolean[] a1 = new boolean[5];
 		for (int i = 0; 0 <= 4; i++)
 			a1[i] = true;
+		*/
+		fail("Must rewrite for new API");
 	}
 		
 	@Test
 	public void testAlerts() {
 		// Table color not implemented yet
 		// Test map color coding:
+		fail("Not yet implemented");
 	}
 
 }
