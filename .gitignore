@@ -9,6 +9,7 @@
 *.log
 *.aux
 *.pdf
+*.synctext.gz
 
 # OS-specific junk #
 .DS_Store
