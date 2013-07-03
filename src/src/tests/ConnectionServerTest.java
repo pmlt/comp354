@@ -90,6 +90,7 @@ public class ConnectionServerTest {
 		assertEquals(timestamp, lastVessel.getLastTimestamp());
 	}
 	
+	@Test
 	public void testAutomaticRefresh() throws IOException, InterruptedException {
 		csThread.start();
 		Thread.sleep(2000);
@@ -103,6 +104,7 @@ public class ConnectionServerTest {
 		assertTrue(timestamp.equals(lastRefresh));
 	}
 	
+	@Test
 	public void testSendData() throws UnknownHostException, IOException, InterruptedException {
 		csThread.start();
 		//Wait for CS to bind socket...
