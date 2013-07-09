@@ -1,10 +1,12 @@
 package vms;
 
+import org.protocols.Netstring;
 import java.net.*;
 import java.nio.channels.*;
 import java.util.*;
 import java.io.Closeable;
 import java.io.IOException;
+import common.UpdateData;
 
 /*
  * Class: ConnectionServer
@@ -119,11 +121,11 @@ public class ConnectionServer implements Closeable {
 	}
 	
 	private void _read(SocketChannel sc) throws IOException {
-		// XXX Must read data from sc.
-		// Expected data: netstring-encoded JSON string containing ship data values
-		// Netstring specifications: http://cr.yp.to/proto/netstrings.txt
-		// JSON specifications: http://json.org/ (there's a thousand libraries to parse JSON out there)
-		// If data is successfully parsed, call updateObservers() with the data, then return
-		// Upon encountering ANY unexpected input, method simply returns.
+		Iterator<byte[]> it = Netstring.read(sc.socket().getInputStream(), 1024*1024);
+		while (it.hasNext()) {
+			byte[] json = it.next();
+			UpdateData ud = UpdateData.fromJSON(new String(json));
+			updateObservers(ud.Id, ud.Type, ud.Coordinates, ud.Course, ud.Timestamp);
+		}
 	}
 }
