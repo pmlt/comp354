@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -145,6 +144,7 @@ public class ConnectionServerTest {
 		assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
 		assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
 		cs.stop();
+		socket.close();
 	}
 
 }
