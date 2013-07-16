@@ -11,11 +11,12 @@ import java.util.Calendar;
 
 import org.junit.*;
 
+import common.Vessel;
+import common.Vessel.VesselType;
+
 import vms.ConnectionServer;
 import vms.Coord;
 import vms.Course;
-import vms.Vessel;
-import vms.Vessel.VesselType;
 
 public class ConnectionServerTest {
 	

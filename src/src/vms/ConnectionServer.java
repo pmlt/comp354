@@ -7,6 +7,7 @@ import java.util.*;
 import java.io.Closeable;
 import java.io.IOException;
 import common.UpdateData;
+import common.Vessel;
 
 /*
  * Class: ConnectionServer

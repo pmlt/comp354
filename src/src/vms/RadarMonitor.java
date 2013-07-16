@@ -2,7 +2,9 @@ package vms;
 
 import java.util.*;
 
-import vms.Vessel.VesselType;
+import common.Vessel;
+import common.Vessel.VesselType;
+
 
 public class RadarMonitor implements ConnectionServer.Observer {
 	public interface Observer {

@@ -7,9 +7,11 @@ import java.util.List;
 
 import vms.*;
 import vms.Alert.AlertType;
-import vms.Vessel.VesselType;
 
 import org.junit.Test;
+
+import common.Vessel;
+import common.Vessel.VesselType;
 
 public class RadarMonitorTest {
 	private boolean REFRESH_CALLED = false;

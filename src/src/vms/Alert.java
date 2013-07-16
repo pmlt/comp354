@@ -2,6 +2,8 @@ package vms;
 
 import java.util.*;
 
+import common.Vessel;
+
 public class Alert {
 	public enum AlertType {
 		LOWRISK,

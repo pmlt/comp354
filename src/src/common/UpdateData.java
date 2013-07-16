@@ -2,9 +2,10 @@ package common;
 
 import java.util.Calendar;
 
+import common.Vessel.VesselType;
+
 import vms.Coord;
 import vms.Course;
-import vms.Vessel.VesselType;
 
 public class UpdateData {
 	public String Id;

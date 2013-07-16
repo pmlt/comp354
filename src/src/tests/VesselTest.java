@@ -8,6 +8,8 @@ import vms.*;
 
 import org.junit.Test;
 
+import common.Vessel;
+
 public class VesselTest {
 
 	@Test

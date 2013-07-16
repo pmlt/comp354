@@ -1,6 +1,9 @@
-package vms;
+package common;
 
 import java.util.*;
+
+import vms.Coord;
+import vms.Course;
 
 public class Vessel {
 	public enum VesselType {
@@ -41,5 +44,16 @@ public class Vessel {
 	
 	public void update(Coord newCoords, Course newCourse, Calendar timestamp) {
 		// XXX Record new snapshot of location/course at the provided timestamp
+	}
+	
+	public void update(UpdateData data) {
+		// XXX Record new snapshot of location/course based on UpdateData
+		// should throw if ID/Type does not match
+	}
+	
+	public UpdateData getUpdateData(Calendar timestamp) {
+		// XXX Generate an UpdateData instance based on the info of the
+		// vessel at the specified timestamp
+		return new UpdateData();
 	}
 }
