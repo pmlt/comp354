@@ -12,7 +12,7 @@ public class MainGUI {
 		final String VIEW[] = { "Table view", "Map view"};
 		JFrame f = new JFrame("TESTING VMS");		
 		f.setSize(700,600);
-		
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		FilterPanel fp = new FilterPanel();
 		TablePanel tp = new TablePanel(v.filterData(fp.getFilter()), rs, v, accessLevel);
 		MapPanel mp = new MapPanel(v, rs, fp);
