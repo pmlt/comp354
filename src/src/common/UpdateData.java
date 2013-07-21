@@ -16,6 +16,17 @@ public class UpdateData {
 	public Course Course;
 	public Calendar Timestamp;
 	
+	public UpdateData() {
+	}
+	
+	public UpdateData(String id, VesselType type, Coord coords, Course course, Calendar timestamp) {
+		Id = id;
+		Type = type;
+		Coordinates = coords;
+		Course = course;
+		Timestamp = timestamp;
+	}
+	
 	public String toJSON() {
 		Gson gson = new Gson();
 		return gson.toJson(this);

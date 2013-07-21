@@ -10,6 +10,7 @@ import vms.Alert.AlertType;
 
 import org.junit.Test;
 
+import common.UpdateData;
 import common.Vessel;
 import common.Vessel.VesselType;
 
@@ -54,19 +55,19 @@ public class RadarMonitorTest {
 		_ResetUI();
 		
 		//Enter first boat, check if refresh was called
-		radar.update("fakeID", VesselType.BOAT, new Coord(0, 0), new Course(0,0), time);
+		radar.update(new UpdateData("fakeID", VesselType.BOAT, new Coord(0, 0), new Course(0,0), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(0, ALERTS.size());
 		_ResetUI();
 
 		//Enter another boat within no-risk zone
-		radar.update("fakeID2", VesselType.BOAT, new Coord(250, 250), new Course(0,0), time);
+		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(250, 250), new Course(0,0), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(0, ALERTS.size());
 		_ResetUI();
 
 		//Move second boat within low-risk zone
-		radar.update("fakeID2", VesselType.BOAT, new Coord(100, 100), new Course(0,0), time);
+		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(100, 100), new Course(0,0), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(1, ALERTS.size());
 		assertEquals(AlertType.LOWRISK, ALERTS.get(0).getType());
@@ -75,7 +76,7 @@ public class RadarMonitorTest {
 		_ResetUI();
 		
 		//Move second boat into high-risk zone, and set course to move away
-		radar.update("fakeID2", VesselType.BOAT, new Coord(0, 0), new Course(150,150), time);
+		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(0, 0), new Course(150,150), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(1, ALERTS.size());
 		assertEquals(AlertType.HIGHRISK, ALERTS.get(0).getType());

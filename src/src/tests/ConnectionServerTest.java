@@ -11,6 +11,7 @@ import java.util.Calendar;
 
 import org.junit.*;
 
+import common.UpdateData;
 import common.Vessel;
 import common.Vessel.VesselType;
 
@@ -41,10 +42,9 @@ public class ConnectionServerTest {
 	public class CSObserver implements ConnectionServer.Observer {
 
 		@Override
-		public void update(String id, VesselType type, Coord newCoords,
-				Course newCourse, Calendar timestamp) {
-			lastVessel = new Vessel(id, type);
-			lastVessel.update(newCoords, newCourse, timestamp);
+		public void update(UpdateData data) {
+			lastVessel = new Vessel(data.Id, data.Type);
+			lastVessel.update(data.Coordinates, data.Course, data.Timestamp);
 		}
 
 		@Override
@@ -82,7 +82,7 @@ public class ConnectionServerTest {
 	public void testManualUpdate() throws IOException {
 		assertNull(lastVessel);
 		Calendar timestamp = Calendar.getInstance();
-		cs.updateObservers("myid", VesselType.BOAT, new Coord(10,10), new Course(20,20), timestamp);
+		cs.updateObservers(new UpdateData("myid", VesselType.BOAT, new Coord(10,10), new Course(20,20), timestamp));
 		assertEquals("myid", lastVessel.getId());
 		assertEquals(VesselType.BOAT, lastVessel.getType());
 		assertEquals(new Coord(10,10), lastVessel.getCoord(timestamp));
