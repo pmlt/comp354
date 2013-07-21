@@ -7,6 +7,8 @@ import common.Vessel.VesselType;
 import vms.Coord;
 import vms.Course;
 
+import com.google.gson.Gson;
+
 public class UpdateData {
 	public String Id;
 	public VesselType Type;
@@ -15,14 +17,13 @@ public class UpdateData {
 	public Calendar Timestamp;
 	
 	public String toJSON() {
-		// XXX TODO by Ghislain
-		// JSON specifications: http://json.org/ (there's a thousand libraries to parse JSON out there)
-		return "";
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 	
 	public static UpdateData fromJSON(String json) {
-		// XXX TODO by Ghislain
-		// JSON specifications: http://json.org/ (there's a thousand libraries to parse JSON out there)
-		return new UpdateData();
+		Gson gson = new Gson();
+		return gson.fromJson(json, UpdateData.class);
 	}
+	
 }
