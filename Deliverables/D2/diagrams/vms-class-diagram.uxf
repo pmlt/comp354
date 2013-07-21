@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>470</x>
+      <y>280</y>
+      <w>240</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>RadarMonitor
+--
+- lowerRange : Coord
+- upperRange : Coord
+- vessels : List&lt;Vessel&gt;
+--
++ setRange(Coord,Coord)
++ getVesselCount() : int
++ getVessels() : List&lt;Vessel&gt;
++ registerObserver(Observer)
++ unregisterObserver(Observer)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>680</x>
+      <y>360</y>
+      <w>100</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1= 0..*</panel_attributes>
+    <additional_attributes>30;240;80;240;80;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>230</x>
+      <y>350</y>
+      <w>50</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>320</x>
+      <y>80</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=0..*
+m2=0..1</panel_attributes>
+    <additional_attributes>140;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>150</x>
+      <y>320</y>
+      <w>220</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>RadarMonitor.Observer
+--
+--
+/+ refresh(List&lt;Alert&gt;)/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>410</x>
+      <y>510</y>
+      <w>300</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Vessel
+--
+- id : String
+- type : VesselType
+--
+
++ getId() : String
++ getType() : VesselType
++ getCoord(Calendar) : Coord
++ getCourse(Calendar) : Course
++ getLastTimestamp() : Calendar
++ update(UpdateData)
++ getUpdateData(Calendar) : UpdateData</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>200</x>
+      <y>440</y>
+      <w>120</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>RadarGUI
+--
+--
++ run()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>100</x>
+      <y>60</y>
+      <w>250</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>ConnectionServer
+--
+- minimumRefresh : long
+--
++ getMinimumRefresh() : long
++ setMinimumRefresh(long)
++ registerObserver(Observer)
++ unregisterObserver(Observer)
++ updateObservers(UpdateData)
++ bind(SocketAddress)
++ start()
++ stop()
++ close()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>460</x>
+      <y>70</y>
+      <w>220</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ConnectionServer.Observer
+--
+--
+/+ update(UpdateData)/
+/+ refresh(Calendar)/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>340</x>
+      <y>320</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=0..*
+m2=0..1</panel_attributes>
+    <additional_attributes>30;30;130;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>560</x>
+      <y>110</y>
+      <w>50</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;170</additional_attributes>
+  </element>
+</diagram>
