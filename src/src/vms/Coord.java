@@ -1,13 +1,17 @@
 package vms;
 
 public class Coord {
+	private int x;
+	private int y;
+	
 	public Coord(int x, int y) {
-		// XXX Initialize members
+		this.x = x;
+		this.y = y;
 	}
 	public int x() {
-		return 0; // XXX
+		return x;
 	}
 	public int y() {
-		return 0; // XXX
+		return y;
 	}
 }

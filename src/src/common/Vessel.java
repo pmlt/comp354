@@ -6,21 +6,28 @@ import vms.Coord;
 import vms.Course;
 
 public class Vessel {
+	private VesselType type;
+	private String id;
+	private Course course;
+	private Coord coords;
+	private Calendar lastTimestamp;
+	
 	public enum VesselType {
 		BOAT
 		// XXX Add all supported types here
 	}
 	
 	public Vessel(String id, VesselType type) {
-		// XXX Initialize members
+		this.id = id;
+		this.type = type;
 	}
 	
 	public String getId() {
-		return ""; // XXX
+		return id;
 	}
 	
 	public VesselType getType() {
-		return VesselType.BOAT; // XXX
+		return type;
 	}
 	
 	public Coord getCoord(Calendar timestamp) {
@@ -38,22 +45,27 @@ public class Vessel {
 	}
 	
 	public Calendar getLastTimestamp() {
-		// XXX Return timestamp of latest snapshot
-		return Calendar.getInstance();
+		return lastTimestamp;
 	}
 	
 	public void update(Coord newCoords, Course newCourse, Calendar timestamp) {
-		// XXX Record new snapshot of location/course at the provided timestamp
+		course = newCourse;
+		coords = newCoords;
+		lastTimestamp = timestamp;
 	}
 	
-	public void update(UpdateData data) {
-		// XXX Record new snapshot of location/course based on UpdateData
-		// should throw if ID/Type does not match
+	public void update(UpdateData data) throws Exception {
+		if(id.equals(data.Id) && type == data.Type){
+			course = data.Course;
+			coords = data.Coordinates;
+			lastTimestamp = data.Timestamp;
+		
+		}else{
+			throw new Exception("Not the correct vessel ID and type");
+		}
 	}
 	
 	public UpdateData getUpdateData(Calendar timestamp) {
-		// XXX Generate an UpdateData instance based on the info of the
-		// vessel at the specified timestamp
-		return new UpdateData();
+		return new UpdateData(id, type, getCoord(timestamp), getCourse(timestamp), timestamp);
 	}
 }

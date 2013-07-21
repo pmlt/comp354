@@ -1,4 +1,4 @@
-package simulator;
+package Simulator;
 
 import java.io.IOException;
 import java.io.InputStream;

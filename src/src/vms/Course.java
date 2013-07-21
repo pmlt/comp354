@@ -1,13 +1,17 @@
 package vms;
 
 public class Course {
+	private int velocityX;
+	private int velocityY;
+	
 	public Course(int xVel, int yVel) {
-		// XXX
+		velocityX = xVel;
+		velocityY = yVel;
 	}
 	public int xVel() {
-		return 0; // XXX
+		return velocityX;
 	}
 	public int yVel() {
-		return 0; // XXX
+		return velocityX;
 	}
 }
