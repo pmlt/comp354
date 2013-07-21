@@ -2,8 +2,8 @@ package vms;
 
 import java.util.*;
 
+import common.UpdateData;
 import common.Vessel;
-import common.Vessel.VesselType;
 
 
 public class RadarMonitor implements ConnectionServer.Observer {
@@ -34,8 +34,7 @@ public class RadarMonitor implements ConnectionServer.Observer {
 	}
 
 	@Override
-	public void update(String id, VesselType type, Coord newCoords,
-			Course newCourse, Calendar timestamp) {
+	public void update(UpdateData data) {
 		// XXX Update internal list with new incoming data, then call refresh()
 		
 	}

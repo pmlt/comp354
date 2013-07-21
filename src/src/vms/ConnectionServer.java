@@ -17,7 +17,7 @@ import common.Vessel;
  */
 public class ConnectionServer implements Closeable {
 	public interface Observer {
-		public void update(String id, Vessel.VesselType type, Coord newCoords, Course newCourse, Calendar timestamp);
+		public void update(UpdateData data);
 		public void refresh(Calendar timestamp);
 	}
 	private static long DEFAULT_REFRESH = 500; //Refresh every half second by default
@@ -55,9 +55,9 @@ public class ConnectionServer implements Closeable {
 		}
 	}
 	
-	public void updateObservers(String id, Vessel.VesselType type, Coord newCoords, Course newCourse, Calendar timestamp) {
+	public void updateObservers(UpdateData data) {
 		for (int i=0; i < _Observers.size(); i++) {
-			_Observers.get(i).update(id, type, newCoords, newCourse, timestamp);
+			_Observers.get(i).update(data);
 		}
 	}
 	
@@ -126,7 +126,7 @@ public class ConnectionServer implements Closeable {
 		while (it.hasNext()) {
 			byte[] json = it.next();
 			UpdateData ud = UpdateData.fromJSON(new String(json));
-			updateObservers(ud.Id, ud.Type, ud.Coordinates, ud.Course, ud.Timestamp);
+			updateObservers(ud);
 		}
 	}
 }
