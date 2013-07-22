@@ -47,11 +47,18 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \subsection{Architecture Diagram}
 
+\subsubsection{Logical View}
+
 The program as it is communicates in a completely different way that it previously does. Previously we had the main calling the information on a timer and sending them to the GUI which was making the program working all at the same time which was not what we wanted. The program now is separated into two subsystems; the VMS and simulator package working in parallel.
 
 \begin{figure}[h]
 \caption{Communication diagram of simulator package}
 \includegraphics[width=\linewidth]{simulator-communication-diagram.eps}
+\end{figure}
+
+\begin{figure}[h]
+\caption{Class diagram of simulator package}
+\includegraphics[width=\linewidth]{ simulator-class-diagram.eps}
 \end{figure}
 
 The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values at regular intervals to the VMS package.
@@ -61,13 +68,19 @@ The simulator is in charge of making sure that the configuration is properly set
 \includegraphics[width=\linewidth]{vms-communication-diagram.eps}
 \end{figure}
 
+\begin{figure}[h]	
+\caption{Class diagram of vms package}
+\includegraphics[width=\linewidth]{vms-class-diagram.eps}
+\end{figure}
+
 The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also at the same time.
+
+\subsubsection{Development View}
 
 \subsection{Subsystem Interfaces Specifications}
 
 [Specification of the software interfaces between the components, i.e. specific messages (or function calls) that are exchanged. These are also often called “Module Interface Specifications”.Description of the parameters passed in these function calls in order to have a service fulfilled. Include valid and invalid ranges of values.Each subsystem interface must be presented in a separate subsection.]
 
-\break
 \section{Detailed Design} % Status: To be done
 
 \subsection{Subsystems} 
