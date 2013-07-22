@@ -1,5 +1,4 @@
 package simulator;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,18 +26,26 @@ public class Mainfunction {
 		StringBuffer wrd = new StringBuffer();
 		wrd = Checkcommand(args);
 		str = wrd.substring(0, wrd.length());
-		System.out.println(str);
+		//System.out.println(str);
 		String fname[]=new String [3];
 		fname=str.split("\\ ");
+		String host=fname[0];
+		int port= Integer.parseInt(fname[1]);
 
 		// Opening VSf file fore reading 
 			try {
+				/*
+				 * open the vsf file 
+				 * read the configuration file 
+				 * create the configuration 
+				 */
 				BufferedReader br = new BufferedReader(new FileReader("src/simulator/"+fname[2]));
-				
 				//InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
 				SimulatorConfiguration.parseVSF(br);
-				br.close();
-			
+				br.close();//	
+				// create connection 
+				ConnectionClient sc=new ConnectionClient();
+				sc.connect(host, port);
 					
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

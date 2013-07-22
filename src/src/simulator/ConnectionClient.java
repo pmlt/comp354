@@ -2,16 +2,14 @@ package simulator;
 
 import java.io.*;
 import java.net.*;
-
 import org.protocols.Netstring;
-
 import common.UpdateData;
 
 public class ConnectionClient implements Closeable {
 	private final int TIMEOUT = 2000; //Never wait more than 2 seconds
 	private Socket _Socket;
 	
-	public ConnectionClient() {
+	protected   ConnectionClient() {
 		_Socket = new Socket();
 	}
 	
@@ -33,4 +31,6 @@ public class ConnectionClient implements Closeable {
 	public void close() throws IOException {
 		if (!_Socket.isClosed()) _Socket.close();
 	}
+	
 }
+
