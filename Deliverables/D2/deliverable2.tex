@@ -35,9 +35,9 @@ Christopher Mukherjee & 6291929 \\
 
 \pagenumbering{arabic}% Arabic page numbers (and reset to 1)
 
-\section{Introduction} % Status: To be done
+\section{Introduction} % Status: Complete
 
-This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. The requirements specifications include ... 
+This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. The requirements specifications include a detailed version of the architecture design pattern, a 4+1 Architectural View diagram as well as a description of the rationale of this design, Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
 
 If a requirement appears in this document, the final Vessel Monitoring System \emph{must} conform to this requirement. Inversely, the Vessel Monitoring System is not required to conform to any other requirement that is not specified in this document.
 
@@ -167,11 +167,11 @@ The main purpose of this class is to parse .vsf file and to keep track of the da
 
 Attributes:
 \begin{enumerate}
-	\item private int _StartDelay
-    \item private int _TimeInterval
-    \item private int _TotalTime
-    \item private int _RadarRange
-    \item List<Vessel> _Vessels
+    \item private int \_StartDelay
+    \item private int \_TimeInterval
+    \item private int \_TotalTime
+    \item private int \_RadarRange
+    \item List\textless Vessel\textgreater \, \_Vessels
 \end {enumerate}
 
 Functions:
@@ -185,7 +185,7 @@ Functions:
 	\item public void setTotalTime(int)
 	\item public int getRadarRange()
 	\item public void setRadarRange(int)
-	\item public List<Vessel> getVessels()
+	\item public List\textless Vessel\textgreater  \,getVessels()
 	\item public void addVessel(Vessel)
 	\item public static SimulatorConfiguration parseVSF(InputStream)
 \end{enumerate}
@@ -196,7 +196,7 @@ This class is responsible for establishing and managing the socket connection to
 Attributes:
 \begin{enumerate}
 	\item private final int TIMEOUT
-    \item private Socket _Socket
+    \item private Socket \_Socket
 \end {enumerate}
 
 Functions:
@@ -213,7 +213,7 @@ This class performs and determines the frequency of data updates and communicati
 
 Attributes:
 \begin{enumerate}
-	\item SimulatorConfiguration _Configuration
+	\item SimulatorConfiguration \_Configuration
 \end {enumerate}
 
 Functions:
@@ -230,12 +230,12 @@ The purpose of this class is to accept connections established by one or more ra
 
 Attributes:
 \begin{enumerate}
-	\item private static long DEFAULT_REFRESH
-    \item private boolean _Continue
-    \item private long _RefreshTime
-    \item private Selector _Selector
-    \item private ServerSocketChannel _Channel
-    \item private List<Observer> _Observers
+	\item private static long DEFAULT\_REFRESH
+    \item private boolean \_Continue
+    \item private long \_RefreshTime
+    \item private Selector \_Selector
+    \item private ServerSocketChannel \_Channel
+    \item private List\textless Observer\textgreater \,\_Observers
 \end {enumerate}
 
 Functions:
@@ -249,7 +249,7 @@ Functions:
 	\item public void updateObservers(UpdateData)
 	\item public void bind(SocketAddress)
 	\item public void setRadarRange(int)
-	\item public List<Vessel> getVessels()
+	\item public List\textless Vessel\textgreater \,getVessels()
 	\item public void addVessel(Vessel)
 	\item public static SimulatorConfiguration parseVSF(InputStream)
 \end{enumerate}
