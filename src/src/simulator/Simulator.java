@@ -1,4 +1,4 @@
-package Simulator;
+package simulator;
 
 import java.io.IOException;
 import java.util.Calendar;

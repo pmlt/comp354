@@ -1,5 +1,6 @@
-package Simulator;
+package simulator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -58,9 +59,47 @@ public class SimulatorConfiguration {
 	 * Should throw ParseException whenever it encounters an unexpected
 	 * format in the input file.
 	 */
-	public static SimulatorConfiguration parseVSF(InputStream in) 
+	public static SimulatorConfiguration parseVSF(BufferedReader in) 
 			throws IOException, ParseException {
 		SimulatorConfiguration sc = new SimulatorConfiguration();
+		String line;
+		String version;
+		while ((line = in.readLine()) != null) {
+			String[] a = line.split("\\s+");
+			if (a[0].trim().compareToIgnoreCase("VSF") == 0)
+				version = a[1];
+			else if (a[0].trim().compareToIgnoreCase("STARTTIME") == 0)
+				sc.setStartDelay((int) Double.parseDouble(a[1]));
+			else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
+				sc.setTimeInterval((int) Double.parseDouble(a[1]));
+			}
+			else if (a[0].trim().compareToIgnoreCase("TIME") == 0)
+				sc.setTotalTime((int) Double.parseDouble(a[1]));
+			else if (a[0].trim().compareToIgnoreCase("RANGE") == 0)
+				sc.setRadarRange(Integer.parseInt(a[1]));
+			/*
+			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) == 0)
+				sc.addVessel(new Vessel(a[1],
+						Integer.parseInt(a[2]),
+						Double.parseDouble(a[3]),
+						Double.parseDouble(a[4]),
+						Double.parseDouble(a[5]),
+						Double.parseDouble(a[6]),
+						Double.parseDouble(a[7])));
+			
+			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) > 0) {
+				timedQueue.add(new Vessel(a[1],
+						Integer.parseInt(a[2]),
+						Double.parseDouble(a[3]),
+						Double.parseDouble(a[4]),
+						Double.parseDouble(a[5]),
+						Double.parseDouble(a[6]),
+						Double.parseDouble(a[7])));
+			}
+			**/
+			
+		} // END OF WHILE LOOP
+		
 		// XXX TODO by Pinsson; set properties of sc by reading file
 		return sc;
 	}

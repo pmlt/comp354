@@ -33,11 +33,11 @@ public class Mainfunction {
 
 		// Opening VSf file fore reading 
 			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/simulator/"+fname[2]));
 				
-				InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
-				
-				String line;
-				SimulatorConfiguration.parseVSF(F_ip);
+				//InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
+				SimulatorConfiguration.parseVSF(br);
+				br.close();
 			
 					
 			} catch (FileNotFoundException e) {
@@ -47,7 +47,7 @@ public class Mainfunction {
 			
 				
 	}
-	
+	// validation of command arguments
 	public static StringBuffer Checkcommand(String[] word){
 		String host,port,filename;
 		 StringBuffer sb = new StringBuffer();
@@ -91,6 +91,7 @@ public class Mainfunction {
 			else quit();// if wrong command 
 		return null;
 	}
+	//validation of ip adress
 	public static boolean Validip(String ipadress)
 	{
 		String[] numbers = ipadress.split("\\.");
@@ -106,7 +107,7 @@ public class Mainfunction {
 		return true;
 
 	}
-
+	//validation of file name 
 	public static boolean filname(String file){
 		String fname[]=new String [2];
 		fname=file.split("\\.");
@@ -115,7 +116,7 @@ public class Mainfunction {
 		else return false;
 
 	}
-
+	//Validation of port number
 	public static boolean validport(String port){
 		int i=Integer.parseInt(port);
 		if ((i>0)||(i<99999)){
@@ -123,8 +124,7 @@ public class Mainfunction {
 		}
 		return false ;
 	}
-
-
+	// method the handles error
 	public static void quit(){
 		System.exit(0);
 	}
