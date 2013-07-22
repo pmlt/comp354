@@ -43,8 +43,6 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \section{Architectural Design} % Status: To be done
 
-[Detailed version of the architecture design pattern should be presented.This section must give a high-level description of the system in terms of its modules and their respective purpose and exact interfaces.]
-
 \subsection{Architecture Diagram}
 
 \subsubsection{Logical View}
@@ -52,34 +50,60 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 The program as it is communicates in a completely different way that it previously does. Previously we had the main calling the information on a timer and sending them to the GUI which was making the program working all at the same time which was not what we wanted. The program now is separated into two subsystems; the VMS and simulator package working in parallel.
 
 \begin{figure}[h]
-\caption{Communication diagram of simulator package}
-\includegraphics[width=\linewidth]{simulator-communication-diagram.eps}
-\end{figure}
-
-\begin{figure}[h]
 \caption{Class diagram of simulator package}
 \includegraphics[width=\linewidth]{ simulator-class-diagram.eps}
 \end{figure}
 
-The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values at regular intervals to the VMS package.
+Something writen here.
 
 \begin{figure}[h]
-\caption{Communication diagram of vms package}
-\includegraphics[width=\linewidth]{vms-communication-diagram.eps}
+\caption{Communication diagram of simulator package}
+\includegraphics[width=\linewidth]{simulator-communication-diagram.eps}
 \end{figure}
+
+The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values at regular intervals to the VMS package.
 
 \begin{figure}[h]	
 \caption{Class diagram of vms package}
 \includegraphics[width=\linewidth]{vms-class-diagram.eps}
 \end{figure}
 
+Something writen here.
+
+\begin{figure}[h]
+\caption{Communication diagram of vms package}
+\includegraphics[width=\linewidth]{vms-communication-diagram.eps}
+\end{figure}
+
 The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also at the same time.
 
 \subsubsection{Development View}
 
+
+\begin{figure}[h]	
+\caption{Activity diagram}
+\includegraphics[width=\linewidth]{activity-diagram.eps}
+\end{figure}
+
 \subsection{Subsystem Interfaces Specifications}
 
-[Specification of the software interfaces between the components, i.e. specific messages (or function calls) that are exchanged. These are also often called “Module Interface Specifications”.Description of the parameters passed in these function calls in order to have a service fulfilled. Include valid and invalid ranges of values.Each subsystem interface must be presented in a separate subsection.]
+\subsubsection{Simulator Package}
+
+\begin{enumerate}
+  \item Parse command line from user: 
+		\newline "./Simulator --host 192.168.0.1 --port 1024 --input filename.vsf"
+		\newline Note: --host, --port and --input can be replaced with -h -p -i respectively.
+		\newline The order of the of the arguments must be in this order.
+  \item In the main function, the command line above will go through validation.
+  \item When all cleared: "SimulatorConfiguration.parseVSF(InputStream in)"
+		\newline which will return the config instance.
+  \item File will be closed.
+	\item "ConnectionClient.connect(String host, int port) throws IOException" will take the validated host and port from the command and create a new socket for the user.
+	\item "" Not sure how it works here.
+	\item "Simulator.start(ConnectionClient client)" will take the client instance created at step 5 and use it to start the simulator.	
+\end{enumerate}
+
+\subsubsection{VMS Package}
 
 \section{Detailed Design} % Status: To be done
 

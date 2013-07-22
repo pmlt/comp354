@@ -2,10 +2,13 @@
 \contentsline {section}{\numberline {2}Architectural Design}{1}
 \contentsline {subsection}{\numberline {2.1}Architecture Diagram}{1}
 \contentsline {subsubsection}{\numberline {2.1.1}Logical View}{1}
-\contentsline {subsection}{\numberline {2.2}Subsystem Interfaces Specifications}{1}
-\contentsline {section}{\numberline {3}Detailed Design}{3}
-\contentsline {subsection}{\numberline {3.1}Subsystems}{3}
-\contentsline {subsubsection}{\numberline {3.1.1}Detailed Design Diagram}{3}
-\contentsline {subsubsection}{\numberline {3.1.2}Unit Descriptions}{3}
+\contentsline {subsubsection}{\numberline {2.1.2}Development View}{2}
+\contentsline {subsection}{\numberline {2.2}Subsystem Interfaces Specifications}{2}
+\contentsline {subsubsection}{\numberline {2.2.1}Simulator Package}{2}
+\contentsline {subsubsection}{\numberline {2.2.2}VMS Package}{2}
+\contentsline {section}{\numberline {3}Detailed Design}{2}
+\contentsline {subsection}{\numberline {3.1}Subsystems}{2}
+\contentsline {subsubsection}{\numberline {3.1.1}Detailed Design Diagram}{2}
+\contentsline {subsubsection}{\numberline {3.1.2}Unit Descriptions}{2}
 \contentsline {section}{\numberline {4}Dynamic Design Scenarios}{3}
 \contentsline {section}{\numberline {5}Revised Cost Estimation}{3}
