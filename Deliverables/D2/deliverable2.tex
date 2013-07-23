@@ -48,64 +48,73 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \subsubsection{Logical View} % Status: Work in Progress
 
-The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator package, and the VMS package.
+The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator subsystem, and the VMS subsystem.
 
 \begin{figure}[!htb]
-\caption{Class Diagram of Simulator Package}
+\caption{Communication Diagram of the Simulator subsystem}
 \centering
-\includegraphics[scale=0.5]{diagrams/simulator-class-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/simulator-communication-diagram.eps}
 \end{figure}
 
-When the simulator is running, it only interacts with two other classes to ensure that all the configurations are properly set.
+When the program fires up this subsystem will start of and parse the arguments that are given to it. Following that it will read from the vsf file from which it will create a simulatorConfiguration instance. With the configuration created from the vsf file, it will start the simulator.  The simulator will update out of date data to the connection client class at regular intervals. From there it will interact with the updateData class and the VMS subsystem.
 
 \break
 
 \begin{figure}[!htb]
-\caption{Communication Diagram of Simulator Package}
+\caption{Class Diagram of the Simulator subsystem}
 \centering
-\includegraphics[scale=0.5]{diagrams/simulator-communication-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/simulator-class-diagram.eps}
 \end{figure}
 
-The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values to the VMS package at regular intervals.
+These are the classes involved in the configuration process of the creation of the simulator. As stated for figure 1 simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can set properly. Then from there the simulator will start the connectionClient which enable communication with the vms subsystem.
+
 
 \begin{figure}[!htb]	
-\caption{Class Diagram of VMS Package}
+\caption{Class Diagram of VMS subsystem}
 \centering
-\includegraphics[scale=0.5]{diagrams/vms-class-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/vms-class-diagram.eps}
 \end{figure}
+
+SOMETHING HERE
 
 \break
 
 \begin{figure}[!htb]
-\caption{Communication Diagram of VMS Package}
+\caption{Communication Diagram of VMS subsystem}
 \centering
-\includegraphics[scale=0.6]{diagrams/vms-communication-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/vms-communication-diagram.eps}
 \end{figure}
 
-The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also updated at the same time.
-
-\break
+When the program starts up, the client will send a JSON update via the socket it will have created to the connection server class. From that point on, it will start communicating with the updateData class for new information. If any data was updated it will notify the observers that the data has been changed, in doing so the radar monitor data will be updated. Inside the radar monitor it will search any data that requires attention (e.g. alerts). If any need attention it will notify the observers (radar gui) with the list of alerts.
 
 \subsubsection{Development View} % Status: Work in Progress
 
 \begin{figure}[!htb]
-\caption{Activity Diagram}
+\caption{Activity Diagram for the Simulator Subsystem}
 \centering
-\includegraphics[scale=0.6]{diagrams/activity-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/simulator-acitivity-diagram.eps}
 \end{figure}
 
-On the development side, the simulator package is where most of the decisions must be made for the program to continue moving forward. Once all the parsing and validation is complete, the program should update the data and then update the interface of the user at some interval.
+Most of the heavy duty is done in the simulator side. It handles multiple steps to ensure the simulator is ready to start running. Even after that it will check regularly if there is new data sent, so it will be able to create updates for the other subsystems.
 
 \break
 
+\begin{figure}[!htb]
+\caption{Activity Diagram for the Vessel Monitoring System (VMS) }
+\centering
+\includegraphics[scale=0.2]{diagrams/vms-activity-diagram.eps}
+\end{figure}
+
+The Vessel Monitoring System has the easy part. The only hard job of of the VMS subsystem is parsing the JSON from updataData and from there it will regularly check for new alerts and check if new data is sent to the gui.
+
 \subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
 
-\subsubsection{Simulator Package} % Status: Work in Progress
+\subsubsection{Simulator subsystem} % Status: Work in Progress
 
 \begin{enumerate}
   \item Parse command-line invocation from user: 
-		\newline "./Simulator --host 192.168.0.1 --port 1024 --input filename.vsf"
-		\newline Note: --host, --port and --input can be replaced with -h -p -i respectively.
+		\newline "./Simulator - -host 192.168.0.1 - -port 1024 - -input filename.vsf"
+		\newline Note: - -host, - -port and - -input can be replaced with -h -p -i respectively.
 		\newline The arguments must be entered in this order.
   \item In the main method, it will be ensured that the command-line invocation is written as it is above, otherwise the program will exit.
   \item When all cleared, "SimulatorConfiguration.parseVSF(InputStream in)" will return the configuration instance of the simulator.
@@ -114,7 +123,7 @@ On the development side, the simulator package is where most of the decisions mu
 	\item "Simulator.start(ConnectionClient client)" will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
-\subsubsection{VMS Package} % Status: Work in Progress
+\subsubsection{VMS subsystem} % Status: Work in Progress
 
 \begin{enumerate}
   \item ConnectionServer.bind(SocketAddress addr) throws IOException
