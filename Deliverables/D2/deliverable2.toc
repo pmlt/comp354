@@ -10,16 +10,16 @@
 \contentsline {subsection}{\numberline {3.1}Subsystems}{5}
 \contentsline {subsubsection}{\numberline {3.1.1}Detailed Design Diagram}{5}
 \contentsline {paragraph}{Simulator Subsystem}{5}
-\contentsline {paragraph}{Vessel Monitoring System (VMS) Subsystem}{6}
-\contentsline {subsubsection}{\numberline {3.1.2}Unit Descriptions}{6}
-\contentsline {paragraph}{Simulator Subsystem}{6}
-\contentsline {subparagraph}{Class SimulatorConfiguration}{6}
-\contentsline {subparagraph}{Class ConnectionClient}{7}
+\contentsline {paragraph}{Vessel Monitoring System (VMS) Subsystem}{5}
+\contentsline {subsubsection}{\numberline {3.1.2}Unit Descriptions}{5}
+\contentsline {paragraph}{Simulator Subsystem}{5}
+\contentsline {subparagraph}{Class SimulatorConfiguration}{5}
+\contentsline {subparagraph}{Class ConnectionClient}{6}
 \contentsline {subparagraph}{Class Simulator}{7}
 \contentsline {paragraph}{Vessel Monitoring System (VMS) Subsystem}{7}
 \contentsline {subparagraph}{Class ConnectionServer}{7}
-\contentsline {subparagraph}{Class RadarMonitor (implements ConnectionServer.Observer)}{8}
+\contentsline {subparagraph}{Class RadarMonitor (implements ConnectionServer.Observer)}{7}
 \contentsline {subparagraph}{Class RadarDisplay (implements RadarMonitor.Observer)}{8}
 \contentsline {subparagraph}{Class Vessel}{8}
-\contentsline {section}{\numberline {4}Dynamic Design Scenarios}{9}
-\contentsline {section}{\numberline {5}Revised Cost Estimation}{9}
+\contentsline {section}{\numberline {4}Dynamic Design Scenarios}{8}
+\contentsline {section}{\numberline {5}Revised Cost Estimation}{8}

@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
 
 \begin{document}
 \title{Requirements Specification Document}
@@ -8,7 +9,7 @@
 
 \maketitle
 
-\vspace*{1.5in}
+\vspace*{3.5in}
 \begin{table}[htbp]
 \caption{Team}
 \begin{center}
@@ -37,93 +38,86 @@ Christopher Mukherjee & 6291929 \\
 
 \section{Introduction} % Status: Complete
 
-This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. The requirements specifications include a detailed version of the architecture design pattern, a 4+1 Architectural View diagram as well as a description of the rationale of this design, Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
+This document will describe in detail the requirement specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. The requirements specifications include a detailed version of the architecture design pattern, a 4+1 Architectural View diagram (as well as a description of the rationale of this design), Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
 
 If a requirement appears in this document, the final Vessel Monitoring System \emph{must} conform to this requirement. Inversely, the Vessel Monitoring System is not required to conform to any other requirement that is not specified in this document.
 
-\section{Architectural Design} % Status: To be done
+\section{Architectural Design} % Status: See subsections
 
-\subsection{Architecture Diagram}
+\subsection{Architecture Diagram} % Status: Work in Progress
 
 \subsubsection{Logical View}
 
-The program as it is communicates in a completely different way that it previously does. Previously we had the main calling the information on a timer and sending them to the GUI which was making the program working all at the same time which was not what we wanted. The program now is separated into two subsystems; the VMS and simulator package working in parallel.
+The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator package, and the VMS.
 
-\begin{figure}[h]
+\begin{figure}[!htb]
 \caption{Class diagram of simulator package}
 \centering
-\includegraphics[scale=0.3]{diagrams/simulator-class-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/simulator-class-diagram.eps}
 \end{figure}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
-When the simulator is running, it only interact with two other class to ensure that all the configuration is properly set. (Figure 1)
+When the simulator is running, it only interacts with two other classes to ensure that all the configurations are properly set.
 
-\break
-
-\begin{figure}[h]
+\begin{figure}[!htb]
 \caption{Communication diagram of simulator package}
 \centering
-\includegraphics[scale=0.3]{diagrams/simulator-communication-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/simulator-communication-diagram.eps}
 \end{figure}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
-The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values at regular intervals to the VMS package.
-(Figure 2)
+The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values to the VMS package at regular intervals.
 
-\begin{figure}[h]	
-\caption{Class diagram of vms package}
+\begin{figure}[!htb]	
+\caption{Class diagram of VMS package}
 \centering
-\includegraphics[scale=0.3]{diagrams/vms-class-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/vms-class-diagram.eps}
 \end{figure}
-
-\vspace{1cm}
-
-(Figure 3)
 
 \break
 
-\begin{figure}[h]
-\caption{Communication diagram of vms package}
+\begin{figure}[!htb]
+\caption{Communication diagram of VMS package}
 \centering
-\includegraphics[scale=0.3]{diagrams/vms-communication-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/vms-communication-diagram.eps}
 \end{figure}
 
-The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also at the same time.
-(Figure 4)
+\vspace{0.5cm}
+
+The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also updated at the same time.
+
+\break
 
 \subsubsection{Development View}
 
-\begin{figure}[h]	
+\begin{figure}[!htb]	
 \caption{Activity diagram}
 \centering
-\includegraphics[scale=0.3]{diagrams/activity-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/activity-diagram.eps}
 \end{figure}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
-In the development side, the simulator package is where the most heavy lifting for the program to start moving forward. 
-But once all the parsing and validation is complete the program should update the data then update the interface of the user at some interval.
-(Figure 5)
+On the development side, the simulator package is where most of the decisions must be made for the program to continue moving forward. Once all the parsing and validation is complete, the program should update the data and then update the interface of the user at some interval.
 
 \break
 
-\subsection{Subsystem Interfaces Specifications}
+\subsection{Subsystem Interfaces Specifications} % Status: Work in Progress
 
 \subsubsection{Simulator Package}
 
 \begin{enumerate}
-  \item Parse command line from user: 
+  \item Parse command-line invocation from user: 
 		\newline "./Simulator --host 192.168.0.1 --port 1024 --input filename.vsf"
 		\newline Note: --host, --port and --input can be replaced with -h -p -i respectively.
-		\newline The order of the of the arguments must be in this order.
-  \item In the main function, it will ensure that the command line is writen like above otherwise will exit the system.
-  \item When all cleared: "SimulatorConfiguration.parseVSF(InputStream in)"
-		\newline which will return the configuration instance of the simulator.
-  \item Any files opened at the time will be closed to ensure no unessessary stream is open.
-	\item "ConnectionClient.connect(String host, int port) throws IOException" will take the validated host and port from the command and create a new socket for the user.
-	\item "Simulator.start(ConnectionClient client)" will take the client instance created at step 5 and use it to start the simulator.	
+		\newline The arguments must be entered in this order.
+  \item In the main method, it will be ensured that the command-line invocation is written as it is above, otherwise the program will exit.
+  \item When all cleared, "SimulatorConfiguration.parseVSF(InputStream in)" will return the configuration instance of the simulator.
+  \item Any files that are opened at this time will be closed to ensure no unnecessary streams are open.
+	\item "ConnectionClient.connect(String host, int port) throws IOException" will take the validated host and port from the command-line and create a new socket for the user.
+	\item "Simulator.start(ConnectionClient client)" will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
 \subsubsection{VMS Package}
@@ -133,10 +127,9 @@ But once all the parsing and validation is complete the program should update th
 	\item ConnectionServer.start() throws IOException
 \end{enumerate}
 
+\section{Detailed Design} % Status: See subsections
 
-\section{Detailed Design}
-
-\subsection{Subsystems}
+\subsection{Subsystems} % Status: Work in Progress
 
 \subsubsection{Detailed Design Diagram}
 
@@ -288,7 +281,7 @@ Functions:
 
 [Give a full dynamic design of two substantial use cases including system sequence diagrams operational contracts, and sequence diagrams. Units and subsystems depicted here must be compatible with the descriptions provided in section 2 and 3.]
 
-\section{Revised Cost Estimation} % Status: To be done
+\section{Revised Cost Estimation} % Status: Work in Progress
 
 [Provide a revised estimated cost and schedule for the project, as well as the basis for those estimates, and the points and circumstances in the project when re-estimation might occur.
 Evaluate the cost of production of each artifact, as described in the previous section, and then adding up the numbers.]
