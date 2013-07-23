@@ -51,26 +51,26 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator subsystem, and the VMS subsystem.
 
 \begin{figure}[!htb]
-\caption{Communication Diagram of the Simulator subsystem}
+\caption{Communication Diagram of the Simulator Subsystem}
 \centering
 \includegraphics[scale=0.5]{diagrams/simulator-communication-diagram.eps}
 \end{figure}
 
-When the program fires up this subsystem will start of and parse the arguments that are given to it. Following that it will read from the vsf file from which it will create a simulatorConfiguration instance. With the configuration created from the vsf file, it will start the simulator.  The simulator will update out of date data to the connection client class at regular intervals. From there it will interact with the updateData class and the VMS subsystem.
+When the program is started, this subsystem will start and parse the arguments that are given to it. Following that it will read from the vsf file from which it will create a simulatorConfiguration instance. With the configuration created from the vsf file, it will start the simulator.  The simulator will update all data to the connection client class at regular intervals. From there it will interact with the updateData class and the VMS subsystem.
 
 \break
 
 \begin{figure}[!htb]
-\caption{Class Diagram of the Simulator subsystem}
+\caption{Class Diagram of the Simulator Subsystem}
 \centering
 \includegraphics[scale=0.4]{diagrams/simulator-class-diagram.eps}
 \end{figure}
 
-These are the classes involved in the configuration process of the creation of the simulator. As stated for figure 1 simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can set properly. Then from there the simulator will start the connectionClient which enable communication with the vms subsystem.
+These are the classes involved in the configuration process of the creation of the simulator. As stated for figure 1, simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can be set properly. After this, the simulator will start the connectionClient which will enable communication with the VMS subsystem.
 
 
 \begin{figure}[!htb]	
-\caption{Class Diagram of VMS subsystem}
+\caption{Class Diagram of VMS Subsystem}
 \centering
 \includegraphics[scale=0.3]{diagrams/vms-class-diagram.eps}
 \end{figure}
@@ -80,12 +80,12 @@ SOMETHING HERE
 \break
 
 \begin{figure}[!htb]
-\caption{Communication Diagram of VMS subsystem}
+\caption{Communication Diagram of VMS Subsystem}
 \centering
 \includegraphics[scale=0.5]{diagrams/vms-communication-diagram.eps}
 \end{figure}
 
-When the program starts up, the client will send a JSON update via the socket it will have created to the connection server class. From that point on, it will start communicating with the updateData class for new information. If any data was updated it will notify the observers that the data has been changed, in doing so the radar monitor data will be updated. Inside the radar monitor it will search any data that requires attention (e.g. alerts). If any need attention it will notify the observers (radar gui) with the list of alerts.
+When the program is started, the client will send a JSON update via the socket it will have created to the connection server class. From that point on, it will start communicating with the updateData class for new information. If any data was updated it will notify the observers that the data has been changed, and in doing so, the radar monitor data will be updated. Inside the radar monitor it will search for any data that requires attention (e.g. alerts). If any need attention, it will notify the observers (radar GUI) with the list of alerts.
 
 \subsubsection{Process View} % Status: Work in Progress
 
@@ -95,6 +95,8 @@ When the program starts up, the client will send a JSON update via the socket it
 \includegraphics[scale=0.35]{diagrams/simulator-acitivity-diagram.eps}
 \end{figure}
 
+% *CHANGE THIS FIRST SENTENCE*
+*SERIOUSLY, CHANGE THIS FIRST SENTENCE*
 Most of the heavy duty is done in the simulator side. It handles multiple steps to ensure the simulator is ready to start running. Even after that it will check regularly if there is new data sent, so it will be able to create updates for the other subsystems.
 
 \break
