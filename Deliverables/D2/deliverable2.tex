@@ -44,34 +44,32 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \section{Architectural Design} % Status: See subsections
 
-\subsection{Architecture Diagram} % Status: Work in Progress
+\subsection{Architecture Diagram} % Status: See subsubsections
 
-\subsubsection{Logical View}
+\subsubsection{Logical View} % Status: Work in Progress
 
-The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator package, and the VMS.
+The program now communicates in a completely different way than it previously did. Previously, we had the main method calling the information on a timer and sending the information to the GUI. This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. The program is now separated into two subsystems which work in parallel: the simulator package, and the VMS package.
 
 \begin{figure}[!htb]
-\caption{Class diagram of simulator package}
+\caption{Class Diagram of Simulator Package}
 \centering
 \includegraphics[scale=0.5]{diagrams/simulator-class-diagram.eps}
 \end{figure}
 
-\vspace{0.5cm}
-
 When the simulator is running, it only interacts with two other classes to ensure that all the configurations are properly set.
 
+\break
+
 \begin{figure}[!htb]
-\caption{Communication diagram of simulator package}
+\caption{Communication Diagram of Simulator Package}
 \centering
 \includegraphics[scale=0.5]{diagrams/simulator-communication-diagram.eps}
 \end{figure}
 
-\vspace{0.5cm}
-
 The simulator is in charge of making sure that the configuration is properly set into the sockets. Following the validation, the simulator will send the updated values to the VMS package at regular intervals.
 
 \begin{figure}[!htb]	
-\caption{Class diagram of VMS package}
+\caption{Class Diagram of VMS Package}
 \centering
 \includegraphics[scale=0.5]{diagrams/vms-class-diagram.eps}
 \end{figure}
@@ -79,34 +77,30 @@ The simulator is in charge of making sure that the configuration is properly set
 \break
 
 \begin{figure}[!htb]
-\caption{Communication diagram of VMS package}
+\caption{Communication Diagram of VMS Package}
 \centering
-\includegraphics[scale=0.5]{diagrams/vms-communication-diagram.eps}
+\includegraphics[scale=0.6]{diagrams/vms-communication-diagram.eps}
 \end{figure}
-
-\vspace{0.5cm}
 
 The VMS package uses the observer pattern. The radar monitor and radar GUI are both observers of the server, so every time that the server is updated the monitor/GUI are also updated at the same time.
 
 \break
 
-\subsubsection{Development View}
+\subsubsection{Development View} % Status: Work in Progress
 
-\begin{figure}[!htb]	
-\caption{Activity diagram}
+\begin{figure}[!htb]
+\caption{Activity Diagram}
 \centering
-\includegraphics[scale=0.5]{diagrams/activity-diagram.eps}
+\includegraphics[scale=0.6]{diagrams/activity-diagram.eps}
 \end{figure}
-
-\vspace{0.5cm}
 
 On the development side, the simulator package is where most of the decisions must be made for the program to continue moving forward. Once all the parsing and validation is complete, the program should update the data and then update the interface of the user at some interval.
 
 \break
 
-\subsection{Subsystem Interfaces Specifications} % Status: Work in Progress
+\subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
 
-\subsubsection{Simulator Package}
+\subsubsection{Simulator Package} % Status: Work in Progress
 
 \begin{enumerate}
   \item Parse command-line invocation from user: 
@@ -120,43 +114,53 @@ On the development side, the simulator package is where most of the decisions mu
 	\item "Simulator.start(ConnectionClient client)" will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
-\subsubsection{VMS Package}
+\subsubsection{VMS Package} % Status: Work in Progress
 
 \begin{enumerate}
   \item ConnectionServer.bind(SocketAddress addr) throws IOException
 	\item ConnectionServer.start() throws IOException
 \end{enumerate}
 
+\break
+
 \section{Detailed Design} % Status: See subsections
 
-\subsection{Subsystems} % Status: Work in Progress
+\subsection{Subsystems} % Status: See subsubsections
 
-\subsubsection{Detailed Design Diagram}
+\subsubsection{Detailed Design Diagram} % Status: Work in Progress
 
-\paragraph{Simulator Subsystem}
+\paragraph{Simulator Subsystem} 
 
-\begin{figure}[h]
+\begin{figure}[!htb]
 \caption{Simulator Class Diagram}
-\includegraphics[width=\linewidth]{diagrams/simulator-class-diagram.eps}
+\centering
+\includegraphics[scale=0.6]{diagrams/simulator-class-diagram.eps}
 \end{figure}
 
 The Simulator subsystem is the part of the software that will simulate the actual physical radar and the data it sends to the Vessel Monitoring System (VMS). A .vsf file, which lists the positions and courses of given vessels, as well as various configuration parameters for the VMS, is parsed and interpreted as vessel data by the simulator, which then establishes socket communication with the VMS. The simulator then proceeds to send updated data to the VMS at set intervals, until the pre-defined total time limit expires.
 
+\break
+
 \paragraph{Vessel Monitoring System (VMS) Subsystem}
 
-\begin{figure}[h]
-\caption{Simulator Class Diagram}
-\includegraphics[width=\linewidth]{diagrams/vms-class-diagram.eps}
+\begin{figure}[!htb]
+\caption{VMS Class Diagram}
+\centering
+\includegraphics[scale=0.6]{diagrams/vms-class-diagram.eps}
 \end{figure}
 
 The Vessel Monitoring System (VMS) subsystem is the part of the software that will receive vessel data from the radar (represented by the Simulator) and interpret this data so that it can be viewed by the user via a graphical interface, and emit high- or low-risk alerts if any two vessels are within a certain range of each other. The VMS accepts socket connections from any number of Simulator instances.
 
-\subsubsection{Unit Descriptions}
+\break
+
+\subsubsection{Unit Descriptions} % Status: Work in Progress
 
 \paragraph{Simulator Subsystem}
 
 \subparagraph{Class SimulatorConfiguration}
-The main purpose of this class is to parse .vsf file and to keep track of the data obtained, as well as registering any modifications to this data.
+The main purpose of this class is to parse the .vsf file and to keep track of the data obtained, as well as registering any modifications to this data.
+
+\vspace{0.5cm}
 
 Attributes:
 \begin{enumerate}
@@ -166,6 +170,8 @@ Attributes:
     \item private int \_RadarRange
     \item List\textless Vessel\textgreater \, \_Vessels
 \end {enumerate}
+
+\vspace{0.5cm}
 
 Functions:
 \begin{enumerate}
@@ -186,11 +192,15 @@ Functions:
 \subparagraph{Class ConnectionClient}
 This class is responsible for establishing and managing the socket connection to the VMS, as well as sending all update data via this connection. The sent data is converted to JSON and encoded as Netstring.
 
+\vspace{0.5cm}
+
 Attributes:
 \begin{enumerate}
 	\item private final int TIMEOUT
     \item private Socket \_Socket
 \end {enumerate}
+
+\vspace{0.5cm}
 
 Functions:
 \begin{enumerate}
@@ -204,10 +214,14 @@ Functions:
 \subparagraph{Class Simulator}
 This class performs and determines the frequency of data updates and communications to the VMS. Once a connection to the VMS is established, the Simulator creates a thread for a set duration, during which the data from SimulatorConfiguration is updated and sent to VMS through the ConnectionClient at set intervals.
 
+\vspace{0.5cm}
+
 Attributes:
 \begin{enumerate}
 	\item SimulatorConfiguration \_Configuration
 \end {enumerate}
+
+\vspace{0.5cm}
 
 Functions:
 \begin{enumerate}
@@ -216,10 +230,14 @@ Functions:
 	\item public long getTimeElapsed(Calendar)
 \end{enumerate}
 
+\vspace{0.25cm}
+
 \paragraph{Vessel Monitoring System (VMS) Subsystem}
 
 \subparagraph{Class ConnectionServer}
 The purpose of this class is to accept connections established by one or more radars, and receive the transmitted data. In addition, observers may be registered so that they will be notified of every incoming data update.
+
+\vspace{0.5cm}
 
 Attributes:
 \begin{enumerate}
@@ -230,6 +248,8 @@ Attributes:
     \item private ServerSocketChannel \_Channel
     \item private List\textless Observer\textgreater \,\_Observers
 \end {enumerate}
+
+\vspace{0.5cm}
 
 Functions:
 \begin{enumerate}
@@ -254,6 +274,8 @@ Functions:
 \subparagraph{Class Vessel}
 This class represents a vessel and all of its relevant characteristics.
 
+\vspace{0.5cm}
+
 Attributes:
 \begin{enumerate}
 	\item private VesselType type
@@ -262,6 +284,8 @@ Attributes:
     \item private Coord coords
     \item private Calendar lastTimestamp
 \end {enumerate}
+
+\vspace{0.5cm}
 
 Functions:
 \begin{enumerate}
