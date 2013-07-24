@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
+\usepackage{indentfirst}
 
 \begin{document}
 \title{Requirements Specification Document}
@@ -326,20 +327,31 @@ Functions:
 
 \section{Revised Cost Estimation} % Status: Work in Progress
 
+\subsection{Cost Estimates}
+
 [Provide a revised estimated cost, as well as the basis for those estimates, and the points and circumstances in the project when re-estimation might occur.
 Evaluate the cost of production of each artifact, as described in the previous section, and then adding up the numbers.]
 
-\vspace{0.5cm}
+\subsection{Project Schedule}
 
-\emph{Simulator program}: x hours of coding. Due date: August 1st, 2013.
+\begin{description}
+  \item[Simulator program:] 8 hours of coding. Due date: August 1st, 2013.
+  \item[VMS program:] 8 hours of coding. Due date: August 1st, 2013.
+  \item[Graphical User Interface:] 4 hours of coding. Due date: August 7th, 2013.
+  \item[Unit test suite:] 3 hours of implementation. Due date: August 9th, 2013.
+  \item[Final integration:] 4 hours of implementation. Due date: August 12th, 2013.
+\end{description}
 
-\emph{VMS program}: x hours of coding. Due date: August 1st, 2013.
+\paragraph{Note}
+The times listed to complete the Simulator program, VMS program, and Graphical User Interface are estimations of how much time the \emph{remainder} of the coding will take, not accounting for the time that has already been spent on the programs as they currently are.
 
-\emph{Graphical User Interface}: 5 hours of coding. Due date: August 7th, 2013.
+\subsection{Risk}
 
-\emph{Unit test suite}: 12 hours of implementation. Due date: August 9th, 2013.
+	All due dates have been calculated with a buffer zone in mind to account for lack of availability depending on course load. Still, course load is difficult to predict, therefore there is a risk that some of the team members will not be able to produce their assigned artifact in time.
 
-\emph{Final integration}: 6 hours of implementation. Due date: August 12th, 2013.
+Also, writing test cases in parallel with the rest of the software may slightly delay production, although the reliability of the code will be improved.
+
+All cost estimates and due dates are subject to change.
 
 \end{document}
 
