@@ -124,7 +124,6 @@ With those in hand, it will be able to start the simulation.
 
 \begin{figure}[!htb]
 \caption{Use Case Diagram for the Simulator}
-\centering
 \includegraphics[scale=0.4]{diagrams/usecasediagram.eps}
 \end{figure}
 The Simulator in general when started, the system will parse the settings and read the .vsf file. From there it will send it to the server where the Vessel Monitoring System can retrieve it.
@@ -398,19 +397,19 @@ This scenario represents the interactions between the software and a user with n
   Post-conditions: stream to .vsf file is created.
   \item[Operation: parseVSF()] Pre-conditions: .vsf file was correctly opened, and stream was created.\newline
   Post-conditions: text from .vsf file is read by the system.
-    \item[Operation: closeFile()] Pre-conditions: .vsf file was opened.\newline
+  \item[Operation: closeFile()] Pre-conditions: .vsf file was opened.\newline
   Post-conditions: none.
-    \item[Operation: initializeData()] Pre-conditions: all data parsed from .vsf file were of correct value type and range.\newline
+  \item[Operation: initializeData()] Pre-conditions: all data parsed from .vsf file were of correct value type and range.\newline
   Post-conditions: text from .vsf file is converted to vessel and configuration data.
-    \item[Operation: verifyPassword()] Pre-conditions: user has entered a password.\newline
+  \item[Operation: verifyPassword()] Pre-conditions: user has entered a password.\newline
   Post-conditions:\newline
   - If password is recognized as valid: GUI display is created.\newline
   - If password is not recognized as valid: none.
-    \item[Operation: displayGUI()] Pre-conditions: none.\newline
+  \item[Operation: displayGUI()] Pre-conditions: none.\newline
   Post-conditions: any vessel data from the system is sent to GUI for display.
-    \item[Operation: updateData()] Pre-conditions: none.\newline
+  \item[Operation: updateData()] Pre-conditions: none.\newline
   Post-conditions: system vessel data is modified based on calculated time factor.
-    \item[Operation: refresh()] Pre-conditions: none.\newline
+  \item[Operation: refresh()] Pre-conditions: none.\newline
   Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
 \end{description}
 
@@ -432,9 +431,9 @@ Most of the contracts for this scenario are the same as for Scenario 1.
 Additional contracts:
 
 \begin{description}
-    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
+  \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
   Post-conditions: GUI display receives only vessel data allowed by the filter.
-    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
+  \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
   Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
 \end{description}
 
@@ -453,44 +452,25 @@ Here, we present in more detail the interactions between the system components, 
 \subparagraph{Operational Contracts for Simulator Subsystem:}
 
 \begin{description}
-    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
-  Post-conditions: GUI display receives only vessel data allowed by the filter.
-    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
-  Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+  \item[Operation: create() (target: SimulatorConfiguration)] Pre-conditions: none.\newline
+  Post-conditions: instance of SimulatorConfiguration is created.
+  \item[Operation: create() (target: ConnectionClient)] Pre-conditions: none.\newline
+  Post-conditions: instance of ConnectionClient is created.
+  \item[Operation: connect(String host, int port)] Pre-conditions: parameter values form a resolvable hostname + port number pair.\newline
+  Post-conditions: attempt is made to connect to the server.
+  \item[Operation: create(SimulatorConfiguration sc) (target: Simulator)] Pre-conditions: none.\newline
+  Post-conditions: instance of Simulator is created.
+  \item[Operation: start(ConnectionClient cc)] Pre-conditions: connection to server was established.\newline
+  Post-conditions: vessel data is sent to server at set intervals for a given duration, determined by configuration data.
+  \item[Operation: getUpdateData(Calendar timestamp)] Pre-conditions: parameter value represents a valid timestamp.\newline
+  Post-conditions: updated vessel data is returned.
+  \item[Operation: sendUpdate(UpdateData data)] Pre-conditions: none.\newline
+  Post-conditions: updated vessel data is sent to server.
+  \item[Operation: close()] Pre-conditions: none.\newline
+  Post-conditions: Socket is closed.
 \end{description}
 
-Operation: create() (target: SimulatorConfiguration)
-Pre-conditions: none.
-Post-conditions: instance of SimulatorConfiguration is created.
-
-Operation: create() (target: ConnectionClient)
-Pre-conditions: none.
-Post-conditions: instance of ConnectionClient is created.
-
-Operation: connect(String host, int port)
-Pre-conditions: parameter values form a resolvable hostname + port number pair.
-Post-conditions: attempt is made to connect to the server.
-
-Operation: create(SimulatorConfiguration sc) (target: Simulator)
-Pre-conditions: none.
-Post-conditions: instance of Simulator is created.
-
-Operation: start(ConnectionClient cc)
-Pre-conditions: connection to server was established.
-Post-conditions: vessel data is sent to server at set intervals for a given duration, determined by configuration data.
-
-Operation: getUpdateData(Calendar timestamp)
-Pre-conditions: parameter value represents a valid timestamp.
-Post-conditions: updated vessel data is returned.
-
-Operation: sendUpdate(UpdateData data)
-Pre-conditions: none.
-Post-conditions: updated vessel data is sent to server.
-
-Operation: close()
-Pre-conditions: none.
-Post-conditions: Socket is closed.
-
+\break
 \paragraph{Vessel Monitoring System (VMS) Subsystem}
 
 \begin{figure}[!htb]
@@ -501,51 +481,32 @@ Post-conditions: Socket is closed.
 
 \subparagraph{Operational Contracts for VMS Subsystem:}
 
-Operation: create() (target: ConnectionServer)
-Pre-conditions: none.
-Post-conditions: instance of ConnectionServer is created.
-
-Operation: create() (target: RadarMonitor)
-Pre-conditions: none.
-Post-conditions: instance of RadarMonitor is created.
-
-Operation: register(RadarMonitor rm)
-Pre-conditions: none.
-Post-conditions: passed RadarMonitor is registered as an observer to ConnectionClient.
-
-Operation: start()
-Pre-conditions: Selector is bound.
-Post-conditions: incoming client connections can be accepted.
-
-Operation: create() (target: Login)
-Pre-conditions: none.
-Post-conditions: instance of Login is created.
-
-Operation: create() (target: RadarDisplay)
-Pre-conditions: none.
-Post-conditions: instance of RadarDisplay is created.
-
-Operation: register(RadarDisplay rd)
-Pre-conditions: none.
-Post-conditions: passed RadarDisplay is registered as an observer to RadarMonitor.
-
-Operation: \_read(SocketChannel sc)
-Pre-conditions:
-- passed SocketChannel is open and connected.
-- data from client was formatted and encoded correctly.
-Post-conditions: data from client is interpreted as vessel data, and all observers are notified.
-
-Operation: update(UpdateData data)
-Pre-conditions: none.
-Post-conditions: data from client replaces current vessel data.
-
-Operation: refresh()
-Pre-conditions: none.
-Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
-
-Operation: close()
-Pre-conditions: none.
-Post-conditions: SocketChannel and Selector are closed.
+\begin{description}
+  \item[Operation: create() (target: ConnectionServer)] Pre-conditions: none.\newline
+  Post-conditions: instance of ConnectionServer is created.
+  \item[Operation: create() (target: RadarMonitor)] Pre-conditions: none.\newline
+  Post-conditions: instance of RadarMonitor is created.
+  \item[Operation: register(RadarMonitor rm)] Pre-conditions: none.\newline
+  Post-conditions: passed RadarMonitor is registered as an observer to ConnectionClient.
+  \item[Operation: start()] Pre-conditions: Selector is bound.\newline
+  Post-conditions: incoming client connections can be accepted.
+  \item[Operation: create() (target: Login)] Pre-conditions: none.\newline
+  Post-conditions: instance of Login is created.
+  \item[Operation: create() (target: RadarDisplay)] Pre-conditions: none.\newline
+  Post-conditions: instance of RadarDisplay is created.
+  \item[Operation: register(RadarDisplay rd)] Pre-conditions: none.\newline
+  Post-conditions: passed RadarDisplay is registered as an observer to RadarMonitor.
+  \item[Operation: read(SocketChannel sc)] Pre-conditions:
+  - passed SocketChannel is open and connected.\newline
+  - data from client was formatted and encoded correctly.\newline
+  Post-conditions: data from client is interpreted as vessel data, and all observers are notified.
+  \item[Operation: update(UpdateData data)] Pre-conditions: none.\newline
+ Post-conditions: data from client replaces current vessel data.
+  \item[Operation: refresh()] Pre-conditions: none.\newline
+  Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
+  \item[Operation: close()] Pre-conditions: none.\newline
+  Post-conditions: SocketChannel and Selector are closed.
+\end{description}
 
 \section{Revised Cost Estimation} % Status: Complete
 
@@ -583,6 +544,7 @@ Also, writing test cases in parallel with the rest of the software may slightly 
 
 All cost estimates and due dates are subject to change.
 
+\break
 \listoffigures
 
 \end{document}
