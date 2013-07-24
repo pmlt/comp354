@@ -167,11 +167,18 @@ Then with that data the VMS checks if any alerts are needed to be outputed to th
 	\item \verb|"Simulator.start(ConnectionClient client)"| will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
-\subsubsection{VMS subsystem} % Status: Work in Progress
+\subsubsection{VMS subsystem} % Status: Complete
 
 \begin{enumerate}
-  \item \verb |"ConnectionServer.bind(SocketAddress addr)"|
-	\item \verb |"ConnectionServer.start()"|
+	\item	Create a ConnectionServer instance
+	\item Create a RadarMonitor instance
+	\item Register RadarMonitor as an observer of ConnectionServer using:
+		\newline \verb|"ConnectionServer.registerObserver(Observer o)"|
+	\item Run \verb|"ConnectionServer.start()"|
+	\item  Create vms.gui.Login instance, show the window
+	\item After user has logged in, create vms.gui.RadarDisplay instance
+	\item Register RadarDisplay instance as observer of RadarMonitor
+	\item Show RadarDisplay window
 \end{enumerate}
 
 \break
