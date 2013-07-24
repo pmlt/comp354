@@ -46,7 +46,10 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 \section{Architectural Design} % Status: See subsections
 
 \subsection{Architecture Diagram} % Status: See subsubsections
-
+Previously in the program, we had the main method calling the information on a timer and sending the information to the GUI. 
+This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. 
+We reworked the architecture of the program and now it is separated into several subsystems.
+All of these subsystems now work independently from each other.
 \subsubsection{Logical View} % Status: Complete
 \begin{figure}[!htb]
 \caption{Communication Diagram of the Simulator Subsystem}
@@ -61,11 +64,11 @@ When the program is started, this subsystem will start and parse the arguments t
 \centering
 \includegraphics[scale=0.4]{diagrams/simulator-class-diagram.eps}
 \end{figure}
-These are the classes involved in the configuration process of the creation of the simulator. As stated for figure 1, simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can be set properly. After this, the simulator will start the connectionClient which will enable communication with the VMS subsystem.
+These are the classes involved in the configuration process of the creation of the simulator. As stated for Figure 1, simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can be set properly. After this, the simulator will start the connectionClient which will enable communication with the VMS subsystem.
 
 
 \begin{figure}[!htb]	
-\caption{Class Diagram of VMS Subsystem}
+\caption{Class Diagram of the Vessel Monitoring System (VMS) Subsystem}
 \centering
 \includegraphics[scale=0.3]{diagrams/vms-class-diagram.eps}
 \end{figure}
@@ -74,7 +77,7 @@ The RadarMonitor.Observer is updated by the RadarMonitor from there it will get 
 
 \break
 \begin{figure}[!htb]
-\caption{Communication Diagram of VMS Subsystem}
+\caption{Communication Diagram of the Vessel Monitoring System (VMS) Subsystem}
 \centering
 \includegraphics[scale=0.45]{diagrams/vms-communication-diagram.eps}
 \end{figure}
@@ -106,14 +109,36 @@ Then step two happens, the connection server will request data from update data.
 Then when the radar monitor receives the new data it will check if any alert were triggered and update the graphical user interface.
 
 \subsubsection{Developement View} % Status: Work in Progress
-Diagram not drawn yet.
+\begin{figure}[!htb]
+\caption{Component Diagram of the Vessel Monitoring System (VMS)}
+\centering
+\includegraphics[scale=0.4]{diagrams/vms-component-diagram.eps}
+\end{figure}
+In the Vessel Monitoring System, the RadarMonitor is the core of this subsystem.
+The information of the server is recorded in RadarMonitor.
+It also updates the information that is sent to the user interface.
+
+\begin{figure}[!htb]
+\caption{Component Diagram of the Simulator}
+\centering
+\includegraphics[scale=0.4]{diagrams/simulator-component-diagram.eps}
+\end{figure}
+In the Simulator subsystem, the simulator itself is the core.
+From the simulator, it goes ahead and create an instance of SimulatorConfiguration and ConnectionClient.
+With those in hand, it will be able to start the simulation.
 
 \break
 \subsubsection{Scenarios} % Status: Work in Progress
 \begin{figure}[!htb]
-\caption{Use Case Diagram}
+\caption{Use Case Diagram for the Vessel Monitoring System (VMS)}
 \centering
 \includegraphics[scale=0.4]{diagrams/vmsdiagram.eps}
+\end{figure}
+
+\begin{figure}[!htb]
+\caption{Use Case Diagram for the Simulator}
+\centering
+\includegraphics[scale=0.4]{diagrams/usecasediagram.eps}
 \end{figure}
 
 \subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
@@ -128,10 +153,10 @@ Diagram not drawn yet.
 		Note: \verb|--host|, \verb|--port| and \verb|--input| can be replaced with \verb|-h|, \verb|-p|, \verb|-i| respectively.
 		\newline The arguments must be entered in this order.
   \item In the main method, it will be ensured that the command-line invocation is written as it is above, otherwise the program will exit.
-  \item When all cleared, "SimulatorConfiguration.parseVSF(InputStream in)" will return the configuration instance of the simulator.
+  \item When all cleared, \verb|"SimulatorConfiguration.parseVSF(InputStream in)"| will return the configuration instance of the simulator.
   \item Any files that are opened at this time will be closed to ensure no unnecessary streams are open.
-	\item "ConnectionClient.connect(String host, int port) throws IOException" will take the validated host and port from the command-line and create a new socket for the user.
-	\item "Simulator.start(ConnectionClient client)" will take the client instance created in step 5 and use it to start the simulator.	
+	\item \verb|"ConnectionClient.connect(String host, int port)| throws IOException" will take the validated host and port from the command-line and create a new socket for the user.
+	\item \verb|"Simulator.start(ConnectionClient client)"| will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
 \subsubsection{VMS subsystem} % Status: Work in Progress
