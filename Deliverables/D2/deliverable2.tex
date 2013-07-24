@@ -187,25 +187,21 @@ In this section, we will describe in detail each subsystem of the software.
 \begin{figure}[!htb]
 \caption{Simulator Class Diagram}
 \centering
-\includegraphics[scale=0.6]{diagrams/simulator-class-diagram.eps}
+\includegraphics[scale=0.7]{diagrams/simulator-class-diagram.eps}
 \end{figure}
-
 The Simulator subsystem is the part of the software that will simulate the actual physical radar and the data it sends to the Vessel Monitoring System (VMS). A .vsf file, which lists the positions and courses of given vessels, as well as various configuration parameters for the VMS, is parsed and interpreted as vessel data by the simulator, which then establishes socket communication with the VMS. The simulator then proceeds to send updated data to the VMS at set intervals, until the pre-defined total time limit expires.
 
 \break
-
 \paragraph{Vessel Monitoring System (VMS) Subsystem}
 
 \begin{figure}[!htb]
 \caption{VMS Class Diagram}
 \centering
-\includegraphics[scale=0.6]{diagrams/vms-class-diagram.eps}
+\includegraphics[scale=0.7]{diagrams/vms-class-diagram.eps}
 \end{figure}
-
 The Vessel Monitoring System (VMS) subsystem is the part of the software that will receive vessel data from the radar (represented by the Simulator) and interpret this data so that it can be viewed by the user via a graphical interface, and emit high- or low-risk alerts if any two vessels are within a certain range of each other. The VMS accepts socket connections from any number of Simulator instances.
 
 \break
-
 \subsubsection{Unit Descriptions} % Status: Complete
 
 \paragraph{Simulator Subsystem}
@@ -214,7 +210,6 @@ The Vessel Monitoring System (VMS) subsystem is the part of the software that wi
 The main purpose of this class is to parse the .vsf file and to keep track of the data obtained, as well as registering any modifications to this data.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
     \item private int \_StartDelay
@@ -225,7 +220,6 @@ Attributes:
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item private SimulatorConfiguration()
@@ -242,11 +236,11 @@ Functions:
 	\item public static SimulatorConfiguration parseVSF(InputStream)
 \end{enumerate}
 
+\break
 \subparagraph{Class ConnectionClient}
 This class is responsible for establishing and managing the socket connection to the VMS, as well as sending all update data via this connection. The sent data is converted to JSON and encoded as Netstring.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
 	\item private final int TIMEOUT
@@ -254,7 +248,6 @@ Attributes:
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public ConnectionClient()
@@ -268,14 +261,12 @@ Functions:
 This class performs and determines the frequency of data updates and communications to the VMS. Once a connection to the VMS is established, the Simulator creates a thread for a set duration, during which the data from SimulatorConfiguration is updated and sent to VMS through the ConnectionClient at set intervals.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
 	\item SimulatorConfiguration \_Configuration
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public Simulator(SimulatorConfiguration)
@@ -283,15 +274,12 @@ Functions:
 	\item public long getTimeElapsed(Calendar)
 \end{enumerate}
 
-\vspace{0.25cm}
-
 \paragraph{Vessel Monitoring System (VMS) Subsystem}
 
 \subparagraph{Class ConnectionServer}
 The purpose of this class is to accept connections established by one or more radars, and receive the transmitted data. In addition, observers may be registered so that they will be notified of every incoming data update.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
 	\item private static long DEFAULT\_REFRESH
@@ -303,7 +291,6 @@ Attributes:
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public ConnectionServer()
@@ -324,7 +311,6 @@ Functions:
 This class stores and updates any vessel data received by the ConnectionServer.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
 	\item private Coord lowerRange
@@ -334,7 +320,6 @@ Attributes:
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public void setRange(Coord, Coord)
@@ -346,15 +331,14 @@ Functions:
 	\item public void refresh(Calendar)
 \end{enumerate}
 
+\break
 \subparagraph{Class RadarDisplay (implements RadarMonitor.Observer)}
 This class displays the data maintained by the RadarMonitor, using GUI components.
 
 \vspace{0.5cm}
-
 Attributes: (none)
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public RadarDisplay()
@@ -365,7 +349,6 @@ Functions:
 This class represents a vessel and all of its relevant characteristics.
 
 \vspace{0.5cm}
-
 Attributes:
 \begin{enumerate}
 	\item private VesselType type
@@ -376,7 +359,6 @@ Attributes:
 \end {enumerate}
 
 \vspace{0.5cm}
-
 Functions:
 \begin{enumerate}
 	\item public Vessel(String, VesselType)
@@ -390,9 +372,10 @@ Functions:
 	\item public UpdateData getUpdateData(Calendar)
 \end{enumerate}
 
+\break
 \section{Dynamic Design Scenarios} % Status: Complete
 
-In this section, we introduce two possible scenarios (use cases) which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
+In this section, we introduce two possible scenarios (use cases), which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
 
 \subsection{Use Case Scenarios}
 
