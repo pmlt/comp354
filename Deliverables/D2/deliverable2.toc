@@ -26,6 +26,7 @@
 \contentsline {section}{\numberline {4}Dynamic Design Scenarios}{11}
 \contentsline {section}{\numberline {5}Revised Cost Estimation}{12}
 \contentsline {subsection}{\numberline {5.1}Cost Estimates}{12}
+\contentsline {paragraph}{Basis}{12}
 \contentsline {subsection}{\numberline {5.2}Project Schedule}{12}
 \contentsline {paragraph}{Note}{12}
 \contentsline {subsection}{\numberline {5.3}Risk}{12}
