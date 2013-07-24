@@ -445,8 +445,6 @@ Additional contracts:
 
 Here, we present in more detail the interactions between the system components, which were not shown in the above use case scenarios. We have now abstracted any interactions with external users.
 
-\paragraph{Simulator Subsystem}
-
 \begin{figure}[!htb]
 \caption{Sequence Diagram - Simulator}
 \centering
@@ -475,7 +473,6 @@ Here, we present in more detail the interactions between the system components, 
 \end{description}
 
 \break
-\paragraph{Vessel Monitoring System (VMS) Subsystem}
 
 \begin{figure}[!htb]
 \caption{Sequence Diagram - VMS}
@@ -485,6 +482,7 @@ Here, we present in more detail the interactions between the system components, 
 
 \subparagraph{Operational Contracts for VMS Subsystem:}
 
+\break
 \begin{description}
   \item[Operation: create() (target: ConnectionServer)] Pre-conditions: none.\newline
   Post-conditions: instance of ConnectionServer is created.
@@ -540,7 +538,7 @@ The times listed to complete the Simulator program, VMS program, and Graphical U
   \item[Unit test suite:] \$200, cost to write test cases and perform testing.
   \item[Final integration:] \$80
   \item[Buffer:] \$160
-  \item[Total Cost:] \$1245
+  \item[Total Cost:] \$840
 \end{description}
 
 \paragraph{Basis} Costs have been calculated based on the amount of man hours spent working on project (at a normal approximate labor cost of \$15 an hour). There was no cost associated to tools, because they were provided by the University. 
