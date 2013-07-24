@@ -4,8 +4,9 @@
 \contentsline {subsubsection}{\numberline {2.1.1}Logical View}{1}
 \contentsline {subsubsection}{\numberline {2.1.2}Process View}{3}
 \contentsline {subsubsection}{\numberline {2.1.3}Developement View}{4}
-\contentsline {subsection}{\numberline {2.2}Subsystem Interfaces Specifications}{4}
-\contentsline {subsubsection}{\numberline {2.2.1}Simulator subsystem}{4}
+\contentsline {subsubsection}{\numberline {2.1.4}Scenarios}{5}
+\contentsline {subsection}{\numberline {2.2}Subsystem Interfaces Specifications}{5}
+\contentsline {subsubsection}{\numberline {2.2.1}Simulator subsystem}{5}
 \contentsline {subsubsection}{\numberline {2.2.2}VMS subsystem}{5}
 \contentsline {section}{\numberline {3}Detailed Design}{6}
 \contentsline {subsection}{\numberline {3.1}Subsystems}{6}

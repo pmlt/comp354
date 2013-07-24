@@ -46,7 +46,7 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \subsection{Architecture Diagram} % Status: See subsubsections
 
-\subsubsection{Logical View} % Status: Work in Progress
+\subsubsection{Logical View} % Status: Complete
 \begin{figure}[!htb]
 \caption{Communication Diagram of the Simulator Subsystem}
 \centering
@@ -79,7 +79,7 @@ The RadarMonitor.Observer is updated by the RadarMonitor from there it will get 
 \end{figure}
 When the program is started, the client will send a JSON update via the socket it will have created to the connection server class. From that point on, it will start communicating with the updateData class for new information. If any data was updated it will notify the observers that the data has been changed, and in doing so, the radar monitor data will be updated. Inside the radar monitor it will search for any data that requires attention (e.g. alerts). If any need attention, it will notify the observers (RadarGUI) with the list of alerts.
 
-\subsubsection{Process View} % Status: Work in Progress
+\subsubsection{Process View} % Status: Complete
 
 \begin{figure}[!htb]
 \caption{Activity Diagram for the Simulator Subsystem}
@@ -96,7 +96,7 @@ Connection client will serialize the data to update data and will keep looping a
 \begin{figure}[!htb]
 \caption{Activity Diagram for the Vessel Monitoring System (VMS) }
 \centering
-\includegraphics[scale=0.4]{diagrams/vms-activity-diagram.eps}
+\includegraphics[scale=0.3]{diagrams/vms-activity-diagram.eps}
 \end{figure}
 The Vessel Monitoring System has two main functionality: connecting to server and updating the graphical user interface with the data.
 The first step is to connect to then server, in this step the user will be connected via socket to the server.
@@ -107,9 +107,17 @@ Then when the radar monitor receives the new data it will check if any alert wer
 \subsubsection{Developement View} % Status: Work in Progress
 Diagram not drawn yet.
 
+\break
+\subsubsection{Scenarios} % Status: Work in Progress
+\begin{figure}[!htb]
+\caption{Use Case Diagram}
+\centering
+\includegraphics[scale=0.4]{diagrams/vmsdiagram.eps}
+\end{figure}
+
 \subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
 
-\subsubsection{Simulator subsystem} % Status: Work in Progress
+\subsubsection{Simulator subsystem} % Status: Complete
 
 \begin{enumerate}
   \item Parse command-line invocation from user: 
