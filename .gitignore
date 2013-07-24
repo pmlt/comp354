@@ -9,7 +9,11 @@ src/bin
 *.log
 *.aux
 *.pdf
-*.synctext.gz
+*.synctex.gz
+*.toc
+*.ps
+*.blg
+*.bbl
 
 # OS-specific junk #
 .DS_Store
