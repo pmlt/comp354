@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>450</x>
+      <y>63</y>
+      <w>44</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>27;27;27;135</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>486</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+displayGUI()</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>63</y>
+      <w>44</w>
+      <h>674</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>27;27;27;657</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>513</y>
+      <w>135</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+updateData()</panel_attributes>
+    <additional_attributes>27;63;81;63;81;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>117</x>
+      <y>306</y>
+      <w>261</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>alt
+--
+ 
+if password is valid
+ 
+
+ 
+-.
+else 
+ 
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>72</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+openFile()</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>126</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+closeFile()</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>225</y>
+      <w>148</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+verifyPassword()</panel_attributes>
+    <additional_attributes>27;63;81;63;81;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>99</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+parseVSF()</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>567</y>
+      <w>129</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+refresh()</panel_attributes>
+    <additional_attributes>27;63;81;63;81;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>441</x>
+      <y>0</y>
+      <w>72</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Data (.vsf)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>279</x>
+      <y>45</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>:System</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>333</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+login user</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>198</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+login</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>648</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+logout</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>54</x>
+      <y>207</y>
+      <w>134</w>
+      <h>242</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>117;27;27;27;27;225;117;225</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>54</y>
+      <w>44</w>
+      <h>683</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>27;27;27;666</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>297</x>
+      <y>162</y>
+      <w>145</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+initializeData()</panel_attributes>
+    <additional_attributes>27;63;81;63;81;27;27;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>144</x>
+      <y>387</y>
+      <w>197</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=-
+access denied</panel_attributes>
+    <additional_attributes>27;45;180;45</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>117</x>
+      <y>486</y>
+      <w>306</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>loop
+--
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+timeElapsed == totalTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>135</x>
+      <y>0</y>
+      <w>72</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>User</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
