@@ -452,6 +452,13 @@ Here, we present in more detail the interactions between the system components, 
 
 \subparagraph{Operational Contracts for Simulator Subsystem:}
 
+\begin{description}
+    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
+  Post-conditions: GUI display receives only vessel data allowed by the filter.
+    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
+  Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+\end{description}
+
 Operation: create() (target: SimulatorConfiguration)
 Pre-conditions: none.
 Post-conditions: instance of SimulatorConfiguration is created.
