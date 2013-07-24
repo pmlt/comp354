@@ -47,16 +47,16 @@ If a requirement appears in this document, the final Vessel Monitoring System \e
 
 \subsection{Architecture Diagram} % Status: See subsubsections
 Previously in the program, we had the main method calling the information on a timer and sending the information to the GUI. 
-This approach caused the entire system (including all subsystems) to work at the same time, which was not what we wanted. 
+This approach caused the entire system (including all subsystems) to execute synchronously, making the VMS dependent on the implementation details of the vessel simulator.
 We reworked the architecture of the program and now it is separated into several subsystems.
-All of these subsystems now work independently from each other.
+All of these subsystems now work and involve independently from each other.
 \subsubsection{Logical View} % Status: Complete
 \begin{figure}[!htb]
 \caption{Communication Diagram of the Simulator Subsystem}
 \centering
 \includegraphics[scale=0.5]{diagrams/simulator-communication-diagram.eps}
 \end{figure}
-When the program is started, this subsystem will start and parse the arguments that are given to it. Following that it will read from the vsf file from which it will create a simulatorConfiguration instance. With the configuration created from the vsf file, it will start the simulator.  The simulator will update all data to the connection client class at regular intervals. From there it will interact with the updateData class and the VMS subsystem.
+When the program is started, this subsystem will start and parse the arguments that are given to it. Following that it will read from the vsf file from which it will create a simulatorConfiguration instance. With the configuration created from the vsf file, it will start the simulator. At regular intervals, the simulator will generate an UpdateData from the VSF information and send it to the VMS server using the ConnectionClient class.
 
 \break
 \begin{figure}[!htb]
@@ -64,7 +64,7 @@ When the program is started, this subsystem will start and parse the arguments t
 \centering
 \includegraphics[scale=0.4]{diagrams/simulator-class-diagram.eps}
 \end{figure}
-These are the classes involved in the configuration process of the creation of the simulator. As stated for Figure 1, simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration can be set properly. After this, the simulator will start the connectionClient which will enable communication with the VMS subsystem.
+These are the classes involved in the configuration process of the creation of the simulator. As stated for Figure 1, simulatorConfiguration class will take on a vsf file for it to parse, with that it will ensure that the configuration is valid. The ConnectionClient abstracts away the details of sending an UpdateData over the network to the VMS. The Simulator aggregates these two classes in order to send UpdateData instances to the VMS at regular intervals.
 
 
 \begin{figure}[!htb]	
@@ -72,8 +72,9 @@ These are the classes involved in the configuration process of the creation of t
 \centering
 \includegraphics[scale=0.3]{diagrams/vms-class-diagram.eps}
 \end{figure}
-These are the classes involved to update the data for the graphical interface. The RadarGUI class is where the user can see the output and is updated through the RadarMonitor.Observer.
-The RadarMonitor.Observer is updated by the RadarMonitor from there it will get the data from ConnectionServer.Observer.
+These are the classes involved to update the data for the graphical interface. The RadarGUI class is where the user can see the output and is updated by a notification from RadarMonitor.
+The RadarMonitor keeps track of the state of vessels within its range. It issues alerts to its observers whenever they occur. It receives UpdateData from clients via notifications from the ConnectionServer class.
+The ConnectionServer class abstracts away the implementation details of receiving an UpdateData from a client over the network; it does not care whether the client is a Simulator program, or a real vessel (both use the same network protocol and data format).
 
 \break
 \begin{figure}[!htb]
@@ -81,7 +82,7 @@ The RadarMonitor.Observer is updated by the RadarMonitor from there it will get 
 \centering
 \includegraphics[scale=0.45]{diagrams/vms-communication-diagram.eps}
 \end{figure}
-When the program is started, the client will send a JSON update via the socket it will have created to the connection server class. From that point on, it will start communicating with the updateData class for new information. If any data was updated it will notify the observers that the data has been changed, and in doing so, the radar monitor data will be updated. Inside the radar monitor it will search for any data that requires attention (e.g. alerts). If any need attention, it will notify the observers (RadarGUI) with the list of alerts.
+When the program is started, the ConnectionServer instance will bind to a specific address and listen for JSON updates from any connected clients. When an UpdateData is received and parsed successfully, it will notify its observers that the data has been changed. The main observer of ConnectionServer is the RadarMonitor instance. Inside the radar monitor it will search for any data that requires attention (e.g. alerts). If any need attention, it will notify the observers (RadarGUI) with the list of alerts, and they will be displayed to the user.
 
 \subsubsection{Process View} % Status: Complete
 
@@ -155,7 +156,7 @@ With those in hand, it will be able to start the simulation.
   \item In the main method, it will be ensured that the command-line invocation is written as it is above, otherwise the program will exit.
   \item When all cleared, \verb|"SimulatorConfiguration.parseVSF(InputStream in)"| will return the configuration instance of the simulator.
   \item Any files that are opened at this time will be closed to ensure no unnecessary streams are open.
-	\item \verb|"ConnectionClient.connect(String host, int port)| throws IOException" will take the validated host and port from the command-line and create a new socket for the user.
+	\item \verb|"ConnectionClient.connect(String host, int port)|" will take the validated host and port from the command-line and create a new socket for the user.
 	\item \verb|"Simulator.start(ConnectionClient client)"| will take the client instance created in step 5 and use it to start the simulator.	
 \end{enumerate}
 
