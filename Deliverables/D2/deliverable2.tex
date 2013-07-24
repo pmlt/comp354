@@ -372,11 +372,11 @@ Functions:
 	\item public UpdateData getUpdateData(Calendar)
 \end{enumerate}
 
-\break
 \section{Dynamic Design Scenarios} % Status: Complete
 
 In this section, we introduce two possible scenarios (use cases), which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
 
+\break
 \subsection{Use Case Scenarios}
 
 Here, we present the interactions between the software and external users.
@@ -393,46 +393,34 @@ This scenario represents the interactions between the software and a user with n
 
 \subparagraph{Operational Contracts for Scenario 1:}
 
-Operation: openFile()
-Pre-conditions: valid file name and path were provided.
-Post-conditions: stream to .vsf file is created.
+\begin{description}
+  \item[Operation: openFile()] Pre-conditions: valid file name and path were provided.\newline
+  Post-conditions: stream to .vsf file is created.
+  \item[Operation: parseVSF()] Pre-conditions: .vsf file was correctly opened, and stream was created.\newline
+  Post-conditions: text from .vsf file is read by the system.
+    \item[Operation: closeFile()] Pre-conditions: .vsf file was opened.\newline
+  Post-conditions: none.
+    \item[Operation: initializeData()] Pre-conditions: all data parsed from .vsf file were of correct value type and range.\newline
+  Post-conditions: text from .vsf file is converted to vessel and configuration data.
+    \item[Operation: verifyPassword()] Pre-conditions: user has entered a password.\newline
+  Post-conditions:\newline
+  - If password is recognized as valid: GUI display is created.\newline
+  - If password is not recognized as valid: none.
+    \item[Operation: displayGUI()] Pre-conditions: none.\newline
+  Post-conditions: any vessel data from the system is sent to GUI for display.
+    \item[Operation: updateData()] Pre-conditions: none.\newline
+  Post-conditions: system vessel data is modified based on calculated time factor.
+    \item[Operation: refresh()] Pre-conditions: none.\newline
+  Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
+\end{description}
 
-Operation: parseVSF()
-Pre-conditions: .vsf file was correctly opened, and stream was created.
-Post-conditions: text from .vsf file is read by the system.
-
-Operation: closeFile()
-Pre-conditions: .vsf file was opened.
-Post-conditions: none.
-
-Operation: initializeData()
-Pre-conditions: all data parsed from .vsf file were of correct value type and range.
-Post-conditions: text from .vsf file is converted to vessel and configuration data.
-
-Operation: verifyPassword()
-Pre-conditions: user has entered a password.
-Post-conditions:
-- If password is recognized as valid: GUI display is created.
-- If password is not recognized as valid: none.
-
-Operation: displayGUI()
-Pre-conditions: none.
-Post-conditions: any vessel data from the system is sent to GUI for display.
-
-Operation: updateData()
-Pre-conditions: none.
-Post-conditions: system vessel data is modified based on calculated time factor.
-
-Operation: refresh()
-Pre-conditions: none.
-Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
-
+\break
 \paragraph{Scenario 2: Administrator}
 
 \begin{figure}[!htb]
 \caption{Sequence Diagram - Administrator}
 \centering
-\includegraphics[scale=0.6]{diagrams/admin-sequence-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/admin-sequence-diagram.eps}
 \end{figure}
 
 This scenario represents the interactions between the software and a user with full access rights ("Administrator").
@@ -443,13 +431,12 @@ Most of the contracts for this scenario are the same as for Scenario 1.
 
 Additional contracts:
 
-Operation: filterDisplayData()
-Pre-conditions: none.
-Post-conditions: GUI display receives only vessel data allowed by the filter.
-
-Operation: sortDisplayData()
-Pre-conditions: none.
-Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+\begin{description}
+    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
+  Post-conditions: GUI display receives only vessel data allowed by the filter.
+    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
+  Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+\end{description}
 
 \subsection{Component Interactions}
 
