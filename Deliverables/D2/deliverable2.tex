@@ -168,11 +168,13 @@ With those in hand, it will be able to start the simulation.
 
 \break
 
-\section{Detailed Design} % Status: See subsections
+\section{Detailed Design} % Status: Complete
 
-\subsection{Subsystems} % Status: See subsubsections
+In this section, we will describe in detail each subsystem of the software.
 
-\subsubsection{Detailed Design Diagram} % Status: Work in Progress
+\subsection{Subsystems} % Status: Complete
+
+\subsubsection{Detailed Design Diagram} % Status: Complete
 
 \paragraph{Simulator Subsystem} 
 
@@ -198,7 +200,7 @@ The Vessel Monitoring System (VMS) subsystem is the part of the software that wi
 
 \break
 
-\subsubsection{Unit Descriptions} % Status: Work in Progress
+\subsubsection{Unit Descriptions} % Status: Complete
 
 \paragraph{Simulator Subsystem}
 
@@ -312,9 +314,46 @@ Functions:
 	\item public static SimulatorConfiguration parseVSF(InputStream)
 \end{enumerate}
 
-\subparagraph{Class RadarMonitor (implements ConnectionServer.Observer)} % Status: To be done
+\subparagraph{Class RadarMonitor (implements ConnectionServer.Observer)}
+This class stores and updates any vessel data received by the ConnectionServer.
 
-\subparagraph{Class RadarDisplay (implements RadarMonitor.Observer)} % Status: To be done
+\vspace{0.5cm}
+
+Attributes:
+\begin{enumerate}
+	\item private Coord lowerRange
+    \item private Coord upperRange
+    \item private ArrayList\textless Vessel\textgreater \,\_Vessels
+    \item private List\textless Observer\textgreater \,\_Observers
+\end {enumerate}
+
+\vspace{0.5cm}
+
+Functions:
+\begin{enumerate}
+	\item public void setRange(Coord, Coord)
+	\item public int getVesselCount()
+	\item public List\textless Vessel\textgreater \,getVessels()
+	\item public void registerObserver(Observer)
+	\item public void unregisterObserver(Observer)
+	\item public void update(UpdateData)
+	\item public void refresh(Calendar)
+\end{enumerate}
+
+\subparagraph{Class RadarDisplay (implements RadarMonitor.Observer)}
+This class displays the data maintained by the RadarMonitor, using GUI components.
+
+\vspace{0.5cm}
+
+Attributes: (none)
+
+\vspace{0.5cm}
+
+Functions:
+\begin{enumerate}
+	\item public RadarDisplay()
+	\item public void refresh(List\textless Alert\textgreater \,)
+\end{enumerate}
 
 \subparagraph{Class Vessel}
 This class represents a vessel and all of its relevant characteristics.
@@ -345,10 +384,185 @@ Functions:
 	\item public UpdateData getUpdateData(Calendar)
 \end{enumerate}
 
+\section{Dynamic Design Scenarios} % Status: Complete
 
-\section{Dynamic Design Scenarios} % Status: To be done
+In this section, we introduce two possible scenarios (use cases) which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
 
-[Give a full dynamic design of two substantial use cases including system sequence diagrams operational contracts, and sequence diagrams. Units and subsystems depicted here must be compatible with the descriptions provided in section 2 and 3.]
+\subsection{Use Case Scenarios}
+
+Here, we present the interactions between the software and external users.
+
+\paragraph{Scenario 1: User}
+
+\begin{figure}[!htb]
+\caption{Sequence Diagram - User}
+\centering
+\includegraphics[scale=0.6]{diagrams/user-sequence-diagram.eps}
+\end{figure}
+
+This scenario represents the interactions between the software and a user with normal access rights ("User").
+
+\subparagraph{Operational Contracts for Scenario 1:}
+
+Operation: openFile()
+Pre-conditions: valid file name and path were provided.
+Post-conditions: stream to .vsf file is created.
+
+Operation: parseVSF()
+Pre-conditions: .vsf file was correctly opened, and stream was created.
+Post-conditions: text from .vsf file is read by the system.
+
+Operation: closeFile()
+Pre-conditions: .vsf file was opened.
+Post-conditions: none.
+
+Operation: initializeData()
+Pre-conditions: all data parsed from .vsf file were of correct value type and range.
+Post-conditions: text from .vsf file is converted to vessel and configuration data.
+
+Operation: verifyPassword()
+Pre-conditions: user has entered a password.
+Post-conditions:
+- If password is recognized as valid: GUI display is created.
+- If password is not recognized as valid: none.
+
+Operation: displayGUI()
+Pre-conditions: none.
+Post-conditions: any vessel data from the system is sent to GUI for display.
+
+Operation: updateData()
+Pre-conditions: none.
+Post-conditions: system vessel data is modified based on calculated time factor.
+
+Operation: refresh()
+Pre-conditions: none.
+Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
+
+\paragraph{Scenario 2: Administrator}
+
+\begin{figure}[!htb]
+\caption{Sequence Diagram - Administrator}
+\centering
+\includegraphics[scale=0.6]{diagrams/admin-sequence-diagram.eps}
+\end{figure}
+
+This scenario represents the interactions between the software and a user with full access rights ("Administrator").
+
+\subparagraph{Operational Contracts for Scenario 2:}
+
+Most of the contracts for this scenario are the same as for Scenario 1.
+
+Additional contracts:
+
+Operation: filterDisplayData()
+Pre-conditions: none.
+Post-conditions: GUI display receives only vessel data allowed by the filter.
+
+Operation: sortDisplayData()
+Pre-conditions: none.
+Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+
+\subsection{Component Interactions}
+
+Here, we present in more detail the interactions between the system components, which were not shown in the above use case scenarios. We have now abstracted any interactions with external users.
+
+\paragraph{Simulator Subsystem}
+
+\begin{figure}[!htb]
+\caption{Sequence Diagram - Simulator}
+\centering
+\includegraphics[scale=0.6]{diagrams/simulator-sequence-diagram.eps}
+\end{figure}
+
+\subparagraph{Operational Contracts for Simulator Subsystem:}
+
+Operation: create() (target: SimulatorConfiguration)
+Pre-conditions: none.
+Post-conditions: instance of SimulatorConfiguration is created.
+
+Operation: create() (target: ConnectionClient)
+Pre-conditions: none.
+Post-conditions: instance of ConnectionClient is created.
+
+Operation: connect(String host, int port)
+Pre-conditions: parameter values form a resolvable hostname + port number pair.
+Post-conditions: attempt is made to connect to the server.
+
+Operation: create(SimulatorConfiguration sc) (target: Simulator)
+Pre-conditions: none.
+Post-conditions: instance of Simulator is created.
+
+Operation: start(ConnectionClient cc)
+Pre-conditions: connection to server was established.
+Post-conditions: vessel data is sent to server at set intervals for a given duration, determined by configuration data.
+
+Operation: getUpdateData(Calendar timestamp)
+Pre-conditions: parameter value represents a valid timestamp.
+Post-conditions: updated vessel data is returned.
+
+Operation: sendUpdate(UpdateData data)
+Pre-conditions: none.
+Post-conditions: updated vessel data is sent to server.
+
+Operation: close()
+Pre-conditions: none.
+Post-conditions: Socket is closed.
+
+\paragraph{Vessel Monitoring System (VMS) Subsystem}
+
+\begin{figure}[!htb]
+\caption{Sequence Diagram - VMS}
+\centering
+\includegraphics[scale=0.6]{diagrams/vms-sequence-diagram.eps}
+\end{figure}
+
+\subparagraph{Operational Contracts for VMS Subsystem:}
+
+Operation: create() (target: ConnectionServer)
+Pre-conditions: none.
+Post-conditions: instance of ConnectionServer is created.
+
+Operation: create() (target: RadarMonitor)
+Pre-conditions: none.
+Post-conditions: instance of RadarMonitor is created.
+
+Operation: register(RadarMonitor rm)
+Pre-conditions: none.
+Post-conditions: passed RadarMonitor is registered as an observer to ConnectionClient.
+
+Operation: start()
+Pre-conditions: Selector is bound.
+Post-conditions: incoming client connections can be accepted.
+
+Operation: create() (target: Login)
+Pre-conditions: none.
+Post-conditions: instance of Login is created.
+
+Operation: create() (target: RadarDisplay)
+Pre-conditions: none.
+Post-conditions: instance of RadarDisplay is created.
+
+Operation: register(RadarDisplay rd)
+Pre-conditions: none.
+Post-conditions: passed RadarDisplay is registered as an observer to RadarMonitor.
+
+Operation: \_read(SocketChannel sc)
+Pre-conditions:
+- passed SocketChannel is open and connected.
+- data from client was formatted and encoded correctly.
+Post-conditions: data from client is interpreted as vessel data, and all observers are notified.
+
+Operation: update(UpdateData data)
+Pre-conditions: none.
+Post-conditions: data from client replaces current vessel data.
+
+Operation: refresh()
+Pre-conditions: none.
+Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
+
+Operation: close()
+Pre-conditions: none.
+Post-conditions: SocketChannel and Selector are closed.
 
 \section{Revised Cost Estimation} % Status: Complete
 
