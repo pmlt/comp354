@@ -6,6 +6,7 @@ src/bin
 *.ear
 
 # LaTeX temporary files #
+#.dvi
 *.log
 *.aux
 *.synctex.gz
