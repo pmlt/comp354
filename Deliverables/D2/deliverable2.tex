@@ -41,6 +41,8 @@ Christopher Mukherjee & 6291929 \\
 
 This document will describe in detail the architecture specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. This design document include a detailed version of the architecture design pattern, a 4+1 Architectural View diagram (as well as a description of the rationale of this design), Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
 
+\break
+
 \section{Architectural Design} % Status: See subsections
 
 \subsection{Architecture Diagram} % Status: See subsubsections
@@ -124,20 +126,21 @@ With those in hand, it will be able to start the simulation.
 
 \begin{figure}[!htb]
 \caption{Use Case Diagram for the Simulator}
-\includegraphics[scale=0.4]{diagrams/usecasediagram.eps}
+\centering
+\includegraphics[scale=0.6]{diagrams/simulator-use-case-diagram.eps}
 \end{figure}
 The Simulator in general when started, the system will parse the settings and read the .vsf file. From there it will send it to the server where the Vessel Monitoring System can retrieve it.
-
-\break
 
 \begin{figure}[!htb]
 \caption{Use Case Diagram for the Vessel Monitoring System (VMS)}
 \centering
-\includegraphics[scale=0.32]{diagrams/vmsdiagram.eps}
+\includegraphics[scale=0.55]{diagrams/vms-use-case-diagram.eps}
 \end{figure}
 The Vessel Monitoring System system is where the user can interact with the data. He can either look at the data or a subset of the data. 
 The information is supplied by the Radar Simulator and sent to the VMS.
 Then with that data the VMS checks if any alerts are needed to be outputed to the user.
+
+\break
 
 \subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
 
@@ -371,11 +374,12 @@ Functions:
 	\item public UpdateData getUpdateData(Calendar)
 \end{enumerate}
 
+\break
+
 \section{Dynamic Design Scenarios} % Status: Complete
 
 In this section, we introduce two possible scenarios (use cases), which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
 
-\break
 \subsection{Use Case Scenarios}
 
 Here, we present the interactions between the software and external users.
@@ -385,7 +389,7 @@ Here, we present the interactions between the software and external users.
 \begin{figure}[!htb]
 \caption{Sequence Diagram - User}
 \centering
-\includegraphics[scale=0.6]{diagrams/user-sequence-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/user-sequence-diagram.eps}
 \end{figure}
 
 This scenario represents the interactions between the software and a user with normal access rights ("User").
@@ -507,6 +511,8 @@ Here, we present in more detail the interactions between the system components, 
   \item[Operation: close()] Pre-conditions: none.\newline
   Post-conditions: SocketChannel and Selector are closed.
 \end{description}
+
+\break
 
 \section{Revised Cost Estimation} % Status: Complete
 
