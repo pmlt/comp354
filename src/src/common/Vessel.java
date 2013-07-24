@@ -30,18 +30,41 @@ public class Vessel {
 		return type;
 	}
 	
-	public Coord getCoord(Calendar timestamp) {
-		// XXX find timestamp of LATEST snapshot that comes before provided timestamp
-		// Calculate difference between provided timestamp and snapshot timestamp
-		// If = 0, output coordinates of the snapshot
-		// If > 0, calculate current coordinates based on snapshot's course
-		return new Coord(0,0);
+	public Coord getCoord(Calendar timestamp) throws Exception {
+		long time = timestamp.getTimeInMillis() - lastTimestamp.getTimeInMillis();
+		
+		if (time > 0){
+			int x = (int)(coords.x() + course.xVel()*time);
+			int y = (int)(coords.y() + course.yVel()*time);
+			coords = new Coord(x, y);
+		}
+		
+		else if(time < 0) {
+			throw new Exception("Trying to read an old timestamp");
+		}
+		
+		return coords;
 	}
 	
-	public Course getCourse(Calendar timestamp) {
+	public Course getCourse(Calendar timestamp) throws Exception {
 		// XXX find timestamp of LATEST snapshot that comes before provided timestamp
 		// Return course of found snapshot
-		return new Course(0,0);
+		
+		// XXX Will the vessel's speed really get bigger overtime? I'm not sure this is necessary
+		
+		long time = timestamp.getTimeInMillis()  - lastTimestamp.getTimeInMillis();
+		
+		if (time > 0){
+			int xVel = (int)(course.xVel() + course.xVel()*time);
+			int yVel = (int)(course.yVel() + course.yVel()*time);
+			course = new Course(xVel, yVel);
+		}
+		
+		else if(time < 0) {
+			throw new Exception("Trying to read an old timestamp");
+		}
+		
+		return course;
 	}
 	
 	public Calendar getLastTimestamp() {
@@ -66,6 +89,17 @@ public class Vessel {
 	}
 	
 	public UpdateData getUpdateData(Calendar timestamp) {
-		return new UpdateData(id, type, getCoord(timestamp), getCourse(timestamp), timestamp);
+		
+		Coord tempCoords = new Coord(0, 0);
+		Course tempCourse = new Course(0,0);
+		
+		try{
+			tempCoords = getCoord(timestamp);
+			tempCourse = getCourse(timestamp);
+		}catch(Exception e){
+			System.out.println("Invalid timestamp");
+		}
+		
+		return new UpdateData(id, type, tempCoords, tempCourse, timestamp);
 	}
 }

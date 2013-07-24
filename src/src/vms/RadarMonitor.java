@@ -2,35 +2,43 @@ package vms;
 
 import java.util.*;
 
+import vms.ConnectionServer.Observer;
+
 import common.UpdateData;
 import common.Vessel;
 
 
 public class RadarMonitor implements ConnectionServer.Observer {
+	
+	private Coord lowerRange;
+	private Coord upperRange;
+	private ArrayList<Vessel> _Vessels;
+	private List<Observer> _Observers;
+	
 	public interface Observer {
 		public void refresh(List<Alert> alerts);
 	}
 	
 	public void setRange(Coord lowerRange, Coord upperRange) {
-		// XXX If ships go beyond this range, we can safely remove them from list
+		this.lowerRange = lowerRange;
+		this.upperRange = upperRange;
 	}
 	
 	public int getVesselCount() {
-		// XXX return how many ships are showing up on the radar right now
-		return 0;
+		return _Vessels.size();
 	}
 	
 	public List<Vessel> getVessels() {
-		// XXX Return the list of vessels showing up on the radar right now
-		return new ArrayList<Vessel>();
+		// XXX Do we want to clone this before returning it?
+		return _Vessels;
 	}
 	
 	public void registerObserver(Observer o) {
-		// XXX Add to internal observers list
+		if (!_Observers.contains(o)) _Observers.add(o);
 	}
 	
 	public void unregisterObserver(Observer o) {
-		// XXX Remove from internal observers list
+		_Observers.remove(o);
 	}
 
 	@Override

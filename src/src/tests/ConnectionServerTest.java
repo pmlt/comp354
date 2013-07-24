@@ -85,8 +85,14 @@ public class ConnectionServerTest {
 		cs.updateObservers(new UpdateData("myid", VesselType.BOAT, new Coord(10,10), new Course(20,20), timestamp));
 		assertEquals("myid", lastVessel.getId());
 		assertEquals(VesselType.BOAT, lastVessel.getType());
-		assertEquals(new Coord(10,10), lastVessel.getCoord(timestamp));
-		assertEquals(new Course(20,20), lastVessel.getCourse(timestamp));
+		
+		try{
+			assertEquals(new Coord(10,10), lastVessel.getCoord(timestamp));
+			assertEquals(new Course(20,20), lastVessel.getCourse(timestamp));
+		}catch(Exception e){
+			System.out.println("Invalid timestamp");
+		}
+		
 		assertEquals(timestamp, lastVessel.getLastTimestamp());
 	}
 	
@@ -142,8 +148,14 @@ public class ConnectionServerTest {
 		Calendar timestamp = lastVessel.getLastTimestamp();
 		assertEquals("myid", lastVessel.getId());
 		assertEquals(VesselType.BOAT, lastVessel.getType());
-		assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
-		assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
+		
+		try{
+			assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
+			assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
+		}catch(Exception e){
+			System.out.println("Invalid timestamp");
+		}
+
 		cs.stop();
 		socket.close();
 	}
