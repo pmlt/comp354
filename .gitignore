@@ -8,6 +8,7 @@ src/bin
 # LaTeX temporary files #
 *.dvi
 *.log
+*.lof
 *.aux
 *.synctex.gz
 *.toc
