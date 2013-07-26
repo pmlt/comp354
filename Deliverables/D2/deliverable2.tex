@@ -39,7 +39,9 @@ Christopher Mukherjee & 6291929 \\
 
 \section{Introduction} % Status: Complete
 
-This document will describe in detail the architecture specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. This design document include a detailed version of the architecture design pattern, a 4+1 Architectural View diagram (as well as a description of the rationale of this design), Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
+This document will describe in detail the software design specifications for the Vessel Monitoring System which is to be developed in the context of the COMP354 course. This design document include a detailed version of the architecture and software design, a 4+1 Architectural View diagram (as well as a description of the rationale of this design), Module Interface Specifications for each subsystem, a complete description of the design of the system and of all its subsystems, full dynamic design scenarios of two substantial use cases, and a revised cost estimation and project schedule.
+
+\break
 
 \section{Architectural Design} % Status: See subsections
 
@@ -125,20 +127,20 @@ With those in hand, it will be able to start the simulation.
 \begin{figure}[!htb]
 \caption{Use Case Diagram for the Simulator}
 \centering
-\includegraphics[scale=0.4]{diagrams/usecasediagram.eps}
+\includegraphics[scale=0.6]{diagrams/simulator-use-case-diagram.eps}
 \end{figure}
 The Simulator in general when started, the system will parse the settings and read the .vsf file. From there it will send it to the server where the Vessel Monitoring System can retrieve it.
-
-\break
 
 \begin{figure}[!htb]
 \caption{Use Case Diagram for the Vessel Monitoring System (VMS)}
 \centering
-\includegraphics[scale=0.32]{diagrams/vmsdiagram.eps}
+\includegraphics[scale=0.55]{diagrams/vms-use-case-diagram.eps}
 \end{figure}
 The Vessel Monitoring System system is where the user can interact with the data. He can either look at the data or a subset of the data. 
 The information is supplied by the Radar Simulator and sent to the VMS.
 Then with that data the VMS checks if any alerts are needed to be outputed to the user.
+
+\break
 
 \subsection{Subsystem Interfaces Specifications} % Status: See subsubsections
 
@@ -372,11 +374,12 @@ Functions:
 	\item public UpdateData getUpdateData(Calendar)
 \end{enumerate}
 
+\break
+
 \section{Dynamic Design Scenarios} % Status: Complete
 
 In this section, we introduce two possible scenarios (use cases), which show interactions between the software and external users. In addition, we show how components of the software interact, within each subsystem.
 
-\break
 \subsection{Use Case Scenarios}
 
 Here, we present the interactions between the software and external users.
@@ -386,7 +389,7 @@ Here, we present the interactions between the software and external users.
 \begin{figure}[!htb]
 \caption{Sequence Diagram - User}
 \centering
-\includegraphics[scale=0.6]{diagrams/user-sequence-diagram.eps}
+\includegraphics[scale=0.5]{diagrams/user-sequence-diagram.eps}
 \end{figure}
 
 This scenario represents the interactions between the software and a user with normal access rights ("User").
@@ -398,19 +401,19 @@ This scenario represents the interactions between the software and a user with n
   Post-conditions: stream to .vsf file is created.
   \item[Operation: parseVSF()] Pre-conditions: .vsf file was correctly opened, and stream was created.\newline
   Post-conditions: text from .vsf file is read by the system.
-    \item[Operation: closeFile()] Pre-conditions: .vsf file was opened.\newline
+  \item[Operation: closeFile()] Pre-conditions: .vsf file was opened.\newline
   Post-conditions: none.
-    \item[Operation: initializeData()] Pre-conditions: all data parsed from .vsf file were of correct value type and range.\newline
+  \item[Operation: initializeData()] Pre-conditions: all data parsed from .vsf file were of correct value type and range.\newline
   Post-conditions: text from .vsf file is converted to vessel and configuration data.
-    \item[Operation: verifyPassword()] Pre-conditions: user has entered a password.\newline
+  \item[Operation: verifyPassword()] Pre-conditions: user has entered a password.\newline
   Post-conditions:\newline
   - If password is recognized as valid: GUI display is created.\newline
   - If password is not recognized as valid: none.
-    \item[Operation: displayGUI()] Pre-conditions: none.\newline
+  \item[Operation: displayGUI()] Pre-conditions: none.\newline
   Post-conditions: any vessel data from the system is sent to GUI for display.
-    \item[Operation: updateData()] Pre-conditions: none.\newline
+  \item[Operation: updateData()] Pre-conditions: none.\newline
   Post-conditions: system vessel data is modified based on calculated time factor.
-    \item[Operation: refresh()] Pre-conditions: none.\newline
+  \item[Operation: refresh()] Pre-conditions: none.\newline
   Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
 \end{description}
 
@@ -432,17 +435,15 @@ Most of the contracts for this scenario are the same as for Scenario 1.
 Additional contracts:
 
 \begin{description}
-    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
+  \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
   Post-conditions: GUI display receives only vessel data allowed by the filter.
-    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
+  \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
   Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
 \end{description}
 
 \subsection{Component Interactions}
 
 Here, we present in more detail the interactions between the system components, which were not shown in the above use case scenarios. We have now abstracted any interactions with external users.
-
-\paragraph{Simulator Subsystem}
 
 \begin{figure}[!htb]
 \caption{Sequence Diagram - Simulator}
@@ -453,45 +454,25 @@ Here, we present in more detail the interactions between the system components, 
 \subparagraph{Operational Contracts for Simulator Subsystem:}
 
 \begin{description}
-    \item[Operation: filterDisplayData()] Pre-conditions: none.\newline
-  Post-conditions: GUI display receives only vessel data allowed by the filter.
-    \item[Operation: sortDisplayData()] Pre-conditions: none.\newline
-  Post-conditions: GUI displays vessel data based on order specified by the selected sorter.
+  \item[Operation: create() (target: SimulatorConfiguration)] Pre-conditions: none.\newline
+  Post-conditions: instance of SimulatorConfiguration is created.
+  \item[Operation: create() (target: ConnectionClient)] Pre-conditions: none.\newline
+  Post-conditions: instance of ConnectionClient is created.
+  \item[Operation: connect(String host, int port)] Pre-conditions: parameter values form a resolvable hostname + port number pair.\newline
+  Post-conditions: attempt is made to connect to the server.
+  \item[Operation: create(SimulatorConfiguration sc) (target: Simulator)] Pre-conditions: none.\newline
+  Post-conditions: instance of Simulator is created.
+  \item[Operation: start(ConnectionClient cc)] Pre-conditions: connection to server was established.\newline
+  Post-conditions: vessel data is sent to server at set intervals for a given duration, determined by configuration data.
+  \item[Operation: getUpdateData(Calendar timestamp)] Pre-conditions: parameter value represents a valid timestamp.\newline
+  Post-conditions: updated vessel data is returned.
+  \item[Operation: sendUpdate(UpdateData data)] Pre-conditions: none.\newline
+  Post-conditions: updated vessel data is sent to server.
+  \item[Operation: close()] Pre-conditions: none.\newline
+  Post-conditions: Socket is closed.
 \end{description}
 
-Operation: create() (target: SimulatorConfiguration)
-Pre-conditions: none.
-Post-conditions: instance of SimulatorConfiguration is created.
-
-Operation: create() (target: ConnectionClient)
-Pre-conditions: none.
-Post-conditions: instance of ConnectionClient is created.
-
-Operation: connect(String host, int port)
-Pre-conditions: parameter values form a resolvable hostname + port number pair.
-Post-conditions: attempt is made to connect to the server.
-
-Operation: create(SimulatorConfiguration sc) (target: Simulator)
-Pre-conditions: none.
-Post-conditions: instance of Simulator is created.
-
-Operation: start(ConnectionClient cc)
-Pre-conditions: connection to server was established.
-Post-conditions: vessel data is sent to server at set intervals for a given duration, determined by configuration data.
-
-Operation: getUpdateData(Calendar timestamp)
-Pre-conditions: parameter value represents a valid timestamp.
-Post-conditions: updated vessel data is returned.
-
-Operation: sendUpdate(UpdateData data)
-Pre-conditions: none.
-Post-conditions: updated vessel data is sent to server.
-
-Operation: close()
-Pre-conditions: none.
-Post-conditions: Socket is closed.
-
-\paragraph{Vessel Monitoring System (VMS) Subsystem}
+\break
 
 \begin{figure}[!htb]
 \caption{Sequence Diagram - VMS}
@@ -501,66 +482,38 @@ Post-conditions: Socket is closed.
 
 \subparagraph{Operational Contracts for VMS Subsystem:}
 
-Operation: create() (target: ConnectionServer)
-Pre-conditions: none.
-Post-conditions: instance of ConnectionServer is created.
+\break
+\begin{description}
+  \item[Operation: create() (target: ConnectionServer)] Pre-conditions: none.\newline
+  Post-conditions: instance of ConnectionServer is created.
+  \item[Operation: create() (target: RadarMonitor)] Pre-conditions: none.\newline
+  Post-conditions: instance of RadarMonitor is created.
+  \item[Operation: register(RadarMonitor rm)] Pre-conditions: none.\newline
+  Post-conditions: passed RadarMonitor is registered as an observer to ConnectionClient.
+  \item[Operation: start()] Pre-conditions: Selector is bound.\newline
+  Post-conditions: incoming client connections can be accepted.
+  \item[Operation: create() (target: Login)] Pre-conditions: none.\newline
+  Post-conditions: instance of Login is created.
+  \item[Operation: create() (target: RadarDisplay)] Pre-conditions: none.\newline
+  Post-conditions: instance of RadarDisplay is created.
+  \item[Operation: register(RadarDisplay rd)] Pre-conditions: none.\newline
+  Post-conditions: passed RadarDisplay is registered as an observer to RadarMonitor.
+  \item[Operation: read(SocketChannel sc)] Pre-conditions:
+  - passed SocketChannel is open and connected.\newline
+  - data from client was formatted and encoded correctly.\newline
+  Post-conditions: data from client is interpreted as vessel data, and all observers are notified.
+  \item[Operation: update(UpdateData data)] Pre-conditions: none.\newline
+ Post-conditions: data from client replaces current vessel data.
+  \item[Operation: refresh()] Pre-conditions: none.\newline
+  Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
+  \item[Operation: close()] Pre-conditions: none.\newline
+  Post-conditions: SocketChannel and Selector are closed.
+\end{description}
 
-Operation: create() (target: RadarMonitor)
-Pre-conditions: none.
-Post-conditions: instance of RadarMonitor is created.
-
-Operation: register(RadarMonitor rm)
-Pre-conditions: none.
-Post-conditions: passed RadarMonitor is registered as an observer to ConnectionClient.
-
-Operation: start()
-Pre-conditions: Selector is bound.
-Post-conditions: incoming client connections can be accepted.
-
-Operation: create() (target: Login)
-Pre-conditions: none.
-Post-conditions: instance of Login is created.
-
-Operation: create() (target: RadarDisplay)
-Pre-conditions: none.
-Post-conditions: instance of RadarDisplay is created.
-
-Operation: register(RadarDisplay rd)
-Pre-conditions: none.
-Post-conditions: passed RadarDisplay is registered as an observer to RadarMonitor.
-
-Operation: \_read(SocketChannel sc)
-Pre-conditions:
-- passed SocketChannel is open and connected.
-- data from client was formatted and encoded correctly.
-Post-conditions: data from client is interpreted as vessel data, and all observers are notified.
-
-Operation: update(UpdateData data)
-Pre-conditions: none.
-Post-conditions: data from client replaces current vessel data.
-
-Operation: refresh()
-Pre-conditions: none.
-Post-conditions: GUI-displayed vessel data corresponds to system vessel data.
-
-Operation: close()
-Pre-conditions: none.
-Post-conditions: SocketChannel and Selector are closed.
+\break
 
 \section{Revised Cost Estimation} % Status: Complete
 
-\subsection{Cost Estimates}
-
-\begin{description}
-  \item[Simulator program:] \$150, cost to code and implement.
-  \item[VMS program:] \$150, cost to code and implement.
-  \item[Graphical User Interface:] \$100, cost to design, code, and implement.
-  \item[Unit test suite:] \$25, cost to write test cases and perform testing.
-  \item[Total Cost:] \$425
-\end{description}
-
-\paragraph{Basis} Costs have been calculated based on the amount of man hours spent working on project (at a low approximate labor cost of \$5 an hour), as well as a reduced cost of tools used to produce code, test cases, documentation, and diagrams.
-Re-estimation of costs may occur when any of the above artifacts is complete, based on whether the artifact took less time or more time than we originally anticipated.
 
 \subsection{Project Schedule}
 
@@ -568,12 +521,28 @@ Re-estimation of costs may occur when any of the above artifacts is complete, ba
   \item[Simulator program:] 8 hours of coding. Due date: August 1st, 2013.
   \item[VMS program:] 8 hours of coding. Due date: August 1st, 2013.
   \item[Graphical User Interface:] 4 hours of coding. Due date: August 7th, 2013.
-  \item[Unit test suite:] 2 hour of testing. Due date: August 9th, 2013.
-  \item[Final integration:] 4 hours of implementation. Due date: August 12th, 2013.
+  \item[Unit test suite:] 10 hour of testing. Due date: August 9th, 2013.
+  \item[Final integration:] 4 hours of integrating components. Due date: August 12th, 2013.
+  \item[Buffer:] 8 hours of buffer for unknowns.
 \end{description}
 
 \paragraph{Note}
 The times listed to complete the Simulator program, VMS program, and Graphical User Interface are estimations of how much time the \emph{remainder} of the coding will take, not accounting for the time that has already been spent on the programs as they currently are.
+
+\subsection{Cost Estimates}
+
+\begin{description}
+  \item[Simulator program:] \$150, cost to code and implement.
+  \item[VMS program:] \$150, cost to code and implement.
+  \item[Graphical User Interface:] \$100, cost to design, code, and implement.
+  \item[Unit test suite:] \$200, cost to write test cases and perform testing.
+  \item[Final integration:] \$80
+  \item[Buffer:] \$160
+  \item[Total Cost:] \$840
+\end{description}
+
+\paragraph{Basis} Costs have been calculated based on the amount of man hours spent working on project (at a normal approximate labor cost of \$15 an hour). There was no cost associated to tools, because they were provided by the University. 
+Re-estimation of costs may occur when any of the above artifacts is complete, based on whether the artifact took less time or more time than we originally anticipated.
 
 \subsection{Risk}
 
@@ -583,6 +552,7 @@ Also, writing test cases in parallel with the rest of the software may slightly 
 
 All cost estimates and due dates are subject to change.
 
+\break
 \listoffigures
 
 \end{document}
