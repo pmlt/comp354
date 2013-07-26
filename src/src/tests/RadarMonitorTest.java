@@ -21,7 +21,7 @@ public class RadarMonitorTest {
 	private class FakeUI implements RadarMonitor.Observer {
 
 		@Override
-		public void refresh(List<Alert> alerts) {
+		public void refresh(List<Alert> alerts, List<Vessel> vessels) {
 			REFRESH_CALLED = true;
 			ALERTS = alerts;
 		}

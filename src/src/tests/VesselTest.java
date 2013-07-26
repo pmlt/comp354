@@ -26,13 +26,9 @@ public class VesselTest {
 		
 		assertEquals(id, v.getId());
 		assertEquals(type, v.getType());
+		assertEquals(startCoord, v.getCoord(startTime));
+		assertEquals(course, v.getCourse(startTime));
 		
-		try{
-			assertEquals(startCoord, v.getCoord(startTime));
-			assertEquals(course, v.getCourse(startTime));
-		}catch(Exception e){
-			System.out.println("Invalid timestamp");
-		}
 		
 		assertEquals(startTime, v.getLastTimestamp());
 		
@@ -65,34 +61,21 @@ public class VesselTest {
 		//Assume two seconds have passed; should have traveled exactly 10 meters on x and y axis
 		curTime.add(Calendar.SECOND, 2);
 		
-		try{
-			assertEquals(new Coord(10, 10), v.getCoord(curTime));
-		}catch(Exception e){
-			System.out.println("Invalid timestamp");
-		}
+		assertEquals(new Coord(10, 10), v.getCoord(curTime));
 		
 		//Travel another 5 meters, then change course
 		curTime.add(Calendar.SECOND, 1);
 		Course newCourse = new Course(0, -10);
 		
-		try{
-			v.update(v.getCoord(curTime), newCourse, curTime);
-			assertEquals(newCourse, v.getCourse(curTime));
-			assertEquals(new Coord(15, 15), v.getCoord(curTime));
-		}catch(Exception e){
-			System.out.println("Invalid timestamp");
-		}
-		
+		v.update(v.getCoord(curTime), newCourse, curTime);
+		assertEquals(newCourse, v.getCourse(curTime));
+		assertEquals(new Coord(15, 15), v.getCoord(curTime));
 		assertEquals(curTime, v.getLastTimestamp());
 		
 		//Travel for two seconds, see if the new course was taken into account
 		curTime.add(Calendar.SECOND, 2);
+		assertEquals(new Coord(15, -5), v.getCoord(curTime));
 		
-		try{
-			assertEquals(new Coord(15, -5), v.getCoord(curTime));
-		}catch(Exception e){
-			System.out.println("Invalid timestamp");
-		}
 	}
 
 }

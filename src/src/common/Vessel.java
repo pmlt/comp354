@@ -30,7 +30,8 @@ public class Vessel {
 		return type;
 	}
 	
-	public Coord getCoord(Calendar timestamp) throws Exception {
+	//illegal state exception
+	public Coord getCoord(Calendar timestamp) throws IllegalStateException {
 		long time = timestamp.getTimeInMillis() - lastTimestamp.getTimeInMillis();
 		
 		if (time > 0){
@@ -40,16 +41,13 @@ public class Vessel {
 		}
 		
 		else if(time < 0) {
-			throw new Exception("Trying to read an old timestamp");
+			throw new IllegalStateException("Trying to read an old timestamp");
 		}
 		
 		return coords;
 	}
 	
-	public Course getCourse(Calendar timestamp) throws Exception {
-		// XXX find timestamp of LATEST snapshot that comes before provided timestamp
-		// Return course of found snapshot
-		
+	public Course getCourse(Calendar timestamp) throws IllegalStateException {		
 		// XXX Will the vessel's speed really get bigger overtime? I'm not sure this is necessary
 		
 		long time = timestamp.getTimeInMillis()  - lastTimestamp.getTimeInMillis();
@@ -61,7 +59,7 @@ public class Vessel {
 		}
 		
 		else if(time < 0) {
-			throw new Exception("Trying to read an old timestamp");
+			throw new IllegalStateException("Trying to read an old timestamp");
 		}
 		
 		return course;
@@ -77,14 +75,14 @@ public class Vessel {
 		lastTimestamp = timestamp;
 	}
 	
-	public void update(UpdateData data) throws Exception {
+	public void update(UpdateData data) throws IllegalStateException {
 		if(id.equals(data.Id) && type == data.Type){
 			course = data.Course;
 			coords = data.Coordinates;
 			lastTimestamp = data.Timestamp;
 		
 		}else{
-			throw new Exception("Not the correct vessel ID and type");
+			throw new IllegalStateException("Not the correct vessel ID and type");
 		}
 	}
 	
@@ -96,7 +94,7 @@ public class Vessel {
 		try{
 			tempCoords = getCoord(timestamp);
 			tempCourse = getCourse(timestamp);
-		}catch(Exception e){
+		}catch(IllegalStateException e){
 			System.out.println("Invalid timestamp");
 		}
 		
