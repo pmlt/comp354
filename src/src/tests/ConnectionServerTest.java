@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Calendar;
 
 import org.junit.*;
+import org.protocols.Netstring;
 
 import common.UpdateData;
 import common.Vessel;
@@ -22,8 +23,7 @@ import vms.Course;
 public class ConnectionServerTest {
 	
 	static ConnectionServer cs = null;
-	final Thread csThread = new Thread() {
-
+	private class CSThread extends Thread {
 		@Override
 		public void run() {
 			
@@ -35,7 +35,7 @@ public class ConnectionServerTest {
 				fail(e.getMessage());
 			}
 		}
-	};
+	}
 	
 	Calendar lastRefresh = null;
 	Vessel lastVessel = null;
@@ -99,66 +99,87 @@ public class ConnectionServerTest {
 	
 	@Test
 	public void testAutomaticRefresh() throws IOException, InterruptedException {
+		CSThread csThread = new CSThread();
 		csThread.start();
-		Thread.sleep(2000);
-		Calendar timestamp = lastRefresh;
-		assertNotNull(timestamp);
-		Thread.sleep(2000);
-		assertTrue(timestamp.before(lastRefresh));
-		cs.stop();
-		timestamp = lastRefresh;
-		Thread.sleep(2000);
-		assertTrue(timestamp.equals(lastRefresh));
+		Calendar timestamp;
+		try {
+			Thread.sleep(2000);
+			timestamp = lastRefresh;
+			assertNotNull(timestamp);
+			Thread.sleep(2000);
+			assertTrue(timestamp.before(lastRefresh));
+		}
+		finally {
+			cs.stop();
+			csThread.join();
+		}
+		try {
+			cs.stop();
+			Thread.sleep(2000); //Wait for CS to stop
+			timestamp = lastRefresh;
+			Thread.sleep(2000); //Check if we received anything else
+			assertEquals(timestamp, lastRefresh);
+		}
+		finally {
+			csThread.join();
+		}
 	}
 	
 	@Test
 	public void testSendData() throws UnknownHostException, IOException, InterruptedException {
+		CSThread csThread = new CSThread();
 		csThread.start();
 		//Wait for CS to bind socket...
 		Thread.sleep(1000);
 		Socket socket = new Socket();
-		socket.connect(InetSocketAddress.createUnresolved("localhost", 11233));
-		OutputStream stream = socket.getOutputStream();
-		
-		//Try sending garbage
-		String msg = "gfenrwjgfe  fbd fbb fwwq";
-		stream.write(msg.getBytes());
-		Thread.sleep(500); //Allow for overhead of network
-		assertNull(lastVessel); //Should NOT have called update()
-		
-		//Try sending netstring-encoded garbage
-		msg = "gfenrwjgfe  fbd fbb fwwq";
-		msg = msg.length() + ":" + msg; //Netstring encoding
-		stream.write(msg.getBytes());
-		Thread.sleep(500); //Allow for overhead of network
-		assertNull(lastVessel); //Should NOT have called update()
-		
-		//Try sending bad vessel values
-		msg = "{\"id\":[1,2,3],\"type\":\"WRONGENUMVALUE\",\"coords\":0,\"course\":{}}";
-		msg = msg.length() + ":" + msg; //Netstring encoding
-		stream.write(msg.getBytes());
-		Thread.sleep(500); //Allow for overhead of network
-		assertNull(lastVessel); //Should NOT have called update()
-		
-		//Try sending correct data
-		msg = "{\"id\":\"myid\",\"type\":\"BOAT\",\"coords\":[10,10],\"course\":[20,-20]}";
-		msg = msg.length() + ":" + msg; //Netstring encoding
-		stream.write(msg.getBytes());
-		Thread.sleep(500); //Allow for overhead of network
-		assertNotNull(lastVessel);
-		Calendar timestamp = lastVessel.getLastTimestamp();
-		assertEquals("myid", lastVessel.getId());
-		assertEquals(VesselType.BOAT, lastVessel.getType());
-		
-		try{
-			assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
-			assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
-		}catch(Exception e){
-			System.out.println("Invalid timestamp");
-		}
+		try {
+			socket.connect(new InetSocketAddress("localhost", 11233));
+			OutputStream stream = socket.getOutputStream();
+			
+			//Try sending garbage
+			String msg = "gfenrwjgfe  fbd fbb fwwq";
+			stream.write(msg.getBytes());
+			Thread.sleep(1000); //Allow for overhead of network
+			assertNull(lastVessel); //Should NOT have called update()
+			
+			//Try sending netstring-encoded garbage
+			msg = "gfenrwjgfe  fbd fbb fwwq";
+			msg = msg.length() + ":" + msg; //Netstring encoding
+			stream.write(msg.getBytes());
+			Thread.sleep(1000); //Allow for overhead of network
+			assertNull(lastVessel); //Should NOT have called update()
+			
+			//Try sending bad vessel values
+			msg = "{\"id\":[1,2,3],\"type\":\"WRONGENUMVALUE\",\"coords\":0,\"course\":{}}";
+			msg = msg.length() + ":" + msg; //Netstring encoding
+			stream.write(msg.getBytes());
+			Thread.sleep(1000); //Allow for overhead of network
+			assertNull(lastVessel); //Should NOT have called update()
+			
+			//Try sending correct data
+			Calendar curTime = Calendar.getInstance();
+			UpdateData ud = new UpdateData("myid", VesselType.BOAT, new Coord(10, 10), new Course(20, -20), curTime);
+			msg = ud.toJSON();
+			Netstring.write(stream, msg.getBytes()); //Write with netstring encoding
+			Thread.sleep(1000); //Allow for overhead of network
+			assertNotNull(lastVessel);
+			Calendar timestamp = lastVessel.getLastTimestamp();
+			assertEquals(curTime, timestamp);
+			assertEquals("myid", lastVessel.getId());
+			assertEquals(VesselType.BOAT, lastVessel.getType());
+			
+			try{
+				assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
+				assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
+			}catch(Exception e){
+				System.out.println("Invalid timestamp");
+			}
+		} finally {
 
-		cs.stop();
-		socket.close();
+			cs.stop();
+			socket.close();
+			csThread.join(); //Wait for ConnectionServer to cleanly shut down
+		}
 	}
 
 }
