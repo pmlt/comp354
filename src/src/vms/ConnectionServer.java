@@ -1,17 +1,14 @@
 package vms;
 
-import org.protocols.Netstring;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.*;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import common.UpdateData;
-import common.Vessel;
 
 /*
  * Class: ConnectionServer
@@ -23,38 +20,6 @@ public class ConnectionServer implements Closeable {
 	public interface Observer {
 		public void update(UpdateData data);
 		public void refresh(Calendar timestamp);
-	}
-	
-	/**
-	 * ByteBufferBackedInputStream was not written by COMP223 students;
-	 * @author Mike Houston
-	 *
-	 */
-	private class ByteBufferBackedInputStream extends InputStream {
-
-	    ByteBuffer buf;
-
-	    public ByteBufferBackedInputStream(ByteBuffer buf) {
-	        this.buf = buf;
-	    }
-
-	    public int read() throws IOException {
-	        if (!buf.hasRemaining()) {
-	            return -1;
-	        }
-	        return buf.get() & 0xFF;
-	    }
-
-	    public int read(byte[] bytes, int off, int len)
-	            throws IOException {
-	        if (!buf.hasRemaining()) {
-	            return -1;
-	        }
-
-	        len = Math.min(len, buf.remaining());
-	        buf.get(bytes, off, len);
-	        return len;
-	    }
 	}
 	
 	private static long DEFAULT_REFRESH = 500; //Refresh every half second by default
