@@ -38,7 +38,7 @@ public class Vessel {
 		if (time > 0){
 			int x = (int)(coords.x() + course.xVel()*time);
 			int y = (int)(coords.y() + course.yVel()*time);
-			coords = new Coord(x, y);
+			return new Coord(x, y);
 		}
 		
 		else if(time < 0) {
