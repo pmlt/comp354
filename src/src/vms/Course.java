@@ -1,6 +1,6 @@
 package vms;
 
-public class Course {
+public class Course implements Cloneable {
 	private int velocityX;
 	private int velocityY;
 	
@@ -12,6 +12,17 @@ public class Course {
 		return velocityX;
 	}
 	public int yVel() {
-		return velocityX;
+		return velocityY;
+	}
+	@Override
+	public boolean equals(Object o) {
+	    if (o == null) return false;
+	    if (!(o instanceof Course))return false;
+	    Course c = (Course)o;
+		return c.velocityX == velocityX && c.velocityY == velocityY;
+	}
+	@Override
+	public Object clone() {
+		return new Course(velocityX, velocityY);
 	}
 }

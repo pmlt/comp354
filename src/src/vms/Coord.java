@@ -1,6 +1,6 @@
 package vms;
 
-public class Coord {
+public class Coord implements Cloneable {
 	private int x;
 	private int y;
 	
@@ -13,5 +13,16 @@ public class Coord {
 	}
 	public int y() {
 		return y;
+	}
+	@Override
+	public boolean equals(Object o) {
+	    if (o == null) return false;
+	    if (!(o instanceof Coord))return false;
+	    Coord c = (Coord)o;
+		return c.x == x && c.y == y;
+	}
+	@Override
+	public Object clone() {
+		return new Coord(x, y);
 	}
 }
