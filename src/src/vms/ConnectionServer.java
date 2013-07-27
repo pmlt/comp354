@@ -2,10 +2,14 @@ package vms;
 
 import org.protocols.Netstring;
 import java.net.*;
+import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.*;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+
 import common.UpdateData;
 import common.Vessel;
 
@@ -20,10 +24,44 @@ public class ConnectionServer implements Closeable {
 		public void update(UpdateData data);
 		public void refresh(Calendar timestamp);
 	}
+	
+	/**
+	 * ByteBufferBackedInputStream was not written by COMP223 students;
+	 * @author Mike Houston
+	 *
+	 */
+	private class ByteBufferBackedInputStream extends InputStream {
+
+	    ByteBuffer buf;
+
+	    public ByteBufferBackedInputStream(ByteBuffer buf) {
+	        this.buf = buf;
+	    }
+
+	    public int read() throws IOException {
+	        if (!buf.hasRemaining()) {
+	            return -1;
+	        }
+	        return buf.get() & 0xFF;
+	    }
+
+	    public int read(byte[] bytes, int off, int len)
+	            throws IOException {
+	        if (!buf.hasRemaining()) {
+	            return -1;
+	        }
+
+	        len = Math.min(len, buf.remaining());
+	        buf.get(bytes, off, len);
+	        return len;
+	    }
+	}
+	
 	private static long DEFAULT_REFRESH = 500; //Refresh every half second by default
 	
 	private boolean _Continue;
 	private long _RefreshTime;
+	private ByteBuffer _Buffer;
 	private Selector _Selector;
 	private ServerSocketChannel _Channel;
 	private List<Observer> _Observers;
@@ -31,6 +69,7 @@ public class ConnectionServer implements Closeable {
 	public ConnectionServer () {
 		_RefreshTime = DEFAULT_REFRESH;
 		_Observers = new ArrayList<Observer>();
+		_Buffer = ByteBuffer.allocate(1024*1024);
 	}
 	
 	public void setMinimumRefresh(long milliseconds) {
@@ -87,20 +126,17 @@ public class ConnectionServer implements Closeable {
 			
 			while (it.hasNext()) {
 				SelectionKey key = it.next();
-				if (SelectionKey.OP_ACCEPT == (key.readyOps() & SelectionKey.OP_ACCEPT)) {
-					//We have a new connection to accept
-					SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
-					sc.configureBlocking(false);
-					//We are interested in data coming from this new connection
-					sc.register(_Selector, SelectionKey.OP_READ);
-				}
-				else if (SelectionKey.OP_READ == (key.readyOps() & SelectionKey.OP_READ)) {
-					//We have data coming from one of the accepted connections
-					SocketChannel sc = (SocketChannel)key.channel();
-					_read(sc);
-				}
-				//Event is now processed
 				it.remove();
+				if (!key.isValid()) continue;
+				if (key.isAcceptable()) {
+					//We have a new connection to accept
+					ServerSocketChannel ssc = (ServerSocketChannel)key.channel();
+					_accept(ssc);
+				}
+				else if (key.isReadable()) {
+					//We have data coming from one of the accepted connections
+					_read(key);
+				}
 			}
 		}
 	}
@@ -121,12 +157,62 @@ public class ConnectionServer implements Closeable {
 		}
 	}
 	
-	private void _read(SocketChannel sc) throws IOException {
-		Iterator<byte[]> it = Netstring.read(sc.socket().getInputStream(), 1024*1024);
-		while (it.hasNext()) {
-			byte[] json = it.next();
-			UpdateData ud = UpdateData.fromJSON(new String(json));
-			updateObservers(ud);
+	private void _accept(ServerSocketChannel ssc) throws IOException {
+		SocketChannel sc = ssc.accept();
+		sc.configureBlocking(false);
+		//We are interested in data coming from this new connection
+		sc.register(_Selector, SelectionKey.OP_READ);
+	}
+	
+	private void _read(SelectionKey key) throws IOException {
+		SocketChannel sc = (SocketChannel)key.channel();
+		_Buffer.clear();
+		
+		int bytes;
+		try {
+			bytes = sc.read(_Buffer);
+		} catch (IOException e) {
+			//This is because the client forcibly disconnected
+			key.cancel();
+			sc.close();
+			return;
 		}
+		if (bytes == -1) { //Normal disconnection
+			sc.close();
+			key.cancel();
+			return;
+		}
+		//We have data! Ideally, at this point we should spin off into a new thread but for now this will do.
+		UpdateData ud;
+		try {
+			String json = decodeNetstring(_Buffer.array(), "UTF-8");
+			System.out.println("Got correct netstring: " + json);
+			ud = UpdateData.fromJSON(json);
+			System.out.println("Update data: " + ud.toString());
+		}
+		catch (Exception e) {
+			//ANYTHING wrong with the client data, we just ignore and move on
+			System.out.println(e.getMessage());
+			return;
+		}
+		updateObservers(ud);
+	}
+	
+	public String decodeNetstring(byte[] buffer, String encoding) throws UnsupportedEncodingException {
+		if (buffer.length < 2) throw new RuntimeException("Buffer too small to contain Netstring!");
+        int pos = 0;
+        byte c;
+        do {
+            c = buffer[pos];
+            if (c == 58) {
+                break; 
+            } else if (c < 48 || c > 57) {
+            	throw new RuntimeException("Invalid prologue!");
+            }
+            pos ++;
+        } while (pos < buffer.length);
+        int len = Integer.parseInt(new String(buffer, 0, pos));
+        pos++;
+        return new String(buffer, pos, len, encoding);
 	}
 }
