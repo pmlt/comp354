@@ -28,7 +28,8 @@ public class ConnectionServerTest {
 		public void run() {
 			
 			try {
-				cs.bind(InetSocketAddress.createUnresolved("localhost", 11233));
+				InetSocketAddress addr = new InetSocketAddress("localhost", 11233);
+				cs.bind(addr);
 				cs.start();
 			} catch (IOException e) {
 				fail(e.getMessage());

@@ -69,12 +69,12 @@ public class VesselTest {
 		
 		v.update(v.getCoord(curTime), newCourse, curTime);
 		assertEquals(newCourse, v.getCourse(curTime));
-		assertEquals(new Coord(15, 15), v.getCoord(curTime));
+		assertEquals(new Coord(25, 25), v.getCoord(curTime));
 		assertEquals(curTime, v.getLastTimestamp());
 		
 		//Travel for two seconds, see if the new course was taken into account
 		curTime.add(Calendar.SECOND, 2);
-		assertEquals(new Coord(15, -5), v.getCoord(curTime));
+		assertEquals(new Coord(25, 5), v.getCoord(curTime));
 		
 	}
 
