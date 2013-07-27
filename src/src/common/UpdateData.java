@@ -8,6 +8,7 @@ import vms.Coord;
 import vms.Course;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class UpdateData {
 	public String Id;
@@ -32,7 +33,7 @@ public class UpdateData {
 		return gson.toJson(this);
 	}
 	
-	public static UpdateData fromJSON(String json) {
+	public static UpdateData fromJSON(String json) throws JsonSyntaxException {
 		Gson gson = new Gson();
 		return gson.fromJson(json, UpdateData.class);
 	}
