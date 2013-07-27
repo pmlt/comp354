@@ -33,6 +33,7 @@ public class Vessel {
 	//illegal state exception
 	public Coord getCoord(Calendar timestamp) throws IllegalStateException {
 		long time = timestamp.getTimeInMillis() - lastTimestamp.getTimeInMillis();
+		time = time / 1000; //Convert to seconds
 		
 		if (time > 0){
 			int x = (int)(coords.x() + course.xVel()*time);
@@ -43,25 +44,12 @@ public class Vessel {
 		else if(time < 0) {
 			throw new IllegalStateException("Trying to read an old timestamp");
 		}
-		
 		return coords;
 	}
 	
-	public Course getCourse(Calendar timestamp) throws IllegalStateException {		
-		// XXX Will the vessel's speed really get bigger overtime? I'm not sure this is necessary
-		
-		long time = timestamp.getTimeInMillis()  - lastTimestamp.getTimeInMillis();
-		
-		if (time > 0){
-			int xVel = (int)(course.xVel() + course.xVel()*time);
-			int yVel = (int)(course.yVel() + course.yVel()*time);
-			course = new Course(xVel, yVel);
-		}
-		
-		else if(time < 0) {
+	public Course getCourse(Calendar timestamp) throws IllegalStateException {
+		if (timestamp.before(lastTimestamp))
 			throw new IllegalStateException("Trying to read an old timestamp");
-		}
-		
 		return course;
 	}
 	
@@ -69,18 +57,20 @@ public class Vessel {
 		return lastTimestamp;
 	}
 	
-	public void update(Coord newCoords, Course newCourse, Calendar timestamp) {
-		course = newCourse;
-		coords = newCoords;
-		lastTimestamp = timestamp;
+	public void update(Coord newCoords, Course newCourse, Calendar timestamp) throws IllegalStateException {
+		if (timestamp.before(lastTimestamp)) 
+			throw new IllegalStateException("Cannot update time before last timestamp!");
+		if (timestamp.equals(lastTimestamp))
+			throw new IllegalStateException("Cannot re-update last timestamp!");
+		//Very important..! Copy the timestamp in case it gets modified somewhere else
+		course = (Course)newCourse.clone();
+		coords = (Coord)newCoords.clone();
+		lastTimestamp = (Calendar)timestamp.clone();
 	}
 	
 	public void update(UpdateData data) throws IllegalStateException {
 		if(id.equals(data.Id) && type == data.Type){
-			course = data.Course;
-			coords = data.Coordinates;
-			lastTimestamp = data.Timestamp;
-		
+			update(data.Coordinates, data.Course, data.Timestamp);
 		}else{
 			throw new IllegalStateException("Not the correct vessel ID and type");
 		}
