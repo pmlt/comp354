@@ -3,6 +3,7 @@ package vms.gui;
 import java.util.List;
 
 import vms.Alert;
+import vms.ConnectionServer;
 import vms.RadarMonitor;
 
 import common.Vessel;
@@ -14,10 +15,12 @@ public class MainGUI implements RadarMonitor.Observer {
 	}
 	private Login _Login;
 	private RadarDisplay _Display;
+	private ConnectionServer _Server;
 	
-	public MainGUI() {
+	public MainGUI(ConnectionServer cs) {
 		_Login = new Login(this);
-		_Display = new RadarDisplay();
+		_Display = new RadarDisplay(this);
+		_Server = cs;
 	}
 
 
@@ -36,5 +39,9 @@ public class MainGUI implements RadarMonitor.Observer {
 	}
 	public void showRadar(UserIdentity identity) {
 		_Display.show(identity);
+	}
+	public void stopServer() {
+		System.out.println("Stopping server");
+		_Server.stop();
 	}
 }

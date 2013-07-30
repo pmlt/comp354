@@ -1,6 +1,8 @@
 package vms.gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,12 @@ import common.Vessel.VesselType;
 
 import vms.*;
 
-public class RadarDisplay {
+public class RadarDisplay implements WindowListener {
+	
+	private final String VIEW[] = { "Table view", "Map view"};
+	
+	MainGUI _Main;
+	
 	JFrame _Frame;
 	FilterPanel _FilterPanel;
 	TablePanel _TablePanel;
@@ -22,9 +29,10 @@ public class RadarDisplay {
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
-	public RadarDisplay() {
-		final String VIEW[] = { "Table view", "Map view"};
+	public RadarDisplay(MainGUI main) {
+		_Main = main;
 		_Frame = new JFrame("Vessel Monitoring System");
+		_Frame.addWindowListener(this);
 		_Frame.setSize(700,600);
 		_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_FilterPanel = new FilterPanel();
@@ -33,7 +41,7 @@ public class RadarDisplay {
 		
 		_TabbedPane = new JTabbedPane();
 		
-		_TabbedPane.add(_TabbedPane, VIEW[0]);
+		_TabbedPane.add(_TablePanel, VIEW[0]);
 		_TabbedPane.add(_MapPanel,VIEW[1]);
 		_Frame.setJMenuBar(new MenuBar(_Frame));
 		_Frame.add(_FilterPanel, BorderLayout.WEST);
@@ -67,5 +75,39 @@ public class RadarDisplay {
 			if (filters.get(v.getType())) copy.add(v);
 		}
 		return vessels;
+	}
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowClosing(WindowEvent e) {
+		_Main.stopServer();
+	}
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,17 +14,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Login implements ActionListener {
+public class Login implements ActionListener, WindowListener {
 	MainGUI _Main;
 	JFrame log;
 	JTextField pass;
 	JButton but[] = {new JButton("Login"), new JButton("Exit")};
 	public Login (MainGUI main) {
 		_Main = main;
-		log = new JFrame("Loggin");
+		log = new JFrame("Login");
+		log.addWindowListener(this);
 		log.setSize(200, 150);
 		log.setResizable(false);
-		log.setJMenuBar(new MenuBar(log));
 
 		//Creating fields
 		JLabel label = new JLabel("Enter you password");
@@ -74,6 +75,47 @@ public class Login implements ActionListener {
 			log.dispatchEvent(windowClosing);
 		}
 
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		_Main.stopServer();
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

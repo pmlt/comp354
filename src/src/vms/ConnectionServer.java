@@ -106,7 +106,7 @@ public class ConnectionServer implements Closeable {
 		}
 	}
 	
-	public void stop() throws IOException {
+	public void stop() {
 		_Continue = false;
 	}
 
