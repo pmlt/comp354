@@ -8,6 +8,7 @@ import vms.Alert.AlertType;
 import common.*;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class MapPanel extends JPanel {
 	
 	private List<Vessel> _Vessels;
 	private List<Alert> _Alerts;
+	
+	public MapPanel() {
+		_Vessels = new ArrayList<Vessel>();
+		_Alerts = new ArrayList<Alert>();
+	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
 		_Alerts = alerts;
