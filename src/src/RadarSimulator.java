@@ -25,7 +25,7 @@ public class RadarSimulator {
 		queue = new ArrayDeque<Vessel>();
 		timedQueue = new PriorityQueue<Vessel>();
 		timeCounter = 0;
-		inputFile = new File("src/comp354_vessel.vsf");
+		inputFile = new File("src/simulator/comp354_vessel.vsf");
 		ini();
 	}
 	
