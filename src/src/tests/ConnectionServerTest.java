@@ -83,9 +83,9 @@ public class ConnectionServerTest {
 	public void testManualUpdate() throws IOException {
 		assertNull(lastVessel);
 		Calendar timestamp = Calendar.getInstance();
-		cs.updateObservers(new UpdateData("myid", VesselType.BOAT, new Coord(10,10), new Course(20,20), timestamp));
+		cs.updateObservers(new UpdateData("myid", VesselType.CARGO_BOAT, new Coord(10,10), new Course(20,20), timestamp));
 		assertEquals("myid", lastVessel.getId());
-		assertEquals(VesselType.BOAT, lastVessel.getType());
+		assertEquals(VesselType.CARGO_BOAT, lastVessel.getType());
 		
 		try{
 			assertEquals(new Coord(10,10), lastVessel.getCoord(timestamp));
@@ -158,7 +158,7 @@ public class ConnectionServerTest {
 			
 			//Try sending correct data
 			Calendar curTime = Calendar.getInstance();
-			UpdateData ud = new UpdateData("myid", VesselType.BOAT, new Coord(10, 10), new Course(20, -20), curTime);
+			UpdateData ud = new UpdateData("myid", VesselType.CARGO_BOAT, new Coord(10, 10), new Course(20, -20), curTime);
 			msg = ud.toJSON();
 			Netstring.write(stream, msg.getBytes()); //Write with netstring encoding
 			Thread.sleep(1000); //Allow for overhead of network
@@ -166,7 +166,7 @@ public class ConnectionServerTest {
 			Calendar timestamp = lastVessel.getLastTimestamp();
 			assertEquals(curTime, timestamp);
 			assertEquals("myid", lastVessel.getId());
-			assertEquals(VesselType.BOAT, lastVessel.getType());
+			assertEquals(VesselType.CARGO_BOAT, lastVessel.getType());
 			
 			try{
 				assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));

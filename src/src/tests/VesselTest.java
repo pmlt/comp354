@@ -15,7 +15,7 @@ public class VesselTest {
 	@Test
 	public void test() {
 		String id = "myid";
-		Vessel.VesselType type = Vessel.VesselType.BOAT;
+		Vessel.VesselType type = Vessel.VesselType.PASSENGER_VESSEL;
 		Coord startCoord = new Coord(0,0);
 		Course course = new Course(5,5);
 		Calendar startTime = Calendar.getInstance();

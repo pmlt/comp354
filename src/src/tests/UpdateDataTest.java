@@ -19,7 +19,7 @@ public class UpdateDataTest {
 	@Test
 	public void testJSON() {
 		Calendar timestamp = Calendar.getInstance();
-		UpdateData test = new UpdateData("myid", VesselType.BOAT, new Coord(10, 10), new Course(20, 20), timestamp);
+		UpdateData test = new UpdateData("myid", VesselType.SPEED_BOAT, new Coord(10, 10), new Course(20, 20), timestamp);
 		
 		String testJSON = test.toJSON();
 		UpdateData result = UpdateData.fromJSON(testJSON);
