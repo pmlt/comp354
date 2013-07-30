@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{indentfirst}
+
+\begin{document}
+\title{Project Testing and Delivery Document}
+\author{Team D}
+\date{\today}
+
+\maketitle
+
+\vspace*{3.5in}
+\begin{table}[htbp]
+\caption{Team}
+\begin{center}
+\begin{tabular}{|r | c|}
+\hline
+Name & ID Number \\
+\hline\hline
+Stefanie Lavoie & 1951750 \\
+Pinsonn Laverdure & 9684352 \\
+Ghislain Ledoux & 6376320 \\
+Rigil Malubay & 6262732 \\
+Philippe Milot & 9164111 \\
+Christopher Mukherjee & 6291929 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\pagenumbering{gobble}% Remove page numbers (and reset to 1)
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}% Arabic page numbers (and reset to 1)
+
+\section{Introduction}
+
+% [The introduction of the document provides an overview of the entire document, briefly introducing what are its goals, and what information is to be found in it.]
+
+\section{Testing Report}
+
+% [This section presents all the testing activities undertaken on the final product, as well as all the individual test cases used.]
+
+\subsection{Test Coverage}
+
+\subsubsection{Tested Items}
+
+% [List all tested items, along with the test cases that were applied on this item. For each test item, explain why it was necessary to test it. For instance, all features listed as requirements for each build is a mandatory test item. In addition, identify at least five units (i.e. classes/methods) and explain why they require unit testing due to their importance in the implementation through their frequency of use and/or the severity of the impact of their misbehavior. You can categorize your tested items, e.g. “Requirements”, “Units”, etc.]
+
+\subsubsection{Untested Items of Interest}
+
+% [List all untested items that you find would necessitate testing. Explain how it could be tested, and why it would be important to test.]
+
+\subsection{Test Cases}
+
+% [Description of all the test cases applied on the tested items using various techniques and testing different aspects of the system. The following sections are mandatory testing perspectives. Other sections can be added to provide appropriate additional testing perspectives. All test cases must be presented as to be reproducible, with the exact data and procedure to convey the test, as well as the expected result.]
+
+\subsubsection{Unit Testing}
+
+% In your system, identify 2 testable units (classes, modules or subsystems)
+
+% [For each of these two units, include a list of test cases. Explain what techniques were used to derive these tests, e.g. black box/equivalence partitioning, white box/basis path, etc.]
+
+\subsubsection{Requirements Testing}
+
+% [For each tested requirement, include a list of test cases presented in the form of a concrete scenario of system usage and expected system reaction.]
+
+\subsubsection{Stress Testing}
+
+% Describe potential extreme situations of system usage. Describe the design of tests that would verify system performance under these extreme conditions. Do not perform the tests.
+
+\section{System Delivery}
+
+% [This section provides instructions as to how to install and use the software.]
+
+\subsection{Installation Manual}
+
+% [Exact description explaining how to install the system, from as self-contained compressed file or CD, to the actual execution of the software.]
+
+\subsection{Users Manual}
+
+% [Exact description of how to use the system. All system features should be presented.]
+
+\section{Final cost estimate}
+
+% [This shall consist of a table listing all components of all phases of this project, including the person hours cost of each component of each phase. This should include documentation, design, implementation and testing. Include the meeting minutes with action item and the time log as well]
+
+\end{document}
