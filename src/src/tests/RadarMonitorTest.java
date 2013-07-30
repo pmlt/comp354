@@ -45,6 +45,7 @@ public class RadarMonitorTest {
 		// XXX Additional tests forthcoming
 	}
 	
+	@Test
 	public void testObservers() {
 		RadarMonitor radar = new RadarMonitor();
 		radar.setRange(new Coord(-2000, -2000), new Coord(2000, 2000));
@@ -69,6 +70,7 @@ public class RadarMonitorTest {
 		_ResetUI();
 
 		//Move second boat within low-risk zone
+		time.add(Calendar.SECOND, 1);
 		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(100, 100), new Course(0,0), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(1, ALERTS.size());
@@ -78,7 +80,8 @@ public class RadarMonitorTest {
 		_ResetUI();
 		
 		//Move second boat into high-risk zone, and set course to move away
-		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(0, 0), new Course(150,150), time));
+		time.add(Calendar.SECOND, 1);
+		radar.update(new UpdateData("fakeID2", VesselType.BOAT, new Coord(0, 0), new Course(100,100), time));
 		assertTrue(REFRESH_CALLED);
 		assertEquals(1, ALERTS.size());
 		assertEquals(AlertType.HIGHRISK, ALERTS.get(0).getType());
