@@ -3,8 +3,8 @@ package vms;
 import java.util.*;
 
 import vms.Alert.AlertType;
-import vms.ConnectionServer.Observer;
 
+import common.Coord;
 import common.UpdateData;
 import common.Vessel;
 

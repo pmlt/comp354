@@ -1,4 +1,4 @@
-package vms;
+package common;
 
 public class Coord implements Cloneable {
 	private int x;

@@ -2,8 +2,6 @@ package common;
 
 import java.util.*;
 
-import vms.Coord;
-import vms.Course;
 
 public class Vessel {
 	private VesselType type;

@@ -10,6 +10,8 @@ import vms.Alert.AlertType;
 
 import org.junit.Test;
 
+import common.Coord;
+import common.Course;
 import common.UpdateData;
 import common.Vessel;
 import common.Vessel.VesselType;

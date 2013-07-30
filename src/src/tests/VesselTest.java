@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
-import vms.*;
-
 import org.junit.Test;
 
+import common.Coord;
+import common.Course;
 import common.Vessel;
 
 public class VesselTest {

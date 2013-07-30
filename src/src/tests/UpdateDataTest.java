@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import com.google.gson.JsonSyntaxException;
 
-import vms.Coord;
-import vms.Course;
 
+import common.Coord;
+import common.Course;
 import common.UpdateData;
 import common.Vessel.VesselType;
 

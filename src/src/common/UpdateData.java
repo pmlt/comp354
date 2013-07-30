@@ -4,8 +4,6 @@ import java.util.Calendar;
 
 import common.Vessel.VesselType;
 
-import vms.Coord;
-import vms.Course;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

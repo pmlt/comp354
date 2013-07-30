@@ -1,4 +1,4 @@
-package vms;
+package common;
 
 public class Course implements Cloneable {
 	private int velocityX;

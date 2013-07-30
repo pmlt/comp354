@@ -12,13 +12,13 @@ import java.util.Calendar;
 import org.junit.*;
 import org.protocols.Netstring;
 
+import common.Coord;
+import common.Course;
 import common.UpdateData;
 import common.Vessel;
 import common.Vessel.VesselType;
 
 import vms.ConnectionServer;
-import vms.Coord;
-import vms.Course;
 
 public class ConnectionServerTest {
 	
