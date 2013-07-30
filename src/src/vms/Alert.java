@@ -22,4 +22,7 @@ public class Alert {
 	public List<Vessel> getVessels() {
 		return _Vessels;
 	}
+	public boolean contains(Vessel v) {
+		return _Vessels.contains(v);
+	}
 }
