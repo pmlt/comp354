@@ -31,8 +31,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// XXX TODO
-		// In order:
+		
 		// Create ConnectionServer instance
 		_Server = new ConnectionServer();
 		try {
@@ -52,18 +51,16 @@ public class Main {
 		Thread t = new CSThread();
 		t.start();
 		
-		// Create vms.gui.Login instance, show the window
-		//LoginGUI = new Login();
-		//LoginGUI.show();
-		
-		// After user has logged in, create vms.gui.RadarDisplay instance
+		// Create Main GUI instance, give it the ConnectionServer
 		_MainGUI = new MainGUI(_Server);
 		
-		// Register RadarDisplay instance as observer of RadarMonitor
+		// Register Main GUI instance as observer of RadarMonitor
 		_Monitor.registerObserver(_MainGUI);
 		
-		// Show RadarDisplay window
+		// Start GUI
 		_MainGUI.start();
+		
+		//Main GUI will take care of closing down ConnectionServer
 	}
 
 }

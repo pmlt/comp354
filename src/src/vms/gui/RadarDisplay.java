@@ -49,11 +49,11 @@ public class RadarDisplay implements WindowListener {
 	}
 	public void show(MainGUI.UserIdentity identity) {
 		_CurrentIdentity = identity;
-		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL) {
-			_FilterPanel.setVisible(true);
+		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL_USER) {
+			_FilterPanel.setVisible(false);
 		}
 		else {
-			_FilterPanel.setVisible(false);
+			_FilterPanel.setVisible(true);
 		}
 		_TablePanel.changeIdentity(identity);
 		_Frame.setVisible(true);
@@ -66,7 +66,7 @@ public class RadarDisplay implements WindowListener {
 	}
 	
 	public List<Vessel> filterData(List<Vessel> vessels) {
-		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL) {
+		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL_USER) {
 			return vessels; //No filtering
 		}
 		List<Vessel> copy = new ArrayList<Vessel>();

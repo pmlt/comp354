@@ -10,8 +10,8 @@ import common.Vessel;
 
 public class MainGUI implements RadarMonitor.Observer {
 	public enum UserIdentity {
-		NORMAL, 
-		PRIVILEGED
+		NORMAL_USER, 
+		OPERATOR
 	}
 	private Login _Login;
 	private RadarDisplay _Display;

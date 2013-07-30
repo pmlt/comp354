@@ -155,7 +155,7 @@ public class TablePanel extends JPanel implements ActionListener {
 	}
 	
 	public void changeIdentity(UserIdentity identity) {
-		_OperatorPanel.setVisible(identity == UserIdentity.PRIVILEGED);
+		_OperatorPanel.setVisible(identity == UserIdentity.OPERATOR);
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {

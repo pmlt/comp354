@@ -50,7 +50,6 @@ public class Login implements ActionListener, WindowListener {
 		// Adding Panels to Frame
 		log.add(output, BorderLayout.CENTER);
 		log.add(commands, BorderLayout.SOUTH);
-		log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void show() {
@@ -61,20 +60,23 @@ public class Login implements ActionListener, WindowListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(but[0])) {
 			if (pass.getText().compareTo("op123") == 0) {
-				_Main.showRadar(MainGUI.UserIdentity.PRIVILEGED);
-				log.dispatchEvent(new WindowEvent(log, WindowEvent.WINDOW_CLOSING));
+				_Main.showRadar(MainGUI.UserIdentity.OPERATOR);
+				close();
 			}
 			else if (pass.getText().compareTo("user123") == 0) {
-				_Main.showRadar(MainGUI.UserIdentity.NORMAL);
-				log.dispatchEvent(new WindowEvent(log, WindowEvent.WINDOW_CLOSING));
+				_Main.showRadar(MainGUI.UserIdentity.NORMAL_USER);
+				close();
 			}
 		}
 		else if (e.getSource().equals(but[1])) {
-			//This is the proper way to close
-			WindowEvent windowClosing = new WindowEvent(log, WindowEvent.WINDOW_CLOSING);
-			log.dispatchEvent(windowClosing);
+			close();
 		}
-
+	}
+	
+	public void close() {
+		//This is the proper way to close
+		WindowEvent windowClosing = new WindowEvent(log, WindowEvent.WINDOW_CLOSING);
+		log.dispatchEvent(windowClosing);
 	}
 
 	@Override
