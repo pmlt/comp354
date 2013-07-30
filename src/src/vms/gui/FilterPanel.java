@@ -21,10 +21,10 @@ public class FilterPanel extends JPanel implements ActionListener {
 	static {
 		VESSEL_NAMES = new HashMap<VesselType, String>();
 		VESSEL_NAMES.put(VesselType.SWIMMER, "1 - Human (swimmer)");
-		VESSEL_NAMES.put(VesselType.SWIMMER, "2 - Speed Boat");
-		VESSEL_NAMES.put(VesselType.SWIMMER, "3 - Fishing Boat");
-		VESSEL_NAMES.put(VesselType.SWIMMER, "4 - Cargo Vessel");
-		VESSEL_NAMES.put(VesselType.SWIMMER, "5 - Passenger Vessel");
+		VESSEL_NAMES.put(VesselType.SPEED_BOAT, "2 - Speed Boat");
+		VESSEL_NAMES.put(VesselType.FISHING_BOAT, "3 - Fishing Boat");
+		VESSEL_NAMES.put(VesselType.CARGO_BOAT, "4 - Cargo Vessel");
+		VESSEL_NAMES.put(VesselType.PASSENGER_VESSEL, "5 - Passenger Vessel");
 	}
 	
 	public FilterPanel() {
@@ -41,6 +41,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		}
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		for (VesselType vtype : VesselType.values()) {
