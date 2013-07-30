@@ -59,7 +59,7 @@ Christopher Mukherjee & 6291929 \\
 
 % [Description of all the test cases applied on the tested items using various techniques and testing different aspects of the system. The following sections are mandatory testing perspectives. Other sections can be added to provide appropriate additional testing perspectives. All test cases must be presented as to be reproducible, with the exact data and procedure to convey the test, as well as the expected result.]
 
-\subsubsection{Unit Testing}
+\subsubsection{Unit Testing} % Status: COMPLETE
 
 % In your system, identify 2 testable units (classes, modules or subsystems)
 
@@ -67,16 +67,42 @@ Christopher Mukherjee & 6291929 \\
 
 \paragraph{VesselTest}
 
-The \verb{Vessel} class was extensively tested using JUnit. The test cases were:
+The \verb|Vessel| class was extensively tested using JUnit. All test cases were designed under the black box principle. The test cases were:
 
-\begin{description}
-  \item[JavaBean functionality] Test all basic accessor/mutator methods.
-  \item[Coordinate calculation] Project current coordinates based on last-known coordinates, course, and time elapsed.
-  \item[Error conditions] Test that the class properly throws whenever bad data is supplied.
+\subparagraph{JavaBean functionality}
+Test all basic accessor/mutator methods.
+
+\subparagraph{Coordinate calculation}
+Project current coordinates based on last-known coordinates, course, and time elapsed.
+
+\subparagraph{Error conditions}
+Test that the class properly throws whenever bad data is supplied.
+
+\paragraph{RadarMonitorTest}
+
+The \verb|RadarMonitor| class was extensively tested using JUnit. All test cases were designed under the black box principle. The test cases were:
+
+\subparagraph{Manual refresh}
+Check that when the RadarMonitor is manually refreshed, all its observers are also refreshed.
+
+\subparagraph{Manual update}
+Check that when the RadarMonitor is manually fed new data, the data is forwarded to all observers.
+
+\subparagraph{Active alert detection}
+Check that when the RadarMonitor is manually fed new data, any alerts triggered by the update are properly detected and observers are notified.
+
+\subparagraph{Passive alert detection}
+Check that when vessels passively drift toward each other over time, all relevant alerts are detected and observers are notified.
+
+\subparagraph{Radar range}
+Check that when ships drift outside the radar range, they are no longer tracked by the monitor.
 
 \subsubsection{Requirements Testing}
 
 % [For each tested requirement, include a list of test cases presented in the form of a concrete scenario of system usage and expected system reaction.]
+
+\paragraph{Requirement 1: Vessel list displays latest information.}
+
 
 \subsubsection{Stress Testing}
 
