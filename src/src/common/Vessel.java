@@ -11,8 +11,15 @@ public class Vessel {
 	private Calendar lastTimestamp;
 	
 	public enum VesselType {
-		BOAT
-		// XXX Add all supported types here
+		SWIMMER(1), 
+		SPEED_BOAT(2), 
+		FISHING_BOAT(3), 
+		CARGO_BOAT(4), 
+		PASSENGER_VESSEL(5);
+		
+		private int value;
+		private VesselType(int v) { value = v; }
+		public int getValue() { return value; }
 	}
 	
 	public Vessel(String id, VesselType type) {
@@ -49,6 +56,19 @@ public class Vessel {
 		if (timestamp.before(lastTimestamp))
 			throw new IllegalStateException("Trying to read an old timestamp");
 		return course;
+	}
+	
+	public double getSpeed(Calendar timestamp) throws IllegalStateException {
+		Course c = getCourse(timestamp);
+		return Math.sqrt(Math.pow(c.xVel(), 2.0) + Math.pow(c.yVel(), 2.0));
+	}
+	
+	public double getDistance(Calendar timestamp) throws IllegalStateException {
+		Coord then = getCoord(getLastTimestamp());
+		Coord now = getCoord(timestamp);
+		int deltaX = now.x() - then.x();
+		int deltaY = now.y() - then.y();
+		return Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
 	}
 	
 	public Calendar getLastTimestamp() {
