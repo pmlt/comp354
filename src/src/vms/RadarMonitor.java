@@ -56,7 +56,8 @@ public class RadarMonitor implements ConnectionServer.Observer {
 			newVessel.update(data);
 			_Vessels.add(newVessel);
 		}
-		
+		//Must call refresh after the update is done!
+		refresh(data.Timestamp);
 	}
 
 	@Override
@@ -67,10 +68,13 @@ public class RadarMonitor implements ConnectionServer.Observer {
 			for(int j=i+1; j<_Vessels.size(); j++){
 				String risk = "none";
 				Alert newAlert;
+				Vessel v1, v2;
 				
-				try{
-					Coord v1Coords = _Vessels.get(i).getCoord(timestamp);
-					Coord v2Coords = _Vessels.get(j).getCoord(timestamp);
+				try {
+					v1 = _Vessels.get(i);
+					v2 = _Vessels.get(j);
+					Coord v1Coords = v1.getCoord(timestamp);
+					Coord v2Coords = v2.getCoord(timestamp);
 					
 					double deltaX = v1Coords.x() - v2Coords.x();
 					double deltaY = v1Coords.y() - v2Coords.y();
@@ -78,12 +82,12 @@ public class RadarMonitor implements ConnectionServer.Observer {
 					
 					if (distance < 50){
 						risk = "high";
-						newAlert = new Alert(AlertType.HIGHRISK, _Vessels);
+						newAlert = createAlert(AlertType.HIGHRISK, v1, v2);
 						_Alerts.add(newAlert);
 					}
 					else if (distance < 200 && risk != "high"){
 						risk = "low";
-						newAlert = new Alert(AlertType.LOWRISK, _Vessels);
+						newAlert = createAlert(AlertType.LOWRISK, v1, v2);
 						_Alerts.add(newAlert);
 					}
 				}catch (IllegalStateException e) {
@@ -95,5 +99,12 @@ public class RadarMonitor implements ConnectionServer.Observer {
 		for (int i=0; i < _Observers.size(); i++) {
 			_Observers.get(i).refresh(_Alerts,_Vessels);
 		}
+	}
+	
+	private Alert createAlert(AlertType t, Vessel v1, Vessel v2) {
+		List<Vessel> pair = new ArrayList<Vessel>();
+		pair.add(v1);
+		pair.add(v2);
+		return new Alert(t, pair);
 	}
 }
