@@ -4,5 +4,6 @@ Vessel Monitoring System
 
 ### Organization of repository
 
-* **docs**: Contains all project documentation in LaTeX format
-* **src**: Contains an Eclipse project with all the Java code.
+* **Deliverables**: Contains all project deliverables in LaTeX format.
+* **Meeting Minutes**: Contains all recorded meeting minutes in Microsoft Word format.
+* **code**: Contains the Eclipse project with all the Java code and the external GSON library used.
