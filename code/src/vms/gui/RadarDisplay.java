@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
 
 import common.Vessel;
 import common.Vessel.VesselType;
@@ -22,10 +24,12 @@ public class RadarDisplay implements WindowListener {
 	MainGUI _Main;
 	
 	JFrame _Frame;
+	JPanel _LeftPane;
 	FilterPanel _FilterPanel;
 	TablePanel _TablePanel;
 	MapPanel _MapPanel;
 	JTabbedPane _TabbedPane;
+	AlertPanel _AlertPanel;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
@@ -38,13 +42,20 @@ public class RadarDisplay implements WindowListener {
 		_FilterPanel = new FilterPanel();
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
+		_LeftPane = new JPanel();
 		
-		_TabbedPane = new JTabbedPane();
 		
+		_TabbedPane = new JTabbedPane();		
 		_TabbedPane.add(_TablePanel, VIEW[0]);
 		_TabbedPane.add(_MapPanel,VIEW[1]);
+		
+		
+		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.LINE_AXIS));	
+		_LeftPane.add(_AlertPanel);
+		_LeftPane.add(_FilterPanel);
+
 		_Frame.setJMenuBar(new MenuBar(_Frame));
-		_Frame.add(_FilterPanel, BorderLayout.WEST);
+		_Frame.add(_LeftPane, BorderLayout.WEST);
 		_Frame.add(_TabbedPane, BorderLayout.CENTER);
 	}
 	public void show(MainGUI.UserIdentity identity) {
@@ -63,6 +74,7 @@ public class RadarDisplay implements WindowListener {
 		vessels = filterData(vessels);
 		_TablePanel.update(alerts, vessels);
 		_MapPanel.update(alerts, vessels);
+		_AlertPanel.update(alerts, vessels);
 	}
 	
 	public List<Vessel> filterData(List<Vessel> vessels) {
