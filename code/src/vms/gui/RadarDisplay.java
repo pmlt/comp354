@@ -40,6 +40,7 @@ public class RadarDisplay implements WindowListener {
 		_Frame.setSize(700,600);
 		_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_FilterPanel = new FilterPanel();
+		_AlertPanel = new AlertPanel();
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
 		_LeftPane = new JPanel();

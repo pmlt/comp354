@@ -25,4 +25,14 @@ public class Coord implements Cloneable {
 	public Object clone() {
 		return new Coord(x, y);
 	}
+	
+	public boolean isInRange(Object lowerLimit, Object upperLimit){
+		if (lowerLimit == null || upperLimit == null) return false;
+	    if (!(lowerLimit instanceof Coord) || !(upperLimit instanceof Coord))return false;
+	    
+	    Coord lLimit = (Coord)lowerLimit;
+	    Coord uLimit = (Coord) upperLimit;
+	    
+	    return x > lLimit.x && x < uLimit.x && y > lLimit.y && y < uLimit.y;
+	}
 }

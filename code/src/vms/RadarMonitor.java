@@ -64,36 +64,53 @@ public class RadarMonitor implements ConnectionServer.Observer {
 	public void refresh(Calendar timestamp) {
 
 		ArrayList<Alert> _Alerts = new ArrayList<Alert>();
+		ArrayList<Integer> removeVesselsID = new ArrayList<Integer>();
+		
 		for(int i=0; i< _Vessels.size(); i++){
-			for(int j=i+1; j<_Vessels.size(); j++){
-				String risk = "none";
-				Alert newAlert;
-				Vessel v1, v2;
+			Vessel v1;
+			v1 = _Vessels.get(i);
+			
+			try {
+				Coord v1Coords = v1.getCoord(timestamp);
 				
-				try {
-					v1 = _Vessels.get(i);
-					v2 = _Vessels.get(j);
-					Coord v1Coords = v1.getCoord(timestamp);
-					Coord v2Coords = v2.getCoord(timestamp);
-					
-					double deltaX = v1Coords.x() - v2Coords.x();
-					double deltaY = v1Coords.y() - v2Coords.y();
-					double distance = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
-					
-					if (distance < 50){
-						risk = "high";
-						newAlert = createAlert(AlertType.HIGHRISK, v1, v2);
-						_Alerts.add(newAlert);
+				if(v1Coords.isInRange(lowerRange, upperRange)){
+					for(int j=i+1; j<_Vessels.size(); j++){
+						String risk = "none";
+						Alert newAlert;
+						Vessel v2;
+						
+						v2 = _Vessels.get(j);
+						Coord v2Coords = v2.getCoord(timestamp);
+						
+						double deltaX = v1Coords.x() - v2Coords.x();
+						double deltaY = v1Coords.y() - v2Coords.y();
+						double distance = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
+						
+						if (distance < 50){
+							risk = "high";
+							newAlert = createAlert(AlertType.HIGHRISK, v1, v2);
+							_Alerts.add(newAlert);
+						}
+						else if (distance < 200 && risk != "high"){
+							risk = "low";
+							newAlert = createAlert(AlertType.LOWRISK, v1, v2);
+							_Alerts.add(newAlert);
+						}
 					}
-					else if (distance < 200 && risk != "high"){
-						risk = "low";
-						newAlert = createAlert(AlertType.LOWRISK, v1, v2);
-						_Alerts.add(newAlert);
-					}
-				}catch (IllegalStateException e) {
-					System.out.println(e.getMessage());
+				}
+				
+				else{
+					removeVesselsID.add(i);
 				}
 			}
+			
+			catch (IllegalStateException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		for(int i = 0; i < removeVesselsID.size(); i++){
+			_Vessels.remove(removeVesselsID.get(i));
 		}
 		
 		for (int i=0; i < _Observers.size(); i++) {
