@@ -1,6 +1,7 @@
 package vms.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ public class AlertPanel extends JPanel {
 
 	public AlertPanel() {
 		_Alerts = new ArrayList<Alert>();
+		this.setMaximumSize(new Dimension(280, 140));
 	}
 
 	public void update(final List<Alert> alerts) {
@@ -49,7 +51,7 @@ public class AlertPanel extends JPanel {
 		if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
 			g2.setColor(Color.yellow);
 		
-		g2.fillOval(wWidth/2, wHeight/2, wWidth, wHeight);
+		g2.fillOval(0, 0, wWidth, wHeight);
 	}
 
 }

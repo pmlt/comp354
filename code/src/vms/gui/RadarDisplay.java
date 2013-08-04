@@ -51,7 +51,7 @@ public class RadarDisplay implements WindowListener {
 		_TabbedPane.add(_MapPanel,VIEW[1]);
 		
 		
-		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.LINE_AXIS));	
+		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);
 		_LeftPane.add(_FilterPanel);
 
