@@ -134,6 +134,8 @@ public class TablePanel extends JPanel implements ActionListener {
 		
 		_OperatorPanel = new JPanel();
 		_OperatorPanel.setLayout(new GridLayout(2, 4));
+		
+/*
 		JPanel empty1 = new JPanel();
 		JPanel empty2 = new JPanel();
 		
@@ -151,7 +153,7 @@ public class TablePanel extends JPanel implements ActionListener {
 		_OperatorPanel.add(_NameList);
 		_OperatorPanel.add(_OrderList);
 		add(_OperatorPanel, BorderLayout.SOUTH);
-		
+*/		
 	}
 	
 	public void changeIdentity(UserIdentity identity) {

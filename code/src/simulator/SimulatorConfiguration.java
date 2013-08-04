@@ -87,21 +87,15 @@ public class SimulatorConfiguration {
 						Calendar.getInstance());
 				sc.addVessel(v);
 			}
-						/*
-						Double.parseDouble(a[3]),
-						Double.parseDouble(a[4]),
-						Double.parseDouble(a[5]),
-						Double.parseDouble(a[6]),
-						Double.parseDouble(a[7])));
+/*
 			
 			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) > 0) {
-				timedQueue.add(new Vessel(a[1],
-						Integer.parseInt(a[2]),
-						Double.parseDouble(a[3]),
-						Double.parseDouble(a[4]),
-						Double.parseDouble(a[5]),
-						Double.parseDouble(a[6]),
-						Double.parseDouble(a[7])));
+				Vessel v = new Vessel(a[1],
+						VesselType.values()[Integer.parseInt(a[2])]);
+				v.update(new Coord(Integer.parseInt(a[3]), Integer.parseInt(a[4])),
+						new Course(Integer.parseInt(a[5]), Integer.parseInt(a[6])),
+						Calendar.getInstance());
+				sc.addVessel(v);
 			}
 			**/
 			
