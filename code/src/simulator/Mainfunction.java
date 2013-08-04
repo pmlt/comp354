@@ -43,8 +43,13 @@ public class Mainfunction {
 				SimulatorConfiguration.parseVSF(br);
 				br.close();//	
 				// create connection 
-				ConnectionClient sc=new ConnectionClient();
-				sc.connect(host, port);
+				ConnectionClient cc=new ConnectionClient();
+				if(cc.isReady()){
+					System.out.println("ready");
+					cc.connect(host, port);
+					}
+				else System.out.println("not REAdy");
+				
 					
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
