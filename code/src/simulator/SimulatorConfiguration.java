@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import common.Coord;
+import common.Course;
 import common.Vessel;
-
+import common.Vessel.VesselType;
 public class SimulatorConfiguration {
 	private int _StartDelay;
 	private int _TimeInterval;
@@ -76,10 +79,15 @@ public class SimulatorConfiguration {
 				sc.setTotalTime((int) Double.parseDouble(a[1]));
 			else if (a[0].trim().compareToIgnoreCase("RANGE") == 0)
 				sc.setRadarRange(Integer.parseInt(a[1]));
-			/*
-			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) == 0)
-				sc.addVessel(new Vessel(a[1],
-						Integer.parseInt(a[2]),
+			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) == 0) {
+				Vessel v = new Vessel(a[1],
+						VesselType.values()[Integer.parseInt(a[2])]);
+				v.update(new Coord(Integer.parseInt(a[3]), Integer.parseInt(a[4])),
+						new Course(Integer.parseInt(a[5]), Integer.parseInt(a[6])),
+						Calendar.getInstance());
+				sc.addVessel(v);
+			}
+						/*
 						Double.parseDouble(a[3]),
 						Double.parseDouble(a[4]),
 						Double.parseDouble(a[5]),

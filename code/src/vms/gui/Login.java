@@ -93,7 +93,7 @@ public class Login implements ActionListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		_Main.stopServer();
+//		_Main.stopServer();
 	}
 
 	@Override

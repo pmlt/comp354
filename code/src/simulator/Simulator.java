@@ -24,8 +24,9 @@ public class Simulator {
 		
 		Calendar startTime = Calendar.getInstance(); //Record time start
 		long timeElapsed = getTimeElapsed(startTime);
-		while (timeElapsed < _Configuration.getTotalTime()) {
+		while (timeElapsed != _Configuration.getTotalTime()) {
 			List<Vessel> list = _Configuration.getVessels();
+//			System.out.println(list.get(0).getCoord(Calendar.getInstance()).x());
 			try {
 				for (int i=0; i < list.size(); i++) {
 					UpdateData data = list.get(i).getUpdateData(Calendar.getInstance());

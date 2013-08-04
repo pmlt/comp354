@@ -40,16 +40,18 @@ public class Mainfunction {
 				 */
 				BufferedReader br = new BufferedReader(new FileReader("src/simulator/"+fname[2]));
 				//InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
-				SimulatorConfiguration.parseVSF(br);
+				SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br);
 				br.close();//	
+				
+				Simulator sim = new Simulator(config);
 				// create connection 
 				ConnectionClient cc=new ConnectionClient();
+				cc.connect(host, port);
+				sim.start(cc);
 				if(cc.isReady()){
 					System.out.println("ready");
-					cc.connect(host, port);
 					}
 				else System.out.println("not REAdy");
-				
 					
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

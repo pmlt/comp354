@@ -41,7 +41,7 @@ public class MainGUI implements RadarMonitor.Observer {
 		_Display.show(identity);
 	}
 	public void stopServer() {
-		System.out.println("Stopping server");
+//		System.out.println("Stopping server");
 		_Server.stop();
 	}
 }
