@@ -73,6 +73,7 @@ public class RadarDisplay implements WindowListener {
 	
 	public void refresh(List<Alert> alerts, List<Vessel> vessels) {
 		vessels = filterData(vessels);
+		vessels = _TablePanel.sort(vessels);
 		_TablePanel.update(alerts, vessels);
 		_MapPanel.update(alerts, vessels);
 		_AlertPanel.update(alerts);
@@ -85,9 +86,11 @@ public class RadarDisplay implements WindowListener {
 		List<Vessel> copy = new ArrayList<Vessel>();
 		Map<VesselType, Boolean> filters = _FilterPanel.getActiveFilters();
 		for (Vessel v : vessels) {
-			if (filters.get(v.getType())) copy.add(v);
+			if (filters.get(v.getType())) {
+				copy.add(v);
+			}
 		}
-		return vessels;
+		return copy;
 	}
 	@Override
 	public void windowActivated(WindowEvent e) {

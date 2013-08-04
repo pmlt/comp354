@@ -19,7 +19,7 @@ public class Main {
 			try {
 				_Server.start();
 				//Server was stopped!
-//				_Server.close();
+				_Server.close();
 			} catch (IOException e) {
 				System.out.println(
 					"ConnectionServer threw an exception: " + e.getMessage());
