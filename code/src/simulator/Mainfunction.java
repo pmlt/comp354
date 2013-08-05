@@ -34,28 +34,31 @@ public class Mainfunction {
 		// Opening VSf file fore reading 
 			try {
 				/*
-				 * open the vsf file 
-				 * read the configuration file 
-				 * create the configuration 
+				 * 	1) Parse command-line arguments to obtain host, port, and vsf filename  Done!
+					2) Open VSF file for reading (Done!)
+					3) Call SimulatorConfiguration.parseVSF(), which returns config instance(DOne!)
+					4) Close file(DOne!)
+					5) Create ConnectionClient instance(DOne!)
+					6) Connect to the VMS (DONE !)
+					7) Create Simulator instance, passing the config(DONE!)
+					8) Call simulator.start(), passing the connection client instance.(DONE !)
+					8) When start() returns, we are done; close ConnectionClient and exit(NOT SURE)
 				 */
 				BufferedReader br = new BufferedReader(new FileReader("src/simulator/"+fname[2]));
 				//InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
 				SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br);
 				br.close();//	
 				
-				Simulator sim = new Simulator(config);
-				// create connection 
 				ConnectionClient cc=new ConnectionClient();
 				cc.connect(host, port);
+				
+				Simulator sim = new Simulator(config);
 				sim.start(cc);
-				if(cc.isReady()){
-					System.out.println("ready");
-					}
-				else System.out.println("not REAdy");
-					
+				
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
-				System.out.println("File not find");
+				System.out.println("File not found");
 			}
 			
 				
