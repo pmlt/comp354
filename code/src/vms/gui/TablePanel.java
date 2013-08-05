@@ -80,7 +80,8 @@ public class TablePanel extends JPanel implements ActionListener {
 			case 2: return v.getCoord(Calendar.getInstance()).x();
 			case 3: return v.getCoord(Calendar.getInstance()).y();
 			case 4: return v.getSpeed(Calendar.getInstance());
-			case 5: return v.getCourse(Calendar.getInstance()).toString();
+			case 5: return "x: " +v.getCourse(Calendar.getInstance()).xVel() + ", y: " + 
+			v.getCourse(Calendar.getInstance()).yVel();
 			case 6: return v.getDistance(Calendar.getInstance());
 			case 7: return v.getLastTimestamp().getTimeInMillis();
 			case 8: 

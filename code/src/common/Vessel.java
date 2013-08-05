@@ -56,6 +56,7 @@ public class Vessel {
 	public Course getCourse(Calendar timestamp) throws IllegalStateException {
 		if (timestamp.before(lastTimestamp))
 			throw new IllegalStateException("Trying to read an old timestamp");
+		
 		return course;
 	}
 	
