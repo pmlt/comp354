@@ -125,6 +125,8 @@ public class TablePanel extends JPanel implements ActionListener {
 		_Table.setPreferredScrollableViewportSize(new Dimension(1000, 440));
 		_Table.setOpaque(true);
 		_Table.setAutoCreateRowSorter(true);
+		_Table.getColumnModel().getColumn(7).setPreferredWidth(170);
+
 		for (int i=0; i<columnNames.length; i++) {
 			_Table.getColumn(columnNames[i]).setCellRenderer(renderer);
 		}
