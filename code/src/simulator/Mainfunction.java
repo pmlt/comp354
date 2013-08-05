@@ -110,6 +110,11 @@ public class Mainfunction {
 	//validation of ip adress
 	public static boolean Validip(String ipadress)
 	{
+		if (ipadress.equalsIgnoreCase("localhost")){
+			return true;
+		}
+		else {
+			
 		String[] numbers = ipadress.split("\\.");
 		if(numbers.length!=4)
 		{
@@ -121,6 +126,7 @@ public class Mainfunction {
 			if((i<0)||(i>255)){return false;}
 		}
 		return true;
+		}
 
 	}
 	//validation of file name 
