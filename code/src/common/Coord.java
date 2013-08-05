@@ -9,10 +9,10 @@ public class Coord implements Cloneable {
 		this.y = y;
 	}
 	public double x() {
-		return x;
+		return Math.floor(x * 1e5) / 1e5;
 	}
 	public double y() {
-		return y;
+		return Math.floor(y * 1e5) / 1e5;
 	}
 	@Override
 	public boolean equals(Object o) {

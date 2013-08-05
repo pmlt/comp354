@@ -61,7 +61,8 @@ public class Vessel {
 	
 	public double getSpeed(Calendar timestamp) throws IllegalStateException {
 		Course c = getCourse(timestamp);
-		return Math.sqrt(Math.pow(c.xVel(), 2.0) + Math.pow(c.yVel(), 2.0));
+		double precision = Math.sqrt(Math.pow(c.xVel(), 2.0) + Math.pow(c.yVel(), 2.0));
+		return Math.floor(precision * 1e5) / 1e5;
 	}
 	
 	public double getDistance(Calendar timestamp) throws IllegalStateException {
@@ -69,7 +70,8 @@ public class Vessel {
 		Coord now = getCoord(timestamp);
 		double deltaX = now.x() - then.x();
 		double deltaY = now.y() - then.y();
-		return Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
+		double precision = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
+		return Math.floor(precision * 1e5) / 1e5;
 	}
 	
 	public Calendar getLastTimestamp() {

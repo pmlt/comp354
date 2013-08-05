@@ -9,10 +9,10 @@ public class Course implements Cloneable {
 		velocityY = yVel;
 	}
 	public double xVel() {
-		return velocityX;
+		return Math.floor(velocityX * 1e5) / 1e5;
 	}
 	public double yVel() {
-		return velocityY;
+		return Math.floor(velocityY * 1e5) / 1e5;
 	}
 	@Override
 	public boolean equals(Object o) {
