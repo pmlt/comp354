@@ -80,8 +80,11 @@ public class SimulatorConfiguration {
 			else if (a[0].trim().compareToIgnoreCase("RANGE") == 0)
 				sc.setRadarRange(Integer.parseInt(a[1]));
 			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) == 0) {
-				Vessel v = new Vessel(a[1],
-						VesselType.values()[Integer.parseInt(a[2])]);
+				Vessel v = null;
+				if (Integer.parseInt(a[2])-1 >= 0 && Integer.parseInt(a[2])-1 < 5)
+					v = new Vessel(a[1], VesselType.values()[Integer.parseInt(a[2])-1]);
+				else
+					v = new Vessel(a[1], VesselType.values()[5]);
 				v.update(new Coord(Integer.parseInt(a[3]), Integer.parseInt(a[4])),
 						new Course(Integer.parseInt(a[5]), Integer.parseInt(a[6])),
 						Calendar.getInstance());

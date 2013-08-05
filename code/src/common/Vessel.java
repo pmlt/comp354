@@ -15,7 +15,8 @@ public class Vessel {
 		SPEED_BOAT(2), 
 		FISHING_BOAT(3), 
 		CARGO_BOAT(4), 
-		PASSENGER_VESSEL(5);
+		PASSENGER_VESSEL(5),
+		UNKNOWN(6);
 		
 		private int value;
 		private VesselType(int v) { value = v; }

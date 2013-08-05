@@ -37,7 +37,7 @@ public class RadarDisplay implements WindowListener {
 		_Main = main;
 		_Frame = new JFrame("Vessel Monitoring System");
 		_Frame.addWindowListener(this);
-		_Frame.setSize(700,600);
+		_Frame.setSize(1300,600);
 		_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_FilterPanel = new FilterPanel();
 		_AlertPanel = new AlertPanel();

@@ -121,7 +121,7 @@ public class TablePanel extends JPanel implements ActionListener {
 	public TablePanel() {
 		RiskColor renderer = new RiskColor();
 		_Table = new JTable(_TableModel);
-		_Table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		_Table.setPreferredScrollableViewportSize(new Dimension(1000, 440));
 		_Table.setOpaque(true);
 		_Table.setAutoCreateRowSorter(true);
 		for (int i=0; i<columnNames.length; i++) {
