@@ -101,7 +101,7 @@ public class SimulatorConfiguration {
 			
 		} // END OF WHILE LOOP
 		
-		// XXX TODO by Pinsson; set properties of sc by reading file
+		//
 		return sc;
 	}
 }

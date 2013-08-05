@@ -53,8 +53,8 @@ public class Mainfunction {
 				cc.connect(host, port);
 				
 				Simulator sim = new Simulator(config);
-				if (cc.isReady()){
-					sim.start(cc);
+				while (cc.isReady()){
+					sim.start(cc);	
 				}
 				cc.close();
 				
