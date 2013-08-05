@@ -53,7 +53,12 @@ public class Mainfunction {
 				cc.connect(host, port);
 				
 				Simulator sim = new Simulator(config);
-				sim.start(cc);
+				if (cc.isReady()){
+					sim.start(cc);
+				}
+				cc.close();
+				
+				
 				
 				
 			} catch (FileNotFoundException e) {
