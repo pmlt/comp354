@@ -24,7 +24,7 @@ public class Simulator {
 		
 		Calendar startTime = Calendar.getInstance(); //Record time start
 		long timeElapsed = getTimeElapsed(startTime);
-		while (timeElapsed != _Configuration.getTotalTime()) {
+		while (timeElapsed <= _Configuration.getTotalTime()) {
 			List<Vessel> list = _Configuration.getVessels();
 //			System.out.println(list.get(0).getCoord(Calendar.getInstance()).x());
 			try {
@@ -46,6 +46,6 @@ public class Simulator {
 	}
 	
 	public long getTimeElapsed(Calendar start) {
-		return Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis() / 1000;
+		return (long) ((Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis())/ 1000.0);
 	}
 }
