@@ -42,8 +42,8 @@ public class Vessel {
 		time = time / 1000; //Convert to seconds
 		
 		if (time > 0){
-			int x = (int)(coords.x() + course.xVel()*time);
-			int y = (int)(coords.y() + course.yVel()*time);
+			double x = (double)(coords.x() + course.xVel()*time);
+			double y = (double)(coords.y() + course.yVel()*time);
 			return new Coord(x, y);
 		}
 		
@@ -67,8 +67,8 @@ public class Vessel {
 	public double getDistance(Calendar timestamp) throws IllegalStateException {
 		Coord then = getCoord(getLastTimestamp());
 		Coord now = getCoord(timestamp);
-		int deltaX = now.x() - then.x();
-		int deltaY = now.y() - then.y();
+		double deltaX = now.x() - then.x();
+		double deltaY = now.y() - then.y();
 		return Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
 	}
 	

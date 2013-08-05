@@ -1,17 +1,17 @@
 package common;
 
 public class Coord implements Cloneable {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
-	public Coord(int x, int y) {
+	public Coord(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-	public int x() {
+	public double x() {
 		return x;
 	}
-	public int y() {
+	public double y() {
 		return y;
 	}
 	@Override

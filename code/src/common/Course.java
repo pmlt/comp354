@@ -1,17 +1,17 @@
 package common;
 
 public class Course implements Cloneable {
-	private int velocityX;
-	private int velocityY;
+	private double velocityX;
+	private double velocityY;
 	
-	public Course(int xVel, int yVel) {
+	public Course(double xVel, double yVel) {
 		velocityX = xVel;
 		velocityY = yVel;
 	}
-	public int xVel() {
+	public double xVel() {
 		return velocityX;
 	}
-	public int yVel() {
+	public double yVel() {
 		return velocityY;
 	}
 	@Override
