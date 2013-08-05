@@ -82,7 +82,7 @@ public class TablePanel extends JPanel implements ActionListener {
 			case 4: return v.getSpeed(Calendar.getInstance());
 			case 5: return v.getCourse(Calendar.getInstance()).toString();
 			case 6: return v.getDistance(Calendar.getInstance());
-			case 7: return v.getLastTimestamp();
+			case 7: return v.getLastTimestamp().getTimeInMillis();
 			case 8: 
 				for(Alert a : _Alerts) {
 					if (a.contains(v)) return a.getType().toString();

@@ -61,11 +61,11 @@ public class Login implements ActionListener, WindowListener {
 		if (e.getSource().equals(but[0])) {
 			if (pass.getText().compareTo("op123") == 0) {
 				_Main.showRadar(MainGUI.UserIdentity.OPERATOR);
-				close();
+				log.hide();
 			}
 			else if (pass.getText().compareTo("user123") == 0) {
 				_Main.showRadar(MainGUI.UserIdentity.NORMAL_USER);
-				close();
+				log.hide();
 			}
 		}
 		else if (e.getSource().equals(but[1])) {
@@ -93,7 +93,7 @@ public class Login implements ActionListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-//		_Main.stopServer();
+		_Main.stopServer();
 	}
 
 	@Override

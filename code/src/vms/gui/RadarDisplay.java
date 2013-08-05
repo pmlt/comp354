@@ -73,7 +73,6 @@ public class RadarDisplay implements WindowListener {
 	
 	public void refresh(List<Alert> alerts, List<Vessel> vessels) {
 		vessels = filterData(vessels);
-		vessels = _TablePanel.sort(vessels);
 		_TablePanel.update(alerts, vessels);
 		_MapPanel.update(alerts, vessels);
 		_AlertPanel.update(alerts);
