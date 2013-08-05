@@ -55,7 +55,7 @@ public class RadarDisplay implements WindowListener {
 		_LeftPane.add(_AlertPanel);
 		_LeftPane.add(_FilterPanel);
 
-		_Frame.setJMenuBar(new MenuBar(_Frame));
+		_Frame.setJMenuBar(new MenuBar(_Frame, main));
 		_Frame.add(_LeftPane, BorderLayout.WEST);
 		_Frame.add(_TabbedPane, BorderLayout.CENTER);
 	}
@@ -66,8 +66,8 @@ public class RadarDisplay implements WindowListener {
 			_LeftPane.setVisible(false);
 		}
 		else {
-			_FilterPanel.setVisible(true);
-			_LeftPane.setVisible(false);
+			//			_FilterPanel.setVisible(true);
+			_LeftPane.setVisible(true);
 		}
 		_TablePanel.changeIdentity(identity);
 		_Frame.setVisible(true);

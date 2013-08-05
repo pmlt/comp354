@@ -14,9 +14,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	 */
 	private static final long serialVersionUID = -8761848412891724604L;
 	private JFrame _ParentWindow;
+	private MainGUI _Main;
 	
-	public MenuBar(JFrame window) {
+	public MenuBar(final JFrame window, final MainGUI main) {
 		_ParentWindow = window;
+		_Main = main;
 		add(createFileMenu());
 	}
 
@@ -26,15 +28,28 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		
 		JMenuItem menuItem = new JMenuItem("Exit");
 		menuItem.addActionListener(this);
-		menuItem.getAccessibleContext().setAccessibleDescription("Exits the program");
+		menuItem.getAccessibleContext().setAccessibleDescription("Exits the program.");
 		
+		JMenuItem menuItem2 = new JMenuItem("Logout");
+		menuItem2.addActionListener(this);
+		menuItem2.getAccessibleContext().setAccessibleDescription("Log out of program.");
+		
+		menu.add(menuItem2);
 		menu.add(menuItem);
 
 		return menu;
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		WindowEvent windowClosing = new WindowEvent(_ParentWindow, WindowEvent.WINDOW_CLOSING);
-		_ParentWindow.dispatchEvent(windowClosing);
+		if (arg0.getActionCommand().compareToIgnoreCase("Logout") == 0 ) {
+			_ParentWindow.hide();
+			_Main.showLogin();
+		}
+		else if (arg0.getActionCommand().compareToIgnoreCase("Exit") == 0) {
+			WindowEvent windowClosing = new WindowEvent(_ParentWindow, WindowEvent.WINDOW_CLOSING);
+			_ParentWindow.dispatchEvent(windowClosing);			
+		}
+		
 	}
 }
+ 
