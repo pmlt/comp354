@@ -62,18 +62,17 @@ public class RadarMonitor implements ConnectionServer.Observer {
 
 	@Override
 	public void refresh(Calendar timestamp) {
-
 		ArrayList<Alert> _Alerts = new ArrayList<Alert>();
 		ArrayList<Integer> removeVesselsID = new ArrayList<Integer>();
 		
 		for(int i=0; i< _Vessels.size(); i++){
 			Vessel v1;
 			v1 = _Vessels.get(i);
-			
 			try {
 				Coord v1Coords = v1.getCoord(timestamp);
 				
 				if(v1Coords.isInRange(lowerRange, upperRange)){
+					System.out.println(_Vessels.size());
 					for(int j=i+1; j<_Vessels.size(); j++){
 						String risk = "none";
 						Alert newAlert;
@@ -85,13 +84,12 @@ public class RadarMonitor implements ConnectionServer.Observer {
 						double deltaX = v1Coords.x() - v2Coords.x();
 						double deltaY = v1Coords.y() - v2Coords.y();
 						double distance = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
-						
 						if (distance < 50){
 							risk = "high";
 							newAlert = createAlert(AlertType.HIGHRISK, v1, v2);
 							_Alerts.add(newAlert);
 						}
-						else if (distance < 200 && risk != "high"){
+						if (distance < 200 && risk != "high"){
 							risk = "low";
 							newAlert = createAlert(AlertType.LOWRISK, v1, v2);
 							_Alerts.add(newAlert);
