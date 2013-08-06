@@ -112,4 +112,11 @@ public class Vessel {
 		
 		return new UpdateData(id, type, tempCoords, tempCourse, timestamp);
 	}
+	
+	public boolean equals(Object other){
+		Vessel vOther = (Vessel)other;
+		if(id.equals(vOther.getId()) && type == vOther.getType())
+			return true;
+		return false;
+	}
 }
