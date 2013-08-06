@@ -1,17 +1,22 @@
 package simulator;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.net.SocketException;
+import java.net.InetSocketAddress;
 import java.text.ParseException;
-import java.util.Scanner;
 
 public class Mainfunction {
+	
+	private static class ParsedArguments {
+		boolean Version = false;
+		boolean Help = false;
+		InetSocketAddress Address = null;
+		File InputFile = null;
+		String Host = null;
+		int Port = 0;
+		String Error = null;
+	}
 
 	/**
 	 * @param args
@@ -19,145 +24,129 @@ public class Mainfunction {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws IOException, ParseException {
-		// TODO Auto-generated method stub
-
-		String str;
-		String word[]= args;
-		StringBuffer wrd = new StringBuffer();
-		wrd = Checkcommand(args);
-		str = wrd.substring(0, wrd.length());
-		//System.out.println(str);
-		String fname[]=new String [3];
-		fname=str.split("\\ ");
-		String host=fname[0];
-		int port= Integer.parseInt(fname[1]);
-
-		// Opening VSf file fore reading 
-			try {
-				/*
-				 * 	1) Parse command-line arguments to obtain host, port, and vsf filename  Done!
-					2) Open VSF file for reading (Done!)
-					3) Call SimulatorConfiguration.parseVSF(), which returns config instance(DOne!)
-					4) Close file(DOne!)
-					5) Create ConnectionClient instance(DOne!)
-					6) Connect to the VMS (DONE !)
-					7) Create Simulator instance, passing the config(DONE!)
-					8) Call simulator.start(), passing the connection client instance.(DONE !)
-					8) When start() returns, we are done; close ConnectionClient and exit(NOT SURE)
-				 */
-				BufferedReader br = new BufferedReader(new FileReader("src/simulator/"+fname[2]));
-				//InputStream F_ip = new FileInputStream("src/simulator/"+fname[2]);
-				SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br);
-				br.close();//	
-				
-				ConnectionClient cc=new ConnectionClient();
-				cc.connect(host, port);
-				
-				Simulator sim = new Simulator(config);
-				if (cc.isReady()){
-					sim.start(cc);	
-				}
-				cc.close();
-				
-				
-				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				System.out.println("file not found");
-				quit();
-			}
-			// 
-			catch(SocketException e){
-				quit();
-			}
-				
-	}
-	// validation of command arguments
-	public static StringBuffer Checkcommand(String[] word){
-		String host,port,filename;
-		 StringBuffer sb = new StringBuffer();
-		if (word.length==6){
-			// System.out.print("check length pass");
-			if ((word[0].compareTo("--host")==0)||(word[0].compareTo("-h")==0)){
-				// System.out.print("check host pass");
-				if(Validip(word[1])){
-					host = word[1];
-					// System.out.print(host);
-					if((word[2].compareTo("-p")==0)||(word[2].compareTo("--port")==0)){
-						if(validport(word[3])){
-							port=word[3];
-							if((word[4].compareTo("-i")==0)||(word[4].compareTo("--input")==0)){
-								if(filname(word[5])){	
-								System.out.println("file:" + word[5]+" host:"+ host +" port:"+port);
-								filename=word[5];
-								sb.append(host);
-								sb.append(" ");
-								sb.append(port);
-								sb.append(" ");
-								sb.append(filename);
-								return sb;}
-								else quit();
-							}
-							quit();
-						}
-						quit();
-					}
-					else quit();
-				}
-				quit();
-			}
+		// 1) Parse command-line arguments to obtain host, port, and vsf filename
+		ParsedArguments parsedArgs = parseArguments(args);
+		if (parsedArgs.Error != null) {
+			System.out.println(parsedArgs.Error);
+			printHelp();
+			System.exit(1);
 		}
-			else if (word.length==1) {
-				if((word[0].compareTo("-v")==0)||(word[0].compareTo("--version")==0)){
-					System.out.println("version");
-					quit();
-					return null;
-				}
-			}
-			else quit();// if wrong command 
-		return null;
-	}
-	//validation of ip adress
-	public static boolean Validip(String ipadress)
-	{
-		if (ipadress.equalsIgnoreCase("localhost")){
-			return true;
+		if (parsedArgs.Help){
+			printHelp();
+			System.exit(0);
 		}
-		else {
+		if (parsedArgs.Version){
+			System.out.println("Vessel Simulator: v. 0.1");
+			System.exit(0);
+		}
+		try {
+			// Opening VSF file fore reading 
+			BufferedReader br = new BufferedReader(new FileReader(parsedArgs.InputFile));
 			
-		String[] numbers = ipadress.split("\\.");
-		if(numbers.length!=4)
-		{
-			return false;
+			// Call SimulatorConfiguration.parseVSF(), which returns config instance
+			SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br);
+			
+			// Close file
+			br.close();
+			
+			// Create ConnectionClient instance
+			ConnectionClient cc = new ConnectionClient();
+			
+			// Connect to the VMS
+			cc.connect(parsedArgs.Host, parsedArgs.Port);
+			
+			// Create Simulator instance, passing the config
+			Simulator sim = new Simulator(config);
+			if (cc.isReady()){
+				// Call simulator.start(), passing the connection client instance.
+				sim.start(cc);	
+			}
+			// When start() returns, we are done; close ConnectionClient and exit
+			cc.close();
 		}
-		for(String st:numbers)
-		{
-			int i=Integer.parseInt(st);
-			if((i<0)||(i>255)){return false;}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+			System.exit(1);
 		}
-		return true;
-		}
-
 	}
-	//validation of file name 
-	public static boolean filname(String file){
-		String fname[]=new String [2];
-		fname=file.split("\\.");
-		if (fname[1].compareTo("vsf")==0)
-			return true;
-		else return false;
-
+	
+	public static void printHelp() {
+		System.out.println("");
+		System.out.println("Vessel Simulator: v. 0.1");
+		System.out.println("");
+		System.out.println("Usage:");
+		System.out.println("[-h|--host HOST] [-p|--port PORT] [-i|--input VSFFILEPATH]");
 	}
-	//Validation of port number
-	public static boolean validport(String port){
-		int i=Integer.parseInt(port);
-		if ((i>0)||(i<99999)){
-			return true;
+	
+	public static ParsedArguments parseArguments(String[] args) {
+		ParsedArguments ret = new ParsedArguments();
+		if (args.length == 0) {
+			ret.Help = true;
+			return ret;
 		}
-		return false ;
-	}
-	// method the handles error
-	public static void quit(){
-		System.exit(0);
+		for (int i=0; i < args.length; i++) {
+			switch (args[i]) {
+			case "--host":
+			case "-h":
+				//Require next argument to be present
+				if ((i+1) >= args.length) {
+					ret.Help = true;
+					return ret;
+				}
+				ret.Host = args[i+1];
+				break;
+			case "--port":
+			case "-p":
+				//Require next argument to be present
+				if ((i+1) >= args.length) {
+					ret.Help = true;
+					return ret;
+				}
+				try {
+					ret.Port = Integer.parseInt(args[i+1]);
+				}
+				catch (NumberFormatException e) {
+					ret.Error = "You must supply a number for the port.";
+				}
+				if ((ret.Port < 0)||(ret.Port > 99999)){
+					ret.Error = "You must provide a positive integer for the port.";
+				}
+				break;
+			case "--input":
+			case "-i":
+				//Require next argument to be present
+				if ((i+1) >= args.length) {
+					ret.Help = true;
+					return ret;
+				}
+				ret.InputFile = new File(args[i+1]);
+				if (!ret.InputFile.exists()) {
+					ret.Error = "File " + args[i+1] + " does not exist.";
+					return ret;
+				}
+				if (!ret.InputFile.canRead()) {
+					ret.Error = "File " + args[i+1] + " is not readable.";
+					return ret;
+				}
+				break;
+			case "--help":
+			case "-?":
+				ret.Help = true;
+				break;
+			case "--version":
+			case "-v":
+				ret.Version = true;
+				break;
+			}
+		}
+		if (ret.Host != null && ret.Port != 0) {
+			ret.Address = new InetSocketAddress(ret.Host, ret.Port);
+			if (ret.Address.isUnresolved()) {
+				ret.Error = "Cannot resolve address " + ret.Host + ":" + ret.Port;
+				return ret;
+			}
+		}
+		
+		return ret;
 	}
 }

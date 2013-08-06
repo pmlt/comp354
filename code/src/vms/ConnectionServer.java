@@ -151,9 +151,7 @@ public class ConnectionServer implements Closeable {
 		UpdateData ud;
 		try {
 			String json = decodeNetstring(_Buffer.array(), "UTF-8");
-			System.out.println("Got correct netstring: " + json);
 			ud = UpdateData.fromJSON(json);
-			System.out.println("Update data: " + ud.toString());
 		}
 		catch (Exception e) {
 			//ANYTHING wrong with the client data, we just ignore and move on
