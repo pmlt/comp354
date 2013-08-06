@@ -42,8 +42,6 @@ public class RadarSimulator {
 				else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
 					timestep = Double.parseDouble(a[1]);
 					if (timestep < MIN_TIMESTEP) {
-						System.out.println("Minimum timestep must be " + MIN_TIMESTEP + " second(s)!\n"
-								+ "Setting timestep to " + MIN_TIMESTEP + " second(s).");
 						timestep = MIN_TIMESTEP;
 					}
 				}
@@ -131,8 +129,6 @@ public class RadarSimulator {
 	
 	void addVessel(Vessel ve) {
 		if (boats.size() > MAX_BOATS) {
-			System.out.println("A maximum of " + MAX_BOATS + " vessels can be viewed by the radar.\n" +
-					"This vessel was added to the queue.");
 			queue.add(ve);
 		}
 		else 

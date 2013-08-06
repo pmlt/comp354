@@ -91,7 +91,7 @@ public class ConnectionServerTest {
 			assertEquals(new Coord(10,10), lastVessel.getCoord(timestamp));
 			assertEquals(new Course(20,20), lastVessel.getCourse(timestamp));
 		}catch(Exception e){
-			System.out.println("Invalid timestamp");
+			fail("Caught exception: " + e.getMessage());
 		}
 		
 		assertEquals(timestamp, lastVessel.getLastTimestamp());
@@ -172,7 +172,7 @@ public class ConnectionServerTest {
 				assertEquals(new Coord(10,-10), lastVessel.getCoord(timestamp));
 				assertEquals(new Course(20,-20), lastVessel.getCourse(timestamp));
 			}catch(Exception e){
-				System.out.println("Invalid timestamp");
+				fail("Caught exception: " + e.getMessage());
 			}
 		} finally {
 

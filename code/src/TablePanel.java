@@ -99,7 +99,6 @@ public class TablePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(remover)) {
 			int row = table.getSelectedRow();
-			System.out.println(table.getValueAt(row, 0));
 			rs.removeVessel(table.getValueAt(row, 0).toString());
 		}			
 		else if (arg0.getSource().equals(adding)) {
