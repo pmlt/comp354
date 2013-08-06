@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.SocketException;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -60,12 +61,15 @@ public class Mainfunction {
 				
 				
 				
-				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
-				System.out.println("File not found");
+				System.out.println("file not found");
+				quit();
 			}
-			
+			// 
+			catch(SocketException e){
+				quit();
+			}
 				
 	}
 	// validation of command arguments
@@ -106,6 +110,7 @@ public class Mainfunction {
 			else if (word.length==1) {
 				if((word[0].compareTo("-v")==0)||(word[0].compareTo("--version")==0)){
 					System.out.println("version");
+					quit();
 					return null;
 				}
 			}

@@ -1,6 +1,7 @@
 package simulator;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,12 +37,21 @@ public class Simulator {
 				timeElapsed = getTimeElapsed(startTime);
 			} catch (InterruptedException e) {
 				break; //User pressed ctrl-c; we exit
-			} catch (IOException e) {
+			}
+			catch(SocketException e){
+				System.exit(0);
+			}
+			
+			catch (IOException e) {
 				e.printStackTrace();
 				// XXX TODO We need to decide what happens here!
 				// If a transmission error occurs, print error and keep going
 				// or do we print error and exit?
 			}
+			
+				
+				
+			
 		}
 	}
 	
