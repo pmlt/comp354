@@ -16,6 +16,7 @@ public class SimulatorConfiguration {
 	private int _TimeInterval;
 	private int _TotalTime;
 	private int _RadarRange;
+	private String _Version;
 	
 	List<Vessel> _Vessels;
 	
@@ -48,6 +49,9 @@ public class SimulatorConfiguration {
 	public void setRadarRange(int _RadarRange) {
 		this._RadarRange = _RadarRange;
 	}
+	public String getVersion() {
+		return _Version;
+	}
 	
 	public List<Vessel> getVessels() {
 		return _Vessels;
@@ -65,11 +69,10 @@ public class SimulatorConfiguration {
 			throws IOException, ParseException {
 		SimulatorConfiguration sc = new SimulatorConfiguration();
 		String line;
-		String version;
 		while ((line = in.readLine()) != null) {
 			String[] a = line.split("\\s+");
 			if (a[0].trim().compareToIgnoreCase("VSF") == 0)
-				version = a[1];
+				sc._Version = a[1];
 			else if (a[0].trim().compareToIgnoreCase("STARTTIME") == 0)
 				sc.setStartDelay((int) Double.parseDouble(a[1]));
 			else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
