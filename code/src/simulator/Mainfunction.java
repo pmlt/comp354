@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.text.ParseException;
+import java.util.Calendar;
 
 public class Mainfunction {
 	
@@ -44,7 +45,7 @@ public class Mainfunction {
 			BufferedReader br = new BufferedReader(new FileReader(parsedArgs.InputFile));
 			
 			// Call SimulatorConfiguration.parseVSF(), which returns config instance
-			SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br);
+			SimulatorConfiguration config = SimulatorConfiguration.parseVSF(br, Calendar.getInstance());
 			
 			// Close file
 			br.close();

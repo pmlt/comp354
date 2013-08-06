@@ -155,7 +155,6 @@ public class ConnectionServer implements Closeable {
 		}
 		catch (Exception e) {
 			//ANYTHING wrong with the client data, we just ignore and move on
-			System.out.println(e.getMessage());
 			return;
 		}
 		updateObservers(ud);

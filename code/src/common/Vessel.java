@@ -98,17 +98,13 @@ public class Vessel {
 		}
 	}
 	
-	public UpdateData getUpdateData(Calendar timestamp) {
+	public UpdateData getUpdateData(Calendar timestamp) throws IllegalStateException {
 		
 		Coord tempCoords = new Coord(0, 0);
 		Course tempCourse = new Course(0,0);
 		
-		try{
-			tempCoords = getCoord(timestamp);
-			tempCourse = getCourse(timestamp);
-		}catch(IllegalStateException e){
-			System.out.println("Invalid timestamp");
-		}
+		tempCoords = getCoord(timestamp);
+		tempCourse = getCourse(timestamp);
 		
 		return new UpdateData(id, type, tempCoords, tempCourse, timestamp);
 	}

@@ -37,7 +37,6 @@ public class VMS {
 			data[count][8] = calculateRisk(v);
 			count++;
 		}
-		System.out.println();
 	}
 	
 	String calculateRisk(Vessel ve) {

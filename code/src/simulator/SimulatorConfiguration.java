@@ -16,6 +16,7 @@ public class SimulatorConfiguration {
 	private int _TimeInterval;
 	private int _TotalTime;
 	private int _RadarRange;
+	private String _Version;
 	
 	List<Vessel> _Vessels;
 	
@@ -48,6 +49,9 @@ public class SimulatorConfiguration {
 	public void setRadarRange(int _RadarRange) {
 		this._RadarRange = _RadarRange;
 	}
+	public String getVersion() {
+		return _Version;
+	}
 	
 	public List<Vessel> getVessels() {
 		return _Vessels;
@@ -61,15 +65,14 @@ public class SimulatorConfiguration {
 	 * Should throw ParseException whenever it encounters an unexpected
 	 * format in the input file.
 	 */
-	public static SimulatorConfiguration parseVSF(BufferedReader in) 
+	public static SimulatorConfiguration parseVSF(BufferedReader in, Calendar reftime) 
 			throws IOException, ParseException {
 		SimulatorConfiguration sc = new SimulatorConfiguration();
 		String line;
-		String version;
 		while ((line = in.readLine()) != null) {
 			String[] a = line.split("\\s+");
 			if (a[0].trim().compareToIgnoreCase("VSF") == 0)
-				version = a[1];
+				sc._Version = a[1];
 			else if (a[0].trim().compareToIgnoreCase("STARTTIME") == 0)
 				sc.setStartDelay((int) Double.parseDouble(a[1]));
 			else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
@@ -87,7 +90,7 @@ public class SimulatorConfiguration {
 					v = new Vessel(a[1], VesselType.values()[5]);
 				v.update(new Coord(Double.parseDouble(a[3]), Double.parseDouble(a[4])),
 						new Course(Double.parseDouble(a[5]), Double.parseDouble(a[6])),
-						Calendar.getInstance());
+						reftime);
 				sc.addVessel(v);
 			}
 			else if (a[0].trim().compareToIgnoreCase("NEWT") == 0 && Double.parseDouble(a[7]) > 0) {
@@ -98,13 +101,21 @@ public class SimulatorConfiguration {
 					v = new Vessel(a[1], VesselType.values()[5]);
 				v.update(new Coord(Double.parseDouble(a[3]), Double.parseDouble(a[4])),
 						new Course(Double.parseDouble(a[5]), Double.parseDouble(a[6])),
-						Calendar.getInstance());
+						reftime);
 				sc.addVessel(v);
 			}
 			
 		} // END OF WHILE LOOP
 		
-		//
+		// Check that data was correct.
+		if (!"001".equals(sc._Version) || 
+			sc._RadarRange < 0 ||
+			sc._StartDelay < 0 ||
+			sc._TimeInterval < 0.5 ||
+			sc._TotalTime < (sc._TimeInterval) ||
+			sc._Vessels.size() <= 0) {
+			throw new ParseException("VSF data incomplete or incorrect!", 0);
+		}
 		return sc;
 	}
 }
