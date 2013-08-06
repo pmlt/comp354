@@ -53,6 +53,7 @@ public class Login implements ActionListener, WindowListener {
 	}
 	
 	public void show() {
+		pass.setText("");
 		log.setVisible(true);
 	}
 	
@@ -61,11 +62,11 @@ public class Login implements ActionListener, WindowListener {
 		if (e.getSource().equals(but[0])) {
 			if (pass.getText().compareTo("op123") == 0) {
 				_Main.showRadar(MainGUI.UserIdentity.OPERATOR);
-				log.hide();
+				log.setVisible(false);
 			}
 			else if (pass.getText().compareTo("user123") == 0) {
 				_Main.showRadar(MainGUI.UserIdentity.NORMAL_USER);
-				log.hide();
+				log.setVisible(false);
 			}
 		}
 		else if (e.getSource().equals(but[1])) {

@@ -42,7 +42,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().compareToIgnoreCase("Logout") == 0 ) {
-			_ParentWindow.hide();
+			_ParentWindow.setVisible(false);
 			_Main.showLogin();
 		}
 		else if (arg0.getActionCommand().compareToIgnoreCase("Exit") == 0) {
