@@ -72,7 +72,6 @@ public class RadarMonitor implements ConnectionServer.Observer {
 				Coord v1Coords = v1.getCoord(timestamp);
 				
 				if(v1Coords.isInRange(lowerRange, upperRange)){
-					System.out.println(_Vessels.size());
 					for(int j=i+1; j<_Vessels.size(); j++){
 						String risk = "none";
 						Alert newAlert;
