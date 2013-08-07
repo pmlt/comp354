@@ -58,8 +58,10 @@ public class MapPanel extends JPanel {
 	
 	public Point place(Coord c, Rectangle b, int range) {
 		Point p = new Point();
-		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
-		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
+//		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
+//		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
+		p.x = (int) Math.ceil(c.x()/2) * b.width / (range/2) + b.x + (b.width/2);
+		p.y = (int) Math.ceil(c.y()/2) * b.height / (range/2) + b.y + (b.height/2);
 		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
 		return p;
 	}
@@ -67,19 +69,19 @@ public class MapPanel extends JPanel {
 	public Color getTypeColor(VesselType t) {
 		switch (t) {
 		case SWIMMER:
-			return Color.BLUE;
-		case FISHING_BOAT:
-			return Color.MAGENTA;
-		case SPEED_BOAT:
-			return Color.green;
-		case CARGO_BOAT:
 			return Color.PINK;
+		case FISHING_BOAT:
+			return Color.CYAN;
+		case SPEED_BOAT:
+			return Color.GREEN;
+		case CARGO_BOAT:
+			return Color.ORANGE;
 		case PASSENGER_VESSEL:
-			return Color.YELLOW;
+			return Color.MAGENTA;
 		case UNKNOWN:
 			return Color.WHITE;
 		default:
-				return Color.WHITE;
+			return Color.WHITE;
 		}
 	}
 	

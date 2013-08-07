@@ -125,7 +125,7 @@ public class TablePanel extends JPanel implements ActionListener {
 		_Table = new JTable(_TableModel);
 		_Table.setPreferredScrollableViewportSize(new Dimension(1000, 440));
 		_Table.setOpaque(true);
-		_Table.setAutoCreateRowSorter(true);
+//		_Table.setAutoCreateRowSorter(true);
 		_Table.getColumnModel().getColumn(7).setPreferredWidth(170);
 
 		for (int i=0; i<columnNames.length; i++) {
@@ -162,6 +162,10 @@ public class TablePanel extends JPanel implements ActionListener {
 	
 	public void changeIdentity(UserIdentity identity) {
 		_OperatorPanel.setVisible(identity == UserIdentity.OPERATOR);
+		if (identity == UserIdentity.NORMAL_USER)
+			_Table.setRowSorter(null);
+		else
+			_Table.setAutoCreateRowSorter(true);
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {

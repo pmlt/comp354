@@ -30,6 +30,7 @@ public class RadarDisplay implements WindowListener {
 	MapPanel _MapPanel;
 	JTabbedPane _TabbedPane;
 	AlertPanel _AlertPanel;
+	LegendPanel _LegendPanel;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
@@ -41,15 +42,14 @@ public class RadarDisplay implements WindowListener {
 		_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_FilterPanel = new FilterPanel();
 		_AlertPanel = new AlertPanel();
+		_LegendPanel = new LegendPanel();
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
 		_LeftPane = new JPanel();
 		
-		
 		_TabbedPane = new JTabbedPane();		
 		_TabbedPane.add(_TablePanel, VIEW[0]);
 		_TabbedPane.add(_MapPanel,VIEW[1]);
-		
 		
 		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);
@@ -58,16 +58,17 @@ public class RadarDisplay implements WindowListener {
 		_Frame.setJMenuBar(new MenuBar(_Frame, main));
 		_Frame.add(_LeftPane, BorderLayout.WEST);
 		_Frame.add(_TabbedPane, BorderLayout.CENTER);
+		_Frame.add(_LegendPanel, BorderLayout.SOUTH);
 	}
 	public void show(MainGUI.UserIdentity identity) {
 		_CurrentIdentity = identity;
 		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL_USER) {
-//			_FilterPanel.setVisible(false);
-			_LeftPane.setVisible(false);
+			_FilterPanel.setVisible(false);
+//			_LeftPane.setVisible(false);
 		}
 		else {
-			//			_FilterPanel.setVisible(true);
-			_LeftPane.setVisible(true);
+			_FilterPanel.setVisible(true);
+//			_LeftPane.setVisible(true);
 		}
 		_TablePanel.changeIdentity(identity);
 		_Frame.setVisible(true);

@@ -20,6 +20,7 @@ public class AlertPanel extends JPanel {
 	public AlertPanel() {
 		_Alerts = new ArrayList<Alert>();
 		this.setMaximumSize(new Dimension(280, 140));
+		this.setPreferredSize(new Dimension(140, 140));
 	}
 
 	public void update(final List<Alert> alerts) {
