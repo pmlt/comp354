@@ -131,16 +131,16 @@ public class MapPanel extends JPanel {
 				g2.setColor(Color.red);
 			
 			Point ul, lr;
-			ul = place(new Coord(c.x() - (HIGH_RISK/2), c.y() - (HIGH_RISK/2)), b, RANGE);
-			lr = place(new Coord(c.x() + (HIGH_RISK/2), c.y() + (HIGH_RISK/2)), b, RANGE);
-			g.drawOval(ul.x, ul.y, 50/RANGE, 50/RANGE);
+			ul = place(new Coord(c.x() - HIGH_RISK, c.y() + HIGH_RISK), b, RANGE);
+			lr = place(new Coord(c.x() + HIGH_RISK, c.y() - HIGH_RISK), b, RANGE);
+			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 			g2.setColor(defaultColor);
 			
 			if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
 				g2.setColor(Color.yellow);
 
-			ul = place(new Coord(c.x() - (LOW_RISK/2), c.y() - (LOW_RISK/2)), b, RANGE);
-			lr = place(new Coord(c.x() + (LOW_RISK/2), c.y() + (LOW_RISK/2)), b, RANGE);
+			ul = place(new Coord(c.x() - LOW_RISK, c.y() + LOW_RISK), b, RANGE);
+			lr = place(new Coord(c.x() + LOW_RISK, c.y() - LOW_RISK), b, RANGE);
 			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 		}
 	}
