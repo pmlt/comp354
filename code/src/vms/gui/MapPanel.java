@@ -2,10 +2,14 @@ package vms.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+
 import javax.swing.JPanel;
 import vms.*;
 import vms.Alert.AlertType;
 import common.*;
+import common.Vessel.VesselType;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -35,21 +39,72 @@ public class MapPanel extends JPanel {
 		this.repaint();
 	}
 	
+	public Rectangle getDrawableArea(int width, int height) {
+		Rectangle r = new Rectangle();
+		if (width > height) {
+			r.x = (width - height) / 2;
+			r.y = 0;
+			r.width = height;
+			r.height = height;
+		}
+		else {
+			r.x = 0;
+			r.y = (height - width) / 2;
+			r.width = width;
+			r.height = width;
+		}
+		return r;
+	}
+	
+	public Point place(Coord c, Rectangle b, int range) {
+		Point p = new Point();
+		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
+		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
+		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
+		return p;
+	}
+	
+	public Color getTypeColor(VesselType t) {
+		switch (t) {
+		case SWIMMER:
+			return Color.BLUE;
+		case FISHING_BOAT:
+			return Color.MAGENTA;
+		case SPEED_BOAT:
+			return Color.green;
+		case CARGO_BOAT:
+			return Color.PINK;
+		case PASSENGER_VESSEL:
+			return Color.YELLOW;
+		case UNKNOWN:
+			return Color.WHITE;
+		default:
+				return Color.WHITE;
+		}
+	}
+	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.black);
 		super.paintComponent(g);
-		int wWidth = getWidth();
-		int wHeight = getHeight();
-		g.drawLine(wWidth/2, 0, wWidth/2, wHeight);
-		g.drawLine(0, wHeight/2, wWidth, wHeight/2);
+		g2.fillRect(0, 0, getWidth(), getHeight());
+		g2.setColor(Color.getHSBColor(125, 100, 83));
+		
+		Rectangle b = getDrawableArea(getWidth(), getHeight());
+		g2.drawRect(b.x, b.y, b.width, b.height);
+		g2.setColor(Color.WHITE);
+		
+		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
+		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
 		Calendar now = Calendar.getInstance();
 		for (Vessel v : _Vessels) {
-			Coord coords = v.getCoord(now);
-			int j = (int) Math.ceil((double)coords.x()) * wWidth/ 2  / RANGE + wWidth/2;
-			int k = (int) Math.ceil((double)coords.y()) * wHeight/-2 / RANGE + wHeight/2;
-			g.fillOval(j-1, k-1, 2, 2);
-			g.drawLine(j, k, wWidth/2, wHeight/2);
+			Color defaultColor = getTypeColor(v.getType());
+			g2.setColor(defaultColor);
+			Coord c = v.getCoord(now);
+			Point p = place(c, b, RANGE);
+			g.fillOval(p.x-3, p.y-3, 6, 6);
+			//g.drawLine(p.x, p.y, (b.x + b.width)/2, (b.y + b.height)/2);
+			g.drawString(v.getId(), p.x+6, p.y+6);
 			
 			//Search for worst alert
 			Alert worstAlert = null;
@@ -65,16 +120,18 @@ public class MapPanel extends JPanel {
 			if (worstAlert != null && worstAlert.getType() == AlertType.HIGHRISK)
 				g2.setColor(Color.red);
 			
-			g.drawOval(j - wWidth*HIGH_RISK/(2*RANGE), k-wHeight*HIGH_RISK/(2*RANGE),
-					wWidth*HIGH_RISK/RANGE, wHeight*HIGH_RISK/RANGE);
-			g2.setColor(Color.black);
+			Point ul, lr;
+			ul = place(new Coord(c.x() - (HIGH_RISK/2), c.y() - (HIGH_RISK/2)), b, RANGE);
+			lr = place(new Coord(c.x() + (HIGH_RISK/2), c.y() + (HIGH_RISK/2)), b, RANGE);
+			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+			g2.setColor(defaultColor);
 			
 			if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
 				g2.setColor(Color.yellow);
-			
-			g.drawOval(j - wWidth*LOW_RISK/(2*RANGE), k-wHeight*LOW_RISK/(2*RANGE),
-					wWidth*LOW_RISK/RANGE, wHeight*LOW_RISK/RANGE);
-			g2.setColor(Color.black);
+
+			ul = place(new Coord(c.x() - (LOW_RISK/2), c.y() - (LOW_RISK/2)), b, RANGE);
+			lr = place(new Coord(c.x() + (LOW_RISK/2), c.y() + (LOW_RISK/2)), b, RANGE);
+			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 		}
 	}
 
