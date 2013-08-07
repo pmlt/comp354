@@ -63,7 +63,7 @@ public class RadarMonitor implements ConnectionServer.Observer {
 	@Override
 	public void refresh(Calendar timestamp) {
 		ArrayList<Alert> _Alerts = new ArrayList<Alert>();
-		ArrayList<Integer> removeVesselsID = new ArrayList<Integer>();
+		ArrayList<Vessel> removeVessels = new ArrayList<Vessel>();
 		
 		for(int i=0; i< _Vessels.size(); i++){
 			Vessel v1;
@@ -97,7 +97,7 @@ public class RadarMonitor implements ConnectionServer.Observer {
 				}
 				
 				else{
-					removeVesselsID.add(i);
+					removeVessels.add(v1);
 				}
 			}
 			
@@ -106,8 +106,8 @@ public class RadarMonitor implements ConnectionServer.Observer {
 			}
 		}
 		
-		for(int i = 0; i < removeVesselsID.size(); i++){
-			_Vessels.remove(removeVesselsID.get(i));
+		for(int i = 0; i < removeVessels.size(); i++){
+			_Vessels.remove(removeVessels.get(i));
 		}
 		
 		for (int i=0; i < _Observers.size(); i++) {
