@@ -1,0 +1,54 @@
+// Version Number
+VSF	001
+// All targets follow constant speed (no acceleration)
+// Use the following equations to calculate 
+// position: 
+// X_f = X_0 + X_Vel * (T - T_0), here [T > T_0]
+// Y_f = Y_0 + Y_Vel * (T - T_0), here [T > T_0]
+// and velocity of vessels
+// Vx_f =  Vx_0
+// Vy_f =  Vy_0
+
+//All time defined in seconds
+//Simulator start time
+STARTTIME  0
+// Targets will be reported to VMS in this time interval
+TIMESTEP  2
+// Total time
+TIME   500
+
+// Radar range defined in meters
+RANGE  5000
+
+// Vessel Type Definitions
+// 1 - Human (swimmer)
+// 2 - Speed Boat
+// 3 - Fishing Boat
+// 4 - Cargo Vessel
+// 5 - Passenger Vessel
+// x - New vessel types will be defined in the future and your program should be able to adopt the change quickly.
+//     This is one of the software design principle.
+
+// NEWT: New Target #1 (Vessel's Initial position and velocity is defined)
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 001	  		1			-500           		500        		10			   	    -10  		 0
+
+// NEWT: New Target #2
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 002	  		2			0           		500      		0			    	-10  			 0
+
+// NEWT: New Target #3
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 003	  		3			500           	    500      		-10			    	-10  			 0
+
+// NEWT: New Target #4
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 004	  		4			-500           	    -500      		10			    	10  			 0
+
+// NEWT: New Target #5
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 005	  		5			0           	    -500      		0			    	10  			 0
+
+// NEWT: New Target #6
+//		Vessel ID	Vessel Type		X [m]           	Y [m]		  Vx_0[m/s]		 	Vy_0[m/s]  Start Time[/sec]
+NEWT	 006	  		6			500           	    -500      		-10			    	10  			 0
