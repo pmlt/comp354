@@ -1,6 +1,7 @@
 package vms.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ public class LegendPanel extends JPanel {
 	public LegendPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setBackground(Color.BLACK);
+		setMaximumSize(new Dimension(800, 10));
 		Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
 		JLabel label = new JLabel("LEGEND");
 		label.setFont(font);

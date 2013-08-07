@@ -97,10 +97,10 @@ public class MapPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.black);
 		super.paintComponent(g);
-		g2.fillRect(0, 0, getWidth(), getHeight());
+		g2.fillRect(0, 0, getWidth(), getHeight()-50);
 		g2.setColor(Color.getHSBColor(125, 100, 83));
 		
-		Rectangle b = getDrawableArea(getWidth(), getHeight());
+		Rectangle b = getDrawableArea(getWidth(), getHeight()-50);
 		g2.drawRect(b.x, b.y, b.width, b.height);
 		g2.setColor(Color.WHITE);
 		
@@ -108,40 +108,42 @@ public class MapPanel extends JPanel {
 		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
 		Calendar now = Calendar.getInstance();
 		for (Vessel v : _Vessels) {
-			Color defaultColor = getTypeColor(v.getType());
-			g2.setColor(defaultColor);
-			Coord c = v.getCoord(now);
-			Point p = place(c, b, RANGE);
-			g.fillOval(p.x-3, p.y-3, 6, 6);
-			//g.drawLine(p.x, p.y, (b.x + b.width)/2, (b.y + b.height)/2);
-			g.drawString(v.getId(), p.x+6, p.y+6);
-			
-			//Search for worst alert
-			Alert worstAlert = null;
-			for (Alert a : _Alerts) {
-				if (a.contains(v)) {
-					if (worstAlert == null || a.getType() == AlertType.HIGHRISK) {
-						worstAlert = a;
+			if (v.getDistance(Calendar.getInstance()) <= RANGE) {
+				Color defaultColor = getTypeColor(v.getType());
+				g2.setColor(defaultColor);
+				Coord c = v.getCoord(now);
+				Point p = place(c, b, RANGE);
+				g.fillOval(p.x-3, p.y-3, 6, 6);
+				//g.drawLine(p.x, p.y, (b.x + b.width)/2, (b.y + b.height)/2);
+				g.drawString(v.getId(), p.x+6, p.y+6);
+				
+				//Search for worst alert
+				Alert worstAlert = null;
+				for (Alert a : _Alerts) {
+					if (a.contains(v)) {
+						if (worstAlert == null || a.getType() == AlertType.HIGHRISK) {
+							worstAlert = a;
+						}
 					}
 				}
+				
+				// Draws circles around the ships; adds color if there is a high-risk or low-risk alert
+				if (worstAlert != null && worstAlert.getType() == AlertType.HIGHRISK)
+					g2.setColor(Color.red);
+				
+				Point ul, lr;
+				ul = place(new Coord(c.x() - HIGH_RISK, c.y() + HIGH_RISK), b, RANGE);
+				lr = place(new Coord(c.x() + HIGH_RISK, c.y() - HIGH_RISK), b, RANGE);
+				g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+				g2.setColor(defaultColor);
+				
+				if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
+					g2.setColor(Color.yellow);
+	
+				ul = place(new Coord(c.x() - LOW_RISK, c.y() + LOW_RISK), b, RANGE);
+				lr = place(new Coord(c.x() + LOW_RISK, c.y() - LOW_RISK), b, RANGE);
+				g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 			}
-			
-			// Draws circles around the ships; adds color if there is a high-risk or low-risk alert
-			if (worstAlert != null && worstAlert.getType() == AlertType.HIGHRISK)
-				g2.setColor(Color.red);
-			
-			Point ul, lr;
-			ul = place(new Coord(c.x() - HIGH_RISK, c.y() + HIGH_RISK), b, RANGE);
-			lr = place(new Coord(c.x() + HIGH_RISK, c.y() - HIGH_RISK), b, RANGE);
-			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
-			g2.setColor(defaultColor);
-			
-			if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
-				g2.setColor(Color.yellow);
-
-			ul = place(new Coord(c.x() - LOW_RISK, c.y() + LOW_RISK), b, RANGE);
-			lr = place(new Coord(c.x() + LOW_RISK, c.y() - LOW_RISK), b, RANGE);
-			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 		}
 	}
 

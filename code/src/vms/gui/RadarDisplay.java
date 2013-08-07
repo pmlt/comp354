@@ -31,7 +31,8 @@ public class RadarDisplay implements WindowListener {
 	JTabbedPane _TabbedPane;
 	AlertPanel _AlertPanel;
 	LegendPanel _LegendPanel;
-	JPanel _MapPane;
+	JPanel _InnerMapPane;
+	JPanel _OuterMapPane;
 	SliderPanel _Slider;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
@@ -48,16 +49,21 @@ public class RadarDisplay implements WindowListener {
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
 		_LeftPane = new JPanel();
-		_MapPane = new JPanel();
+		_InnerMapPane = new JPanel();
 		_Slider = new SliderPanel(_MapPanel);
+		_OuterMapPane = new JPanel();
 		
-		_MapPane.setLayout(new BoxLayout(_MapPane, BoxLayout.X_AXIS));
-		_MapPane.add(_MapPanel);
-		_MapPane.add(_Slider);
+		_InnerMapPane.setLayout(new BoxLayout(_InnerMapPane, BoxLayout.X_AXIS));
+		_InnerMapPane.add(_MapPanel);
+		_InnerMapPane.add(_Slider);
+		
+		_OuterMapPane.setLayout(new BoxLayout(_OuterMapPane, BoxLayout.Y_AXIS));
+		_OuterMapPane.add(_InnerMapPane);
+		_OuterMapPane.add(_LegendPanel);
 		
 		_TabbedPane = new JTabbedPane();		
 		_TabbedPane.add(_TablePanel, VIEW[0]);
-		_TabbedPane.add(_MapPane,VIEW[1]);
+		_TabbedPane.add(_OuterMapPane,VIEW[1]);
 		
 		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);
@@ -66,7 +72,7 @@ public class RadarDisplay implements WindowListener {
 		_Frame.setJMenuBar(new MenuBar(_Frame, main));
 		_Frame.add(_LeftPane, BorderLayout.WEST);
 		_Frame.add(_TabbedPane, BorderLayout.CENTER);
-		_Frame.add(_LegendPanel, BorderLayout.SOUTH);
+//		_Frame.add(_LegendPanel, BorderLayout.SOUTH);
 	}
 	public void show(MainGUI.UserIdentity identity) {
 		_CurrentIdentity = identity;
