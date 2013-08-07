@@ -78,10 +78,12 @@ public class RadarDisplay implements WindowListener {
 		_CurrentIdentity = identity;
 		if (_CurrentIdentity == MainGUI.UserIdentity.NORMAL_USER) {
 			_FilterPanel.setVisible(false);
+			_Slider.setVisible(false);
 //			_LeftPane.setVisible(false);
 		}
 		else {
 			_FilterPanel.setVisible(true);
+			_Slider.setVisible(true);
 //			_LeftPane.setVisible(true);
 		}
 		_TablePanel.changeIdentity(identity);
