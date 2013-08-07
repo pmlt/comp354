@@ -100,6 +100,7 @@ public class ConnectionServer implements Closeable {
 				}
 				else if (key.isReadable()) {
 					//We have data coming from one of the accepted connections
+					System.out.println("reading packet");
 					_read(key);
 				}
 			}
@@ -132,7 +133,7 @@ public class ConnectionServer implements Closeable {
 	private void _read(SelectionKey key) throws IOException {
 		SocketChannel sc = (SocketChannel)key.channel();
 		_Buffer.clear();
-		
+
 		int bytes;
 		try {
 			bytes = sc.read(_Buffer);

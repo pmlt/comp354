@@ -3,6 +3,7 @@ package vms.gui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -166,7 +167,12 @@ public class TablePanel extends JPanel implements ActionListener {
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
 		_TableModel.setAlerts(alerts);
 		_TableModel.setVessels(vessels);
-		_Table.updateUI();
+		
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	_Table.updateUI();
+		    }
+		  });
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
