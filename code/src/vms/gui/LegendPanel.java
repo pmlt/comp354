@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
 
 import common.Vessel.VesselType;
 
