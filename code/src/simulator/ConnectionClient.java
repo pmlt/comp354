@@ -2,7 +2,8 @@ package simulator;
 
 import java.io.*;
 import java.net.*;
-import org.protocols.Netstring;
+
+import common.Netstring;
 import common.UpdateData;
 
 public class ConnectionClient implements Closeable {
@@ -20,7 +21,8 @@ public class ConnectionClient implements Closeable {
 	
 	public void sendUpdate(UpdateData data) throws IOException {
 		String json = data.toJSON();
-		Netstring.write(_Socket.getOutputStream(), json.getBytes());
+		byte[] bytes = Netstring.encode(json);
+		_Socket.getOutputStream().write(bytes);
 	}
 	
 	public boolean isReady() {

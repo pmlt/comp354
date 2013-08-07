@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 import java.util.Calendar;
 
 import org.junit.*;
-import org.protocols.Netstring;
 
 import common.Coord;
 import common.Course;
@@ -160,7 +159,8 @@ public class ConnectionServerTest {
 			Calendar curTime = Calendar.getInstance();
 			UpdateData ud = new UpdateData("myid", VesselType.CARGO_BOAT, new Coord(10, -10), new Course(20, -20), curTime);
 			msg = ud.toJSON();
-			Netstring.write(stream, msg.getBytes()); //Write with netstring encoding
+			msg = msg.length() + ":" + msg + ",";
+			stream.write(msg.getBytes()); //Write with netstring encoding
 			Thread.sleep(1000); //Allow for overhead of network
 			assertNotNull(lastVessel);
 			Calendar timestamp = lastVessel.getLastTimestamp();

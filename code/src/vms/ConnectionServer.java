@@ -6,8 +6,9 @@ import java.nio.channels.*;
 import java.util.*;
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
+import common.Netstring;
+import common.Netstring.DecodeResult;
 import common.UpdateData;
 
 /*
@@ -149,32 +150,32 @@ public class ConnectionServer implements Closeable {
 		}
 		//We have data! Ideally, at this point we should spin off into a new thread but for now this will do.
 		UpdateData ud;
-		try {
-			String json = decodeNetstring(_Buffer.array(), "UTF-8");
-			ud = UpdateData.fromJSON(json);
+		DecodeResult res = new DecodeResult();
+		byte[] buf_arr = _Buffer.array();
+		while (true) {
+			//As long as there is a netstring to read in the buffer, we try to read it
+			try {
+				res = Netstring.decode(buf_arr, res.end_pos, "UTF-8");
+				if (res.data == null) {
+					//No more valid netstrings in input
+					//This is a potential bug;
+					//We should save the remaining buffer on a per-client basis
+					break;
+				}
+				ud = UpdateData.fromJSON(res.data);
+			}
+			catch (Exception e) {
+				//ANYTHING wrong with the client data, we just ignore and move on
+				return;
+			}
+			try {
+				updateObservers(ud);
+			}
+			catch (IllegalStateException e) {
+				//Client tried to send outdated data;
+				//We can safely ignore this.
+				return;
+			}
 		}
-		catch (Exception e) {
-			//ANYTHING wrong with the client data, we just ignore and move on
-			return;
-		}
-		updateObservers(ud);
-	}
-	
-	public String decodeNetstring(byte[] buffer, String encoding) throws UnsupportedEncodingException {
-		if (buffer.length < 2) throw new RuntimeException("Buffer too small to contain Netstring!");
-        int pos = 0;
-        byte c;
-        do {
-            c = buffer[pos];
-            if (c == 58) {
-                break; 
-            } else if (c < 48 || c > 57) {
-            	throw new RuntimeException("Invalid prologue!");
-            }
-            pos ++;
-        } while (pos < buffer.length);
-        int len = Integer.parseInt(new String(buffer, 0, pos));
-        pos++;
-        return new String(buffer, pos, len, encoding);
 	}
 }
