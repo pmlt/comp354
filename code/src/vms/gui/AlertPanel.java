@@ -4,17 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import vms.*;
 import vms.Alert.AlertType;
-import common.*;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlertPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4571898524902730798L;
 	private List<Alert> _Alerts;
 
 	public AlertPanel() {

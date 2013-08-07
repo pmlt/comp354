@@ -8,9 +8,6 @@ import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.table.*;
 
@@ -24,7 +21,7 @@ import java.awt.Component;
 import java.awt.Color;
 import java.util.*;
 
-public class TablePanel extends JPanel implements ActionListener {
+public class TablePanel extends JPanel {
 	
     /**
 	 * 
@@ -96,15 +93,15 @@ public class TablePanel extends JPanel implements ActionListener {
 		
 	};
 	private VesselTableModel _TableModel = new VesselTableModel();
-	private JComboBox _NameList;
-	private JComboBox _OrderList;
+	//private JComboBox _NameList;
+	//private JComboBox _OrderList;
 	private JTable _Table;
 	private JScrollPane _ScrollPane;
 	private JPanel _OperatorPanel;
 
 	private int _OrderName = 0;
 	private int _OrderType = 0;
-	
+	/*
     final private String[] orderTypeNames = {
     		"Ascending",
     		"Descending"
@@ -119,7 +116,7 @@ public class TablePanel extends JPanel implements ActionListener {
 			new JLabel("Order by"),
 			new JLabel("Type order")
 	};
-    
+    */
 	public TablePanel() {
 		RiskColor renderer = new RiskColor();
 		_Table = new JTable(_TableModel);
@@ -179,6 +176,7 @@ public class TablePanel extends JPanel implements ActionListener {
 		  });
 	}
 	
+	/*
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(_NameList)) {
 			JComboBox cb = (JComboBox)arg0.getSource();
@@ -189,6 +187,7 @@ public class TablePanel extends JPanel implements ActionListener {
 			_OrderType = cb.getSelectedIndex();
 		}
 	}
+	*/
 	
 	public List<Vessel> sort(List<Vessel> list) {
 		Collections.sort(list, new VesselComparator(_OrderName, _OrderType));

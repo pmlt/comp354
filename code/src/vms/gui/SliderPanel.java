@@ -1,7 +1,6 @@
 package vms.gui;
 
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -9,6 +8,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class SliderPanel extends JPanel implements ChangeListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1788532518660234476L;
 	private final int MIN = 1;
 	private final int MAX = 6;
 	private final int INIT = 1;

@@ -11,6 +11,10 @@ import javax.swing.BoxLayout;
 import common.Vessel.VesselType;
 
 public class LegendPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9004280718191289072L;
 	final private VesselType[] types = {VesselType.SWIMMER, VesselType.SPEED_BOAT, VesselType.FISHING_BOAT,
 			VesselType.CARGO_BOAT, VesselType.PASSENGER_VESSEL, VesselType.UNKNOWN};
 	

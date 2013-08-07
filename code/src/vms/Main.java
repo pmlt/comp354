@@ -3,8 +3,6 @@ package vms;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import common.Coord;
-
 import vms.gui.*;
 
 public class Main {
