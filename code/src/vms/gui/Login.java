@@ -24,9 +24,11 @@ public class Login implements ActionListener, WindowListener {
 		_Main = main;
 		log = new JFrame("Login");
 		log.addWindowListener(this);
-		log.setSize(200, 150);
+		log.setSize(200, 140);
 		log.setResizable(false);
 		log.setLocationRelativeTo(null);
+		log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		//Creating fields
 		JLabel label = new JLabel("Enter your password");

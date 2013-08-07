@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 
 public class SliderPanel extends JPanel implements ChangeListener {
 	private final int MIN = 1;
-	private final int MAX = 5;
+	private final int MAX = 6;
 	private final int INIT = 1;
 	private MapPanel mp;
 	
