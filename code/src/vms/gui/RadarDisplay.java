@@ -43,6 +43,7 @@ public class RadarDisplay implements WindowListener {
 		_Frame.addWindowListener(this);
 		_Frame.setSize(1300,600);
 		_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_Frame.setLocationRelativeTo(null);
 		_FilterPanel = new FilterPanel();
 		_AlertPanel = new AlertPanel();
 		_LegendPanel = new LegendPanel();
