@@ -45,7 +45,7 @@ public class Main {
 		
 		// Create RadarMonitor instance
 		_Monitor = new RadarMonitor();
-		_Monitor.setRange(2500);
+		_Monitor.setRange(5000);
 		// Register RadarMonitor as observer of ConnectionServer
 		_Server.registerObserver(_Monitor);
 		

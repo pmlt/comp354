@@ -41,6 +41,7 @@ public class RadarMonitor implements ConnectionServer.Observer {
 	@Override
 	public void update(UpdateData data) {
 		boolean isInList = false;
+		
 		for(int i = 0; i<_Vessels.size(); i++){
 			if(_Vessels.get(i).getId().equals(data.Id) && _Vessels.get(i).getType() == data.Type){
 				_Vessels.get(i).update(data);

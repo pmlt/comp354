@@ -67,10 +67,9 @@ public class Vessel {
 	}
 	
 	public double getDistance(Calendar timestamp) throws IllegalStateException {
-		Coord then = getCoord(getLastTimestamp());
 		Coord now = getCoord(timestamp);
-		double deltaX = now.x() - then.x();
-		double deltaY = now.y() - then.y();
+		double deltaX = now.x();
+		double deltaY = now.y();
 		double precision = Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaY, 2.0));
 		return Math.floor(precision * 1e5) / 1e5;
 	}
