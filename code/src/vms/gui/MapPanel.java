@@ -60,8 +60,8 @@ public class MapPanel extends JPanel {
 		Point p = new Point();
 //		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
 //		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
-		p.x = (int) Math.ceil(c.x()/2) * b.width / (range/2) + b.x + (b.width/2);
-		p.y = (int) Math.ceil(c.y()/2) * b.height / (range/2) + b.y + (b.height/2);
+		p.x = (int) Math.ceil((c.x()/2) * b.width / (range)) + b.x + (b.width/2);
+		p.y = (int) Math.ceil(c.y()/-2) * b.height / (range) + b.y + (b.height/2);
 		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
 		return p;
 	}
