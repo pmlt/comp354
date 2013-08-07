@@ -10,7 +10,8 @@ public class Alert {
 	
 	public enum AlertType {
 		LOWRISK,
-		HIGHRISK
+		HIGHRISK,
+		NONE
 	}
 	public Alert(AlertType type, List<Vessel> vessels) {
 		_Type = type;

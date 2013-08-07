@@ -86,9 +86,14 @@ public class RadarMonitor implements ConnectionServer.Observer {
 							newAlert = createAlert(AlertType.HIGHRISK, v1, v2);
 							_Alerts.add(newAlert);
 						}
-						if (distance < 200 && risk != "high"){
+						else if (distance < 200 && risk != "high"){
 							risk = "low";
 							newAlert = createAlert(AlertType.LOWRISK, v1, v2);
+							_Alerts.add(newAlert);
+						}
+						else {
+							risk = "none";
+							newAlert = createAlert(AlertType.NONE, v1, v2);
 							_Alerts.add(newAlert);
 						}
 					}
