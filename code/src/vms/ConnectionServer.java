@@ -100,7 +100,6 @@ public class ConnectionServer implements Closeable {
 				}
 				else if (key.isReadable()) {
 					//We have data coming from one of the accepted connections
-					System.out.println("reading packet");
 					_read(key);
 				}
 			}
