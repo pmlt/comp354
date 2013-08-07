@@ -31,6 +31,8 @@ public class RadarDisplay implements WindowListener {
 	JTabbedPane _TabbedPane;
 	AlertPanel _AlertPanel;
 	LegendPanel _LegendPanel;
+	JPanel _MapPane;
+	SliderPanel _Slider;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
@@ -46,10 +48,16 @@ public class RadarDisplay implements WindowListener {
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
 		_LeftPane = new JPanel();
+		_MapPane = new JPanel();
+		_Slider = new SliderPanel(_MapPanel);
+		
+		_MapPane.setLayout(new BoxLayout(_MapPane, BoxLayout.X_AXIS));
+		_MapPane.add(_MapPanel);
+		_MapPane.add(_Slider);
 		
 		_TabbedPane = new JTabbedPane();		
 		_TabbedPane.add(_TablePanel, VIEW[0]);
-		_TabbedPane.add(_MapPanel,VIEW[1]);
+		_TabbedPane.add(_MapPane,VIEW[1]);
 		
 		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);

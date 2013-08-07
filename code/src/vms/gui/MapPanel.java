@@ -21,7 +21,8 @@ public class MapPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -3982174526003182203L;
-	private final int RANGE = 5000;
+	private int RANGE;
+	private final int MAX_RANGE = 5000;
 	private final int HIGH_RISK = 50;
 	private final int LOW_RISK = 200;
 	
@@ -31,11 +32,18 @@ public class MapPanel extends JPanel {
 	public MapPanel() {
 		_Vessels = new ArrayList<Vessel>();
 		_Alerts = new ArrayList<Alert>();
+		RANGE  = MAX_RANGE;
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
 		_Alerts = alerts;
 		_Vessels = vessels;
+		this.repaint();
+	}
+	
+	public void changeRange(int x) {
+		RANGE = (int) Math.ceil((double) MAX_RANGE / (double) x);
+//		System.out.println(RANGE);
 		this.repaint();
 	}
 	
@@ -61,7 +69,7 @@ public class MapPanel extends JPanel {
 //		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
 //		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
 		p.x = (int) Math.ceil((c.x()/2) * b.width / (range)) + b.x + (b.width/2);
-		p.y = (int) Math.ceil(c.y()/-2) * b.height / (range) + b.y + (b.height/2);
+		p.y = (int) Math.ceil((c.y()/-2) * b.height / (range)) + b.y + (b.height/2);
 		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
 		return p;
 	}
@@ -125,7 +133,7 @@ public class MapPanel extends JPanel {
 			Point ul, lr;
 			ul = place(new Coord(c.x() - (HIGH_RISK/2), c.y() - (HIGH_RISK/2)), b, RANGE);
 			lr = place(new Coord(c.x() + (HIGH_RISK/2), c.y() + (HIGH_RISK/2)), b, RANGE);
-			g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+			g.drawOval(ul.x, ul.y, 50/RANGE, 50/RANGE);
 			g2.setColor(defaultColor);
 			
 			if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
