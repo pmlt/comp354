@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 public class Login implements ActionListener, WindowListener {
@@ -27,7 +28,7 @@ public class Login implements ActionListener, WindowListener {
 		log.setResizable(false);
 
 		//Creating fields
-		JLabel label = new JLabel("Enter you password");
+		JLabel label = new JLabel("Enter your password");
 //		JLabel op = new JLabel("Operator: op123");
 //		JLabel us = new JLabel("User: user123");
 		pass = new JTextField();
@@ -50,6 +51,9 @@ public class Login implements ActionListener, WindowListener {
 		// Adding Panels to Frame
 		log.add(output, BorderLayout.CENTER);
 		log.add(commands, BorderLayout.SOUTH);
+		
+		JRootPane rootPane = log.getRootPane();
+	    rootPane.setDefaultButton(but[0]);
 	}
 	
 	public void show() {
