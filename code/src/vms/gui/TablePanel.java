@@ -71,6 +71,7 @@ public class TablePanel extends JPanel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
+			if (_Vessels.size() <= rowIndex) return "";
 			Vessel v = _Vessels.get(rowIndex);
 			switch(columnIndex) {
 			case 0: return v.getId();
@@ -93,36 +94,18 @@ public class TablePanel extends JPanel {
 		
 	};
 	private VesselTableModel _TableModel = new VesselTableModel();
-	//private JComboBox _NameList;
-	//private JComboBox _OrderList;
 	private JTable _Table;
 	private JScrollPane _ScrollPane;
 	private JPanel _OperatorPanel;
 
 	private int _OrderName = 0;
 	private int _OrderType = 0;
-	/*
-    final private String[] orderTypeNames = {
-    		"Ascending",
-    		"Descending"
-    };
-    final private String[] orderListNames = {
-    		"Vessel ID",
-            "Type",
-            "Speed",
-            "Distance"
-    };
-	JLabel[] label = {
-			new JLabel("Order by"),
-			new JLabel("Type order")
-	};
-    */
+
 	public TablePanel() {
 		RiskColor renderer = new RiskColor();
 		_Table = new JTable(_TableModel);
 		_Table.setPreferredScrollableViewportSize(new Dimension(1000, 440));
 		_Table.setOpaque(true);
-//		_Table.setAutoCreateRowSorter(true);
 		_Table.getColumnModel().getColumn(7).setPreferredWidth(170);
 
 		for (int i=0; i<columnNames.length; i++) {
@@ -136,25 +119,6 @@ public class TablePanel extends JPanel {
 		_OperatorPanel = new JPanel();
 		_OperatorPanel.setLayout(new GridLayout(2, 4));
 		
-/*
-		JPanel empty1 = new JPanel();
-		JPanel empty2 = new JPanel();
-		
-		//Create Button to add
-		_NameList = new JComboBox(orderListNames);
-		_OrderList = new JComboBox(orderTypeNames);
-		_NameList.setSelectedIndex(0);
-		_NameList.addActionListener(this);
-		_OrderList.setSelectedIndex(0);
-		_OrderList.addActionListener(this);
-		_OperatorPanel.add(empty1);
-		_OperatorPanel.add(empty2);
-		_OperatorPanel.add(label[0]);
-		_OperatorPanel.add(label[1]);
-		_OperatorPanel.add(_NameList);
-		_OperatorPanel.add(_OrderList);
-		add(_OperatorPanel, BorderLayout.SOUTH);
-*/		
 	}
 	
 	public void changeIdentity(UserIdentity identity) {
@@ -175,19 +139,6 @@ public class TablePanel extends JPanel {
 		    }
 		  });
 	}
-	
-	/*
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource().equals(_NameList)) {
-			JComboBox cb = (JComboBox)arg0.getSource();
-			_OrderName = cb.getSelectedIndex();
-		}
-		else if (arg0.getSource().equals(_OrderList)) {
-			JComboBox cb = (JComboBox)arg0.getSource();
-			_OrderType = cb.getSelectedIndex();
-		}
-	}
-	*/
 	
 	public List<Vessel> sort(List<Vessel> list) {
 		Collections.sort(list, new VesselComparator(_OrderName, _OrderType));
