@@ -89,7 +89,7 @@ public class TablePanel extends JPanel implements ActionListener {
 				for(Alert a : _Alerts) {
 					if (a.contains(v)) return a.getType().toString();
 				}
-				return ""; //No alert for this ship
+				return "None"; //No alert for this ship
 			}
 			return "Unknown";
 		}
