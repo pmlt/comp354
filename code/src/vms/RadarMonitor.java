@@ -10,9 +10,7 @@ import common.Vessel;
 
 
 public class RadarMonitor implements ConnectionServer.Observer {
-	
-	private Coord lowerRange;
-	private Coord upperRange;
+	private int range;
 	private ArrayList<Vessel> _Vessels = new ArrayList<Vessel>();
 	private List<Observer> _Observers = new ArrayList<Observer>();
 	
@@ -20,9 +18,8 @@ public class RadarMonitor implements ConnectionServer.Observer {
 		public void refresh(List<Alert> alerts, List<Vessel> vessels);
 	}
 	
-	public void setRange(Coord lowerRange, Coord upperRange) {
-		this.lowerRange = lowerRange;
-		this.upperRange = upperRange;
+	public void setRange(int range) {
+		this.range = range;
 	}
 	
 	public int getVesselCount() {
@@ -71,7 +68,7 @@ public class RadarMonitor implements ConnectionServer.Observer {
 			try {
 				Coord v1Coords = v1.getCoord(timestamp);
 				
-				if(v1Coords.isInRange(lowerRange, upperRange)){
+				if(v1Coords.isInRange(range)){
 					for(int j=i+1; j<_Vessels.size(); j++){
 						String risk = "none";
 						Alert newAlert;

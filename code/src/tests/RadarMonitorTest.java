@@ -38,7 +38,7 @@ public class RadarMonitorTest {
 	@Test
 	public void test() {
 		RadarMonitor radar = new RadarMonitor();
-		radar.setRange(new Coord(-200, -200), new Coord(200, 200));
+		radar.setRange(200);
 		assertEquals(0, radar.getVesselCount());
 		assertArrayEquals(new Vessel[0], radar.getVessels().toArray());
 		
@@ -48,7 +48,7 @@ public class RadarMonitorTest {
 	@Test
 	public void testObservers() {
 		RadarMonitor radar = new RadarMonitor();
-		radar.setRange(new Coord(-2000, -2000), new Coord(2000, 2000));
+		radar.setRange(2000);
 		radar.registerObserver(new FakeUI());
 
 		Calendar time = Calendar.getInstance();

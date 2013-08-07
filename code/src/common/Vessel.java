@@ -110,9 +110,10 @@ public class Vessel {
 	}
 	
 	public boolean equals(Object other){
+		if (other == null) return false;
+	    if (!(other instanceof Vessel))return false;
+	    
 		Vessel vOther = (Vessel)other;
-		if(id.equals(vOther.getId()) && type == vOther.getType())
-			return true;
-		return false;
+		return id.equals(vOther.getId()) && type == vOther.getType();
 	}
 }
