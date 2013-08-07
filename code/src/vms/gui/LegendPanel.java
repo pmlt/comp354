@@ -3,6 +3,7 @@ package vms.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -19,15 +20,18 @@ public class LegendPanel extends JPanel {
 			VesselType.CARGO_BOAT, VesselType.PASSENGER_VESSEL, VesselType.UNKNOWN};
 	
 	public LegendPanel() {
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		// setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setBackground(Color.BLACK);
-		setMaximumSize(new Dimension(800, 10));
+		setMaximumSize(new Dimension(600, 30));
+		setLayout(new GridLayout(3, 3));
 		Font font = new Font(Font.DIALOG, Font.PLAIN, 15);
 		JLabel label = new JLabel("LEGEND");
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setBackground(Color.BLACK);
 		this.add(label);
+		this.add(new JLabel(""));
+		this.add(new JLabel(""));
 		for (int i=0; i<types.length; i++) {
 			label = new JLabel("    " + getType(types[i]));
 			label.setFont(font);
