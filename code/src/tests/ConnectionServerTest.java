@@ -158,7 +158,7 @@ public class ConnectionServerTest {
 			
 			//Try sending correct data
 			Calendar curTime = Calendar.getInstance();
-			UpdateData ud = new UpdateData("myid", VesselType.CARGO_BOAT, new Coord(10, 10), new Course(20, -20), curTime);
+			UpdateData ud = new UpdateData("myid", VesselType.CARGO_BOAT, new Coord(10, -10), new Course(20, -20), curTime);
 			msg = ud.toJSON();
 			Netstring.write(stream, msg.getBytes()); //Write with netstring encoding
 			Thread.sleep(1000); //Allow for overhead of network
