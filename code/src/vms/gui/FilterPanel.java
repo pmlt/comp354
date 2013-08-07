@@ -25,7 +25,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 		VESSEL_NAMES.put(VesselType.FISHING_BOAT, "3 - Fishing Boat");
 		VESSEL_NAMES.put(VesselType.CARGO_BOAT, "4 - Cargo Vessel");
 		VESSEL_NAMES.put(VesselType.PASSENGER_VESSEL, "5 - Passenger Vessel");
-		VESSEL_NAMES.put(VesselType.UNKNOWN, "6 - Unkown");
+		VESSEL_NAMES.put(VesselType.UNKNOWN, "6 - Unknown");
 	}
 	
 	public FilterPanel() {
