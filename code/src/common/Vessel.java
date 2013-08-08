@@ -60,6 +60,33 @@ public class Vessel {
 		return course;
 	}
 	
+	public String getCourseInDegrees(Calendar timestamp) {
+		double vx = getCourse(timestamp).xVel();
+		double vy = getCourse(timestamp).yVel();
+		if (Math.abs(vx) < 0.00001 && Math.abs(vy) < 0.00001)
+			return "Stationary";
+		else if (Math.abs(vx) < 0.00001) {
+			if (vy > 0)
+				return "0" + "\u00B0";
+			else
+				return "180" + "\u00B0";
+		}
+		else if (Math.abs(vy) < 0.00001) {
+			if (vx > 0)
+				return "90" + "\u00B0";
+			else
+				return "270" + "\u00B0";
+		}
+		else if (vx > 0 && vy > 0)
+			return Long.toString(Math.round(Math.toDegrees(Math.atan(Math.abs(vx/vy))))) + "\u00B0";
+		else if (vx > 0 && vy < 0)
+			return Long.toString(Math.round(90 + Math.toDegrees(Math.atan(Math.abs(vx/vy))))) + "\u00B0";
+		else if (vx < 0 && vy < 0)
+			return Long.toString(Math.round(180 + Math.toDegrees(Math.atan(Math.abs(vx/vy))))) + "\u00B0";
+		else
+			return Long.toString(Math.round(270 + Math.toDegrees(Math.atan(Math.abs(vx/vy))))) + "\u00B0";	
+	}
+	
 	public double getSpeed(Calendar timestamp) throws IllegalStateException {
 		Course c = getCourse(timestamp);
 		double precision = Math.sqrt(Math.pow(c.xVel(), 2.0) + Math.pow(c.yVel(), 2.0));

@@ -121,7 +121,7 @@ public class MapPanel extends JPanel {
 				Alert worstAlert = null;
 				for (Alert a : _Alerts) {
 					if (a.contains(v)) {
-						if (worstAlert == null || a.getType() == AlertType.HIGHRISK) {
+						if (worstAlert == null || worstAlert.getType() == AlertType.NONE || a.getType() == AlertType.HIGHRISK) {
 							worstAlert = a;
 						}
 					}

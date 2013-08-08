@@ -79,17 +79,30 @@ public class TablePanel extends JPanel {
 			case 2: return v.getCoord(Calendar.getInstance()).x();
 			case 3: return v.getCoord(Calendar.getInstance()).y();
 			case 4: return v.getSpeed(Calendar.getInstance());
-			case 5: return "Long: " +v.getCourse(Calendar.getInstance()).xVel() + ", Lat: " + 
-			v.getCourse(Calendar.getInstance()).yVel();
+			case 5: return v.getCourseInDegrees(Calendar.getInstance());
 			case 6: return v.getDistance(Calendar.getInstance());
 			case 7: return v.getLastTimestamp().getTime();
-			case 8: 
-				for(Alert a : _Alerts) {
+			case 8: return getWorstAlert(v).toString();
+/*				for(Alert a : _Alerts) {
 					if (a.contains(v)) return a.getType().toString();
 				}
-				return "None"; //No alert for this ship
+				return ""; //No alert for this ship*/
 			}
 			return "Unknown";
+		}
+		
+		private Alert.AlertType getWorstAlert(Vessel v) {
+			Alert worstAlert = null;
+			for (Alert a : _Alerts) {
+				if (a.contains(v)) {
+					if (worstAlert == null || worstAlert.getType() == AlertType.NONE || a.getType() == AlertType.HIGHRISK)
+						worstAlert = a;
+				}
+			}
+			if (worstAlert == null)
+				return AlertType.NONE;
+			else
+				return worstAlert.getType();
 		}
 		
 	};

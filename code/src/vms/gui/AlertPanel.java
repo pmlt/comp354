@@ -37,8 +37,9 @@ public class AlertPanel extends JPanel {
 		int wHeight = 140;
 		Alert worstAlert = null;
 		for (Alert a : _Alerts) {
-			if (worstAlert == null || a.getType() == AlertType.HIGHRISK) {
+			if (worstAlert == null || worstAlert.getType() == AlertType.NONE || a.getType() == AlertType.HIGHRISK) {
 				worstAlert = a;
+			if (worstAlert.getType() == AlertType.HIGHRISK)
 				break;
 			}
 		}
