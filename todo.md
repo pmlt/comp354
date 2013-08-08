@@ -20,4 +20,4 @@ To Do List
 * Finish Sections 2 (except 2.2.1) and 3 of Deliverable 3
 
 #### Note:
-Some of the items listed above are optional (They may or may not be implemented in the final version)
+Some of the items listed above are optional (they may or may not be implemented in the final version)
