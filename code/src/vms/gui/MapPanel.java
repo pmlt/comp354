@@ -64,6 +64,20 @@ public class MapPanel extends JPanel {
 		return r;
 	}
 	
+	private void drawArrow(Course v, Point p, Graphics2D g) {
+		int cx = p.x;
+		int cy = p.y;
+		int vx = (int) v.xVel();
+		int vy = (int) v.yVel();
+		int dx = cx - vx;
+		int dy = cy - vy;
+		int lenBody = (int) Math.sqrt( Math.pow((double) dx, 2.0) + Math.pow((double) dy, 2.0)) /4;
+		final int RATIO = RANGE/500;
+		g.drawLine(cx+vx*-1/RATIO, cy+vy/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Body of arrow
+		g.drawLine(cx+vx*-1/RATIO, cy+vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Arrow Head of Diagnol
+		g.drawLine(cx-vx*-1/RATIO, cy-vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); 
+	}
+	
 	public Point place(Coord c, Rectangle b, int range) {
 		Point p = new Point();
 //		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
@@ -112,9 +126,9 @@ public class MapPanel extends JPanel {
 				Color defaultColor = getTypeColor(v.getType());
 				g2.setColor(defaultColor);
 				Coord c = v.getCoord(now);
+				Course co = v.getCourse(now);
 				Point p = place(c, b, RANGE);
-				g.fillOval(p.x-3, p.y-3, 6, 6);
-				//g.drawLine(p.x, p.y, (b.x + b.width)/2, (b.y + b.height)/2);
+				drawArrow(co, p, g2);
 				g.drawString(v.getId(), p.x+6, p.y+6);
 				
 				//Search for worst alert
