@@ -33,7 +33,12 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		JMenuItem menuItem2 = new JMenuItem("Logout");
 		menuItem2.addActionListener(this);
 		menuItem2.getAccessibleContext().setAccessibleDescription("Log out of program.");
-		
+
+		JMenuItem menuItem3 = new JMenuItem("Add New Simulator File...");
+		menuItem3.addActionListener(this);
+		menuItem3.getAccessibleContext().setAccessibleDescription("Adds a new VSF Simulator file.");
+
+		menu.add(menuItem3);
 		menu.add(menuItem2);
 		menu.add(menuItem);
 
@@ -49,7 +54,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			WindowEvent windowClosing = new WindowEvent(_ParentWindow, WindowEvent.WINDOW_CLOSING);
 			_ParentWindow.dispatchEvent(windowClosing);			
 		}
-		
+		if (arg0.getActionCommand().compareToIgnoreCase("Add New Simulator File...") == 0 ) {
+			_AddVSF.setVisible(true);
+		}		
 	}
 }
  
