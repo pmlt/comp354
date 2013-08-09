@@ -16,11 +16,13 @@ public class MainGUI implements RadarMonitor.Observer {
 	private Login _Login;
 	private RadarDisplay _Display;
 	private ConnectionServer _Server;
+	private AddVSF _AddVSF;
 	
 	public MainGUI(ConnectionServer cs) {
 		_Login = new Login(this);
 		_Display = new RadarDisplay(this);
 		_Server = cs;
+		_AddVSF = new AddVSF(this);
 	}
 
 
@@ -43,5 +45,8 @@ public class MainGUI implements RadarMonitor.Observer {
 	public void stopServer() {
 //		System.out.println("Stopping server");
 		_Server.stop();
+	}
+	public void showAddVSF() {
+		_AddVSF.show();
 	}
 }

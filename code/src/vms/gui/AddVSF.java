@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JRootPane;
@@ -25,12 +26,12 @@ public class AddVSF implements ActionListener, WindowListener {
 	JTextField inputFile;
 	JTextField host;
 	JTextField port;
-	JButton but[] = {new JButton("Login"), new JButton("Exit")};
+	JButton but[] = {new JButton("Add"), new JButton("Cancel")};
 	public AddVSF (MainGUI main) {
 		_AddFile = main;
 		addFile = new JFrame("Add New Simulator File");
 		addFile.addWindowListener(this);
-		addFile.setSize(250, 450);
+		addFile.setSize(250, 150);
 		addFile.setResizable(false);
 		addFile.setLocationRelativeTo(null);
 		addFile.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,27 +83,17 @@ public class AddVSF implements ActionListener, WindowListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(but[0])) {
-			if (comboBox.getSelectedItem().toString() == "operator" && pass.getText().compareTo("op123") == 0) {
-//				_Main.showRadar(MainGUI.UserIdentity.OPERATOR);
-//				addFile.setVisible(false);
+			if (inputFile.getText().compareTo("") != 0 && host.getText().compareTo("") != 0 && port.getText().compareTo("") != 0) {
+//				Mainfunction;
+				addFile.setVisible(false);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Please enter all required information!", "File Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		else if (e.getSource().equals(but[1])) {
-			close();
+			addFile.setVisible(false);
 		}
-		else if (e.getSource().equals(comboBox)) {
-			if (comboBox.getSelectedItem().toString() == "operator") {
-				label2.setEnabled(true);
-				pass.setEnabled(true);
-			}
-			else if (comboBox.getSelectedItem().toString() == "user") {
-				label2.setEnabled(false);
-				pass.setEnabled(false);
-				pass.setText("");
-			}
-
-		}
-
 	}
 	
 	public void close() {
@@ -149,12 +140,6 @@ public class AddVSF implements ActionListener, WindowListener {
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
