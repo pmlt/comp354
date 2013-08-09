@@ -54,9 +54,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
 			WindowEvent windowClosing = new WindowEvent(_ParentWindow, WindowEvent.WINDOW_CLOSING);
 			_ParentWindow.dispatchEvent(windowClosing);			
 		}
-		if (arg0.getActionCommand().compareToIgnoreCase("Add New Simulator File...") == 0 ) {
-			_AddVSF.setVisible(true);
-		}		
+//		if (arg0.getActionCommand().compareToIgnoreCase("Add New Simulator File...") == 0 ) {
+//			_AddVSF.setVisible(true);
+//		}		
 	}
 }
  
