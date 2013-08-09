@@ -1,8 +1,10 @@
 package vms.gui;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.BoxLayout;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import common.Vessel.VesselType;
 
@@ -20,7 +22,7 @@ public class FilterPanel extends JPanel implements ActionListener {
 	final static private Map<VesselType, String> VESSEL_NAMES;
 	static {
 		VESSEL_NAMES = new HashMap<VesselType, String>();
-		VESSEL_NAMES.put(VesselType.SWIMMER, "1 - Human (swimmer)");
+		VESSEL_NAMES.put(VesselType.SWIMMER, "1 - Human (swimmer) ");
 		VESSEL_NAMES.put(VesselType.SPEED_BOAT, "2 - Speed Boat");
 		VESSEL_NAMES.put(VesselType.FISHING_BOAT, "3 - Fishing Boat");
 		VESSEL_NAMES.put(VesselType.CARGO_BOAT, "4 - Cargo Vessel");
@@ -30,9 +32,8 @@ public class FilterPanel extends JPanel implements ActionListener {
 	
 	public FilterPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new TitledBorder("Filter by:")));
 		filter = new HashMap<VesselType, Boolean>();
-		JLabel label = new JLabel("Filter by");
-		this.add(label);
 		for (VesselType vtype : VesselType.values()) {
 			JCheckBox chk = new JCheckBox(VESSEL_NAMES.get(vtype));
 			chk.addActionListener(this);
