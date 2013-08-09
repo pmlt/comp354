@@ -10,8 +10,6 @@ To Do List
 * Make map view prettier (perhaps blueish or greenish background to simulate water or radar)
 * Make map circular (instead of square/rectangular)
 * Make zoom function zoom closer and make it moveable
-* Add username field to login (dropdown: Admin or User)
-* Make password field an actual password field (show asterix instead of letters)
 * Add a way to differentiate between different vessels with same ID from different VSF files
 * Create easy way to add VSF files to system (browse for file) instead of command line invocation
 * Make vessels arrows/triangles instead of dots (to show direction)
