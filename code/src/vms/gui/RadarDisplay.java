@@ -34,6 +34,7 @@ public class RadarDisplay implements WindowListener {
 	JPanel _InnerMapPane;
 	JPanel _OuterMapPane;
 	SliderPanel _Slider;
+	MiscPanel _MiscPanel;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
@@ -53,6 +54,7 @@ public class RadarDisplay implements WindowListener {
 		_LeftPane = new JPanel();
 		_InnerMapPane = new JPanel();
 		_Slider = new SliderPanel(_MapPanel);
+		_MiscPanel = new MiscPanel(_MapPanel);
 		_OuterMapPane = new JPanel();
 		
 		_InnerMapPane.setLayout(new BoxLayout(_InnerMapPane, BoxLayout.X_AXIS));
@@ -70,6 +72,7 @@ public class RadarDisplay implements WindowListener {
 		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);
 		_LeftPane.add(_FilterPanel);
+		_LeftPane.add(_MiscPanel);
 
 		_Frame.setJMenuBar(new MenuBar(_Frame, main));
 		_Frame.add(_LeftPane, BorderLayout.WEST);

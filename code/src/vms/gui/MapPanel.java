@@ -25,6 +25,7 @@ public class MapPanel extends JPanel {
 	private final int MAX_RANGE = 5000;
 	private final int HIGH_RISK = 50;
 	private final int LOW_RISK = 200;
+	private Coord center;
 	
 	private List<Vessel> _Vessels;
 	private List<Alert> _Alerts;
@@ -33,6 +34,7 @@ public class MapPanel extends JPanel {
 		_Vessels = new ArrayList<Vessel>();
 		_Alerts = new ArrayList<Alert>();
 		RANGE  = MAX_RANGE;
+		center = new Coord(0,0);
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
@@ -41,10 +43,14 @@ public class MapPanel extends JPanel {
 		this.repaint();
 	}
 	
-	public void changeRange(int x) {
+	public void changeRange(double x) {
 		RANGE = (int) Math.ceil((double) MAX_RANGE / (double) x);
 //		System.out.println(RANGE);
 		this.repaint();
+	}
+	
+	public void changeCenter(Coord newCenter) {
+		center = newCenter;
 	}
 	
 	public Rectangle getDrawableArea(int width, int height) {
@@ -82,8 +88,10 @@ public class MapPanel extends JPanel {
 		Point p = new Point();
 //		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
 //		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
-		p.x = (int) Math.ceil((c.x()/2) * b.width / (range)) + b.x + (b.width/2);
-		p.y = (int) Math.ceil((c.y()/-2) * b.height / (range)) + b.y + (b.height/2);
+//		p.x = (int) Math.ceil((c.x()/2) * b.width / (range)) + b.x + (b.width/2);
+//		p.y = (int) Math.ceil((c.y()/-2) * b.height / (range)) + b.y + (b.height/2);
+		p.x = (int) (Math.ceil(c.x())*b.width/(2*range) + b.x + b.width/2 - center.x()*b.width/(2*range));
+		p.y = (int) (Math.ceil(c.y())*b.height/(-2*range) + b.y + b.height/2 + center.y()*b.height/(2*range));
 		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
 		return p;
 	}
@@ -111,18 +119,47 @@ public class MapPanel extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.black);
 		super.paintComponent(g);
-		g2.fillRect(0, 0, getWidth(), getHeight()-50);
+//		g2.fillRect(0, 0, getWidth(), getHeight()-50);
+		g2.fillRect(0, 0, getWidth(), getHeight());
+		
+		//draw bounds
 		g2.setColor(Color.getHSBColor(125, 100, 83));
-		
-		Rectangle b = getDrawableArea(getWidth(), getHeight()-50);
+//		Rectangle b = getDrawableArea(getWidth(), getHeight()-50);
+		Rectangle b = getDrawableArea(getWidth(), getHeight());
 		g2.drawRect(b.x, b.y, b.width, b.height);
-		g2.setColor(Color.WHITE);
 		
-		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
-		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
+		double scale = (double)MAX_RANGE/RANGE;
+		
+		//draw outer range
+		g2.setColor(Color.WHITE);
+//		center = new Coord(-1000,1000);
+		g2.drawOval((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
+				(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
+				(int)(b.width*scale), (int)(b.height*scale));
+		
+		//draw grid
+		g2.setColor(Color.GRAY);
+		for (int i=0; i<=MAX_RANGE/100; i++) {
+			if (i == MAX_RANGE/200)
+				g2.setColor(Color.WHITE);
+			else
+				g2.setColor(Color.GRAY);
+			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/100)),
+					(int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + b.width*scale),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/100)));
+			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/100)),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
+					(int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/100)),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + b.height*scale));
+		}
+		
+//		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
+//		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
+		
 		Calendar now = Calendar.getInstance();
 		for (Vessel v : _Vessels) {
-			if (v.getDistance(Calendar.getInstance()) <= RANGE) {
+			if (v.getDistance(Calendar.getInstance()) <= MAX_RANGE) {
 				Color defaultColor = getTypeColor(v.getType());
 				g2.setColor(defaultColor);
 				Coord c = v.getCoord(now);
