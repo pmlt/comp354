@@ -27,27 +27,24 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		centerPanel = new JPanel();
 		centerPanel.add(new JLabel("Map center:"));
 		centerData = new JTextField();
-		centerData.setText("(1000,1000)");
 		centerData.setEditable(false);
-//		centerData.setSize(new Dimension(200,20));
+		centerData.setPreferredSize(new Dimension(120,20));
 		centerPanel.add(centerData);
 		this.add(centerPanel);
 		
 		pointerPanel = new JPanel();
 		pointerPanel.add(new JLabel("Current location:"));
 		pointerData = new JTextField();
-		pointerData.setText("(1000,1000)");
 		pointerData.setEditable(false);
-//		pointerData.setSize(new Dimension(200,20));
+		pointerData.setPreferredSize(new Dimension(120,20));
 		pointerPanel.add(pointerData);
 		this.add(pointerPanel);
 		
 		zoomPanel = new JPanel();
 		zoomPanel.add(new JLabel("Zooming:"));
 		zoomData = new JTextField();
-		zoomData.setText("1000%");
 		zoomData.setEditable(false);
-//		zoomData.setSize(new Dimension(200,20));
+		zoomData.setPreferredSize(new Dimension(60,20));
 		zoomPanel.add(zoomData);
 		this.add(zoomPanel);
 //		this.setMinimumSize(new Dimension(200,400));
@@ -57,7 +54,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 	public void update(Coord center, Coord pointer, int range, int maxRange, double width, double height) {
 //		System.out.println(center.x() + ", " + center.y());
 //		centerPanel.remove(centerData);
-		centerData.setText("(" + center.x() + ", " + center.y() + ")");
+		centerData.setText("(" + (int)center.x() + ", " + (int)center.y() + ")");
 //		centerPanel.add(centerData);
 		
 		int xPos, yPos;

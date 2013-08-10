@@ -13,7 +13,7 @@ import common.Vessel;
 import common.Vessel.VesselType;
 public class SimulatorConfiguration {
 	private int _StartDelay;
-	private int _TimeInterval;
+	private double _TimeInterval;
 	private int _TotalTime;
 	private int _RadarRange;
 	private String _Version;
@@ -31,10 +31,10 @@ public class SimulatorConfiguration {
 	public void setStartDelay(int _StartDelay) {
 		this._StartDelay = _StartDelay;
 	}
-	public int getTimeInterval() {
+	public double getTimeInterval() {
 		return _TimeInterval;
 	}
-	public void setTimeInterval(int _TimeInterval) {
+	public void setTimeInterval(double _TimeInterval) {
 		this._TimeInterval = _TimeInterval;
 	}
 	public int getTotalTime() {
@@ -76,7 +76,7 @@ public class SimulatorConfiguration {
 			else if (a[0].trim().compareToIgnoreCase("STARTTIME") == 0)
 				sc.setStartDelay((int) Double.parseDouble(a[1]));
 			else if (a[0].trim().compareToIgnoreCase("TIMESTEP") == 0) {
-				sc.setTimeInterval((int) Double.parseDouble(a[1]));
+				sc.setTimeInterval(Double.parseDouble(a[1]));
 			}
 			else if (a[0].trim().compareToIgnoreCase("TIME") == 0)
 				sc.setTotalTime((int) Double.parseDouble(a[1]));
