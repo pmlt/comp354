@@ -32,7 +32,6 @@ public class RadarDisplay implements WindowListener {
 	AlertPanel _AlertPanel;
 	LegendPanel _LegendPanel;
 	JPanel _MapPane;
-	SliderPanel _Slider;
 	DataPanel _DataPanel;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
@@ -51,7 +50,6 @@ public class RadarDisplay implements WindowListener {
 		_TablePanel = new TablePanel();
 		_MapPanel = new MapPanel();
 		_LeftPane = new JPanel();
-		_Slider = new SliderPanel(_MapPanel);
 		_MapPane = new JPanel();
 		_DataPanel = new DataPanel();
 		
