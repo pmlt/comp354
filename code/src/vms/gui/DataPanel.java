@@ -27,6 +27,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		centerPanel = new JPanel();
 		centerPanel.add(new JLabel("Map center:"));
 		centerData = new JTextField();
+		centerData.setText("(1000,1000)");
 		centerData.setEditable(false);
 //		centerData.setSize(new Dimension(200,20));
 		centerPanel.add(centerData);
@@ -35,6 +36,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		pointerPanel = new JPanel();
 		pointerPanel.add(new JLabel("Current location:"));
 		pointerData = new JTextField();
+		pointerData.setText("(1000,1000)");
 		pointerData.setEditable(false);
 //		pointerData.setSize(new Dimension(200,20));
 		pointerPanel.add(pointerData);
@@ -43,6 +45,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		zoomPanel = new JPanel();
 		zoomPanel.add(new JLabel("Zooming:"));
 		zoomData = new JTextField();
+		zoomData.setText("1000%");
 		zoomData.setEditable(false);
 //		zoomData.setSize(new Dimension(200,20));
 		zoomPanel.add(zoomData);
