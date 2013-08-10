@@ -1,11 +1,8 @@
 package vms.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
@@ -27,6 +24,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		centerPanel = new JPanel();
 		centerPanel.add(new JLabel("Map center:"));
 		centerData = new JTextField();
+		centerData.setText("(0, 0)");
 		centerData.setEditable(false);
 		centerData.setPreferredSize(new Dimension(120,20));
 		centerPanel.add(centerData);
@@ -43,6 +41,7 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 		zoomPanel = new JPanel();
 		zoomPanel.add(new JLabel("Zooming:"));
 		zoomData = new JTextField();
+		zoomData.setText("100%");
 		zoomData.setEditable(false);
 		zoomData.setPreferredSize(new Dimension(60,20));
 		zoomPanel.add(zoomData);
