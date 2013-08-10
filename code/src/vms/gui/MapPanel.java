@@ -4,6 +4,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseMotionListener;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,6 +14,7 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 import vms.*;
 import vms.Alert.AlertType;
+import vms.ConnectionServer.Observer;
 import common.*;
 import common.Vessel.VesselType;
 
@@ -21,10 +23,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MapPanel extends JPanel implements MouseListener, MouseWheelListener {
+public class MapPanel extends JPanel implements MouseListener, MouseWheelListener, MouseMotionListener {
 	/**
 	 * 
 	 */
+	public interface Observer {
+		public void update(Coord center, Coord pointer, int range, int maxRange, double width, double height);
+	}
+	
 	private static final long serialVersionUID = -3982174526003182203L;
 	private int RANGE;
 	private final int MAX_RANGE = 5000;
@@ -35,15 +41,18 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	private List<Vessel> _Vessels;
 	private List<Alert> _Alerts;
+	private List<Observer> _Observers;
 	
 	public MapPanel() {
 		_Vessels = new ArrayList<Vessel>();
 		_Alerts = new ArrayList<Alert>();
+		_Observers = new ArrayList<Observer>();
 		RANGE = MAX_RANGE;
 		scale = (double)MAX_RANGE/RANGE;
 		center = new Coord(0,0);
 		this.addMouseListener(this);
 		this.addMouseWheelListener(this);
+		this.addMouseMotionListener(this);
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
@@ -52,9 +61,22 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		this.repaint();
 	}
 	
+	public void registerObserver(Observer o) {
+		if (!_Observers.contains(o))
+			_Observers.add(o);
+	}
+	
+	public void unregisterObserver(Observer o) {
+		_Observers.remove(o);
+	}
+	
+	public void updateObservers(Coord center, Coord pointer, int range, int maxRange, double width, double height) {
+		for (int i=0; i < _Observers.size(); i++)
+			_Observers.get(i).update(center, pointer, range, maxRange, width, height);
+	}
+	
 	public void changeRange(double x) {
 		RANGE = (int) Math.ceil((double) MAX_RANGE / (double) x);
-//		System.out.println(RANGE);
 		this.repaint();
 	}
 	
@@ -64,6 +86,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	public void changeCenter(Coord newCenter) {
 		center = newCenter;
+		this.repaint();
 	}
 	
 	public Coord getCenter() {
@@ -155,18 +178,18 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		
 		//draw grid
 		g2.setColor(Color.GRAY);
-		for (int i=0; i<=MAX_RANGE/100; i++) {
+		for (int i=0; i<=MAX_RANGE/250; i++) {
 //			if (i == MAX_RANGE/200)
 //				g2.setColor(Color.WHITE);
 //			else
 				g2.setColor(Color.GRAY);
 			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
-					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/100)),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/250)),
 					(int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + b.width*scale),
-					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/100)));
-			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/100)),
+					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/250)));
+			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/250)),
 					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
-					(int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/100)),
+					(int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1) + i*b.width*scale/(MAX_RANGE/250)),
 					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + b.height*scale));
 		}
 		
@@ -242,7 +265,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		double height = (double) this.getHeight();
 //		System.out.println(width);
 //		System.out.println(height);
-//		RANGE = 2500;
 		int xPos = (int)center.x();
 		int yPos = (int)center.y();
 		if (width > height) {
@@ -253,10 +275,19 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		}
 		else {
 			xPos = (int)(e.getX()*2*RANGE/width - RANGE + center.x());
-			xPos = (int)(e.getY()*(-2)*RANGE*(1+(height-width)/width)/height - RANGE*(height-width)/width + RANGE + center.y());
+			yPos = (int)(e.getY()*(-2)*RANGE*(1+(height-width)/width)/height + RANGE*(height-width)/width + RANGE + center.y());
 //			System.out.println(xPos);
 //			System.out.println(yPos);
 		}
+		if (xPos > MAX_RANGE)
+			xPos = MAX_RANGE;
+		if (xPos < -MAX_RANGE)
+			xPos = -MAX_RANGE;
+		if (yPos > MAX_RANGE)
+			yPos = MAX_RANGE;
+		if (yPos < -MAX_RANGE)
+			yPos = -MAX_RANGE;
+		
 		center = new Coord(xPos, yPos);
 		this.repaint();
 	}
@@ -275,4 +306,14 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 			RANGE = 10000;
 		this.repaint();
 	}
+	
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mouseMoved(MouseEvent e) {
+		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
+	}
+	
 }

@@ -34,7 +34,7 @@ public class RadarDisplay implements WindowListener {
 	JPanel _InnerMapPane;
 	JPanel _OuterMapPane;
 	SliderPanel _Slider;
-	MiscPanel _MiscPanel;
+	DataPanel _DataPanel;
 	
 	MainGUI.UserIdentity _CurrentIdentity;
 	
@@ -54,15 +54,18 @@ public class RadarDisplay implements WindowListener {
 		_LeftPane = new JPanel();
 		_InnerMapPane = new JPanel();
 		_Slider = new SliderPanel(_MapPanel);
-		_MiscPanel = new MiscPanel(_MapPanel);
 		_OuterMapPane = new JPanel();
+		_DataPanel = new DataPanel();
+		
+		_MapPanel.registerObserver(_DataPanel);
 		
 		_InnerMapPane.setLayout(new BoxLayout(_InnerMapPane, BoxLayout.X_AXIS));
 		_InnerMapPane.add(_MapPanel);
 		_InnerMapPane.add(_Slider);
 		
-		_OuterMapPane.setLayout(new BoxLayout(_OuterMapPane, BoxLayout.Y_AXIS));
+		_OuterMapPane.setLayout(new BoxLayout(_OuterMapPane, BoxLayout.PAGE_AXIS));
 		_OuterMapPane.add(_InnerMapPane);
+		_OuterMapPane.add(_DataPanel);
 		_OuterMapPane.add(_LegendPanel);
 		
 		_TabbedPane = new JTabbedPane();		
@@ -72,7 +75,6 @@ public class RadarDisplay implements WindowListener {
 		_LeftPane.setLayout(new BoxLayout(_LeftPane, BoxLayout.Y_AXIS));	
 		_LeftPane.add(_AlertPanel);
 		_LeftPane.add(_FilterPanel);
-		_LeftPane.add(_MiscPanel);
 
 		_Frame.setJMenuBar(new MenuBar(_Frame, main));
 		_Frame.add(_LeftPane, BorderLayout.WEST);
