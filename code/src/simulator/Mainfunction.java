@@ -7,6 +7,8 @@ import java.net.InetSocketAddress;
 import java.text.ParseException;
 import java.util.Calendar;
 
+import javax.swing.JOptionPane;
+
 public class Mainfunction {
 	
 	private static class ParsedArguments {
@@ -107,10 +109,10 @@ public class Mainfunction {
 					ret.Port = Integer.parseInt(args[i+1]);
 				}
 				catch (NumberFormatException e) {
-					ret.Error = "You must supply a number for the port.";
+					JOptionPane.showMessageDialog(null, "You must supply a number for the port.", "File Error", JOptionPane.WARNING_MESSAGE);
 				}
 				if ((ret.Port < 0)||(ret.Port > 99999)){
-					ret.Error = "You must provide a positive integer for the port.";
+					JOptionPane.showMessageDialog(null, "You must provide a positive integer for the port.", "File Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case "--input":
@@ -122,12 +124,10 @@ public class Mainfunction {
 				}
 				ret.InputFile = new File(args[i+1]);
 				if (!ret.InputFile.exists()) {
-					ret.Error = "File " + args[i+1] + " does not exist.";
-					return ret;
+					JOptionPane.showMessageDialog(null, "File " + args[i+1] + " does not exist.", "File Error", JOptionPane.WARNING_MESSAGE);
 				}
 				if (!ret.InputFile.canRead()) {
-					ret.Error = "File " + args[i+1] + " is not readable.";
-					return ret;
+					JOptionPane.showMessageDialog(null, "File " + args[i+1] + " is not readable.", "File Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case "--help":
@@ -143,8 +143,7 @@ public class Mainfunction {
 		if (ret.Host != null && ret.Port != 0) {
 			ret.Address = new InetSocketAddress(ret.Host, ret.Port);
 			if (ret.Address.isUnresolved()) {
-				ret.Error = "Cannot resolve address " + ret.Host + ":" + ret.Port;
-				return ret;
+				JOptionPane.showMessageDialog(null, "Cannot resolve address " + ret.Host + ":" + ret.Port, "File Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		

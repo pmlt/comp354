@@ -92,22 +92,20 @@ public class AddVSF extends JFrame implements ActionListener, WindowListener {
 			// Demonstrate "Open" dialog:
 			int rVal = c.showOpenDialog(AddVSF.this);
 			if (rVal == JFileChooser.APPROVE_OPTION) {
-				inputFile.setText(c.getCurrentDirectory().toString() + c.getSelectedFile().getName());
+				inputFile.setText(c.getSelectedFile().getName());
 			}
 			if (rVal == JFileChooser.CANCEL_OPTION) {
 				inputFile.setText("");
 			}		}
 		else if (e.getSource().equals(but[1])) {
 			if (inputFile.getText().compareTo("") != 0 && host.getText().compareTo("") != 0 && port.getText().compareTo("") != 0) {
-				String[] arguments = new String[]{host.getText(), port.getText(), inputFile.getText()};
+				String[] arguments = new String[]{"--host", host.getText(), "--port", port.getText(), "--input", "assets/" + inputFile.getText()};
 				try {
 					simulator.Mainfunction.main(arguments);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("IOException");
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("ParseException");
 				}
 				addFile.setVisible(false);
 			}
