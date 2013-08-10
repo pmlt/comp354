@@ -300,7 +300,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		RANGE += e.getWheelRotation()*(-500);
+		RANGE += e.getWheelRotation()*(500);
 		if (RANGE < 500)
 			RANGE = 500;
 		if (RANGE > 2*MAX_RANGE)
