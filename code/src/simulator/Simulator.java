@@ -33,7 +33,7 @@ public class Simulator {
 					UpdateData data = list.get(i).getUpdateData(Calendar.getInstance());
 					client.sendUpdate(data);
 				}
-				Thread.sleep(_Configuration.getTimeInterval() * 1000);
+				Thread.sleep((int)(_Configuration.getTimeInterval() * 1000));
 				timeElapsed = getTimeElapsed(startTime);
 			} catch (InterruptedException e) {
 				break; //User pressed ctrl-c; we exit
