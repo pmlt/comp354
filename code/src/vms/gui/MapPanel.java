@@ -289,6 +289,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 			yPos = -MAX_RANGE;
 		
 		center = new Coord(xPos, yPos);
+		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 		this.repaint();
 	}
 	
@@ -304,6 +305,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 			RANGE = 500;
 		if (RANGE > 2*MAX_RANGE)
 			RANGE = 10000;
+		
+		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 		this.repaint();
 	}
 	
