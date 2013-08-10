@@ -1,5 +1,10 @@
 package vms.gui;
 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -16,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements MouseListener, MouseWheelListener {
 	/**
 	 * 
 	 */
@@ -26,6 +31,7 @@ public class MapPanel extends JPanel {
 	private final int HIGH_RISK = 50;
 	private final int LOW_RISK = 200;
 	private Coord center;
+	private double scale;
 	
 	private List<Vessel> _Vessels;
 	private List<Alert> _Alerts;
@@ -33,8 +39,11 @@ public class MapPanel extends JPanel {
 	public MapPanel() {
 		_Vessels = new ArrayList<Vessel>();
 		_Alerts = new ArrayList<Alert>();
-		RANGE  = MAX_RANGE;
+		RANGE = MAX_RANGE;
+		scale = (double)MAX_RANGE/RANGE;
 		center = new Coord(0,0);
+		this.addMouseListener(this);
+		this.addMouseWheelListener(this);
 	}
 	
 	public void update(final List<Alert> alerts, final List<Vessel> vessels) {
@@ -49,8 +58,16 @@ public class MapPanel extends JPanel {
 		this.repaint();
 	}
 	
+	public int getRange() {
+		return RANGE;
+	}
+	
 	public void changeCenter(Coord newCenter) {
 		center = newCenter;
+	}
+	
+	public Coord getCenter() {
+		return center;
 	}
 	
 	public Rectangle getDrawableArea(int width, int height) {
@@ -128,11 +145,10 @@ public class MapPanel extends JPanel {
 		Rectangle b = getDrawableArea(getWidth(), getHeight());
 		g2.drawRect(b.x, b.y, b.width, b.height);
 		
-		double scale = (double)MAX_RANGE/RANGE;
+		scale = (double)MAX_RANGE/RANGE;
 		
 		//draw outer range
 		g2.setColor(Color.WHITE);
-//		center = new Coord(-1000,1000);
 		g2.drawOval((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
 				(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
 				(int)(b.width*scale), (int)(b.height*scale));
@@ -140,9 +156,9 @@ public class MapPanel extends JPanel {
 		//draw grid
 		g2.setColor(Color.GRAY);
 		for (int i=0; i<=MAX_RANGE/100; i++) {
-			if (i == MAX_RANGE/200)
-				g2.setColor(Color.WHITE);
-			else
+//			if (i == MAX_RANGE/200)
+//				g2.setColor(Color.WHITE);
+//			else
 				g2.setColor(Color.GRAY);
 			g.drawLine((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
 					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + i*b.height*scale/(MAX_RANGE/100)),
@@ -154,8 +170,10 @@ public class MapPanel extends JPanel {
 					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + b.height*scale));
 		}
 		
-//		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
-//		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
+		//draw axis
+		g2.setColor(Color.WHITE);
+		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
+		g.drawLine(b.x, b.y + (b.height/2), (b.x + b.width), b.y + (b.height/2));
 		
 		Calendar now = Calendar.getInstance();
 		for (Vessel v : _Vessels) {
@@ -196,6 +214,65 @@ public class MapPanel extends JPanel {
 				g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
 			}
 		}
-	}
+	}	
 
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+//		System.out.println("Mouse clicked!");
+//		System.out.println(e.getX());
+//		System.out.println(e.getY());
+		double width = (double) this.getWidth();
+		double height = (double) this.getHeight();
+//		System.out.println(width);
+//		System.out.println(height);
+//		RANGE = 2500;
+		int xPos = (int)center.x();
+		int yPos = (int)center.y();
+		if (width > height) {
+			xPos = (int)(e.getX()*2*RANGE*(1+(width-height)/height)/width - RANGE*(width-height)/height - RANGE + center.x());
+			yPos = (int)(e.getY()*(-2)*RANGE/height + RANGE + center.y());
+//			System.out.println(xPos);
+//			System.out.println(yPos);
+		}
+		else {
+			xPos = (int)(e.getX()*2*RANGE/width - RANGE + center.x());
+			xPos = (int)(e.getY()*(-2)*RANGE*(1+(height-width)/width)/height - RANGE*(height-width)/width + RANGE + center.y());
+//			System.out.println(xPos);
+//			System.out.println(yPos);
+		}
+		center = new Coord(xPos, yPos);
+		this.repaint();
+	}
+	
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		RANGE += e.getWheelRotation()*(-500);
+		if (RANGE < 500)
+			RANGE = 500;
+		if (RANGE > 2*MAX_RANGE)
+			RANGE = 10000;
+		this.repaint();
+	}
 }
