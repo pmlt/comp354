@@ -21,6 +21,17 @@ public class Vessel {
 		private int value;
 		private VesselType(int v) { value = v; }
 		public int getValue() { return value; }
+		public String toString() {
+			switch (value) {
+			case 1: return "Human (swimmer)";
+			case 2: return "Speed Boat";
+			case 3: return "Fishing Boat";
+			case 4: return "Cargo Vessel";
+			case 5: return "Passenger Vessel";
+			case 6: return "Unknown";
+			default: return "Unknown";
+			}
+		}
 	}
 	
 	public Vessel(String id, VesselType type) {
