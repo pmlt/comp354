@@ -25,9 +25,9 @@ public class Simulator {
 		if (!client.isReady()) 
 			throw new RuntimeException("Must connect client before calling start()!");
 
-//		Calendar startTime = Calendar.getInstance(); //Record time start
-//		long timeElapsed = getTimeElapsed(startTime);
-//		while (timeElapsed <= _Configuration.getTotalTime()) {
+		Calendar startTime = Calendar.getInstance(); //Record time start
+		long timeElapsed = getTimeElapsed(startTime);
+		while (timeElapsed <= _Configuration.getTotalTime()) {
 			List<Vessel> list = _Configuration.getVessels();
 //			System.out.println(list.get(0).getCoord(Calendar.getInstance()).x());
 			try {
@@ -35,12 +35,12 @@ public class Simulator {
 					UpdateData data = list.get(i).getUpdateData(Calendar.getInstance());
 					client.sendUpdate(data);
 				}
-//				Thread.sleep((int)(_Configuration.getTimeInterval() * 1000));
-//				timeElapsed = getTimeElapsed(startTime);
+				Thread.sleep((int)(_Configuration.getTimeInterval() * 1000));
+				timeElapsed = getTimeElapsed(startTime);
 			}
-//			catch (InterruptedException e) {
-//				break; //User pressed ctrl-c; we exit
-//			}
+			catch (InterruptedException e) {
+				break; //User pressed ctrl-c; we exit
+			}
 			catch(SocketException e){
 				System.exit(0);
 			}
@@ -50,7 +50,7 @@ public class Simulator {
 				// If a transmission error occurs, print error and keep going
 				// or do we print error and exit?
 			}
-//		}
+		}
 	}
 	
 	public long getTimeElapsed(Calendar start) {
