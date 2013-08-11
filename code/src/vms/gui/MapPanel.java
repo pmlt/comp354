@@ -191,7 +191,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setColor(Color.black);
+		g2.setColor(Color.getHSBColor((float)0.55, (float)0.8, (float)0.2));
 		super.paintComponent(g);
 //		g2.fillRect(0, 0, getWidth(), getHeight()-50);
 		g2.fillRect(0, 0, getWidth(), getHeight());
@@ -254,24 +254,28 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 				}
 				
 				// Draws circles around the ships; adds color if there is a high-risk or low-risk alert
-				if (worstAlert != null && worstAlert.getType() == AlertType.HIGHRISK)
-					g2.setColor(Color.red);
-				
 				Point ul, lr;
-				ul = place(new Coord(c.x() - HIGH_RISK, c.y() + HIGH_RISK), b, RANGE);
-				lr = place(new Coord(c.x() + HIGH_RISK, c.y() - HIGH_RISK), b, RANGE);
-				g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
-				g2.setColor(defaultColor);
 				
-				if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
+				if (worstAlert != null && worstAlert.getType() == AlertType.HIGHRISK)
+				{
+					g2.setColor(Color.red);
+					ul = place(new Coord(c.x() - HIGH_RISK, c.y() + HIGH_RISK), b, RANGE);
+					lr = place(new Coord(c.x() + HIGH_RISK, c.y() - HIGH_RISK), b, RANGE);
+					g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+				}
+//				g2.setColor(defaultColor);
+				
+				else if (worstAlert != null && worstAlert.getType() == AlertType.LOWRISK)
+				{
 					g2.setColor(Color.yellow);
-	
-				ul = place(new Coord(c.x() - LOW_RISK, c.y() + LOW_RISK), b, RANGE);
-				lr = place(new Coord(c.x() + LOW_RISK, c.y() - LOW_RISK), b, RANGE);
-				g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+					ul = place(new Coord(c.x() - LOW_RISK, c.y() + LOW_RISK), b, RANGE);
+					lr = place(new Coord(c.x() + LOW_RISK, c.y() - LOW_RISK), b, RANGE);
+					g.drawOval(ul.x, ul.y, lr.x - ul.x, lr.y - ul.y);
+				}
 			}
 		}
 	}	
+
 
 	
 	@Override
