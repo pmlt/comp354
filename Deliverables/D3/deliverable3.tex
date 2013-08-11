@@ -81,9 +81,43 @@ This document will describe in detail the testing process and final delivery for
 
 % [List all tested items, along with the test cases that were applied on this item. For each test item, explain why it was necessary to test it. For instance, all features listed as requirements for each build is a mandatory test item. In addition, identify at least five units (i.e. classes/methods) and explain why they require unit testing due to their importance in the implementation through their frequency of use and/or the severity of the impact of their misbehavior. You can categorize your tested items, e.g. “Requirements”, “Units”, etc.]
 
-\subsubsection{Untested Items of Interest}
+\paragraph{VSF file parsing.} Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed. This is critical, as 
+
+\paragraph{Client-side connection.} Test that the simulator returns a helpful error message when attempting to connect to a non-existing VMS. Test that the simulator correctly connects to an existing VMS.
+
+\paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
+
+\paragraph{Server-side connection.} Test that the VMS can bind to a proper host and port number. Check that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
+
+\paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
+
+\paragraph{VMS Update Rate.} Test that the VMS display is updated as soon as new information comes in. Test that the VMS display is updated at a fixed, regular rate when no data is coming in.
+
+\paragraph{Out-of-range Vessels.} Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
+
+\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, Type, X-Y coordinates, Speed, Course, Distance from center of radar, last updated time, and risk level.
+
+\paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list.
+
+\paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table.
+
+\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as dots, with circles around them to indicate high-risk and low-risk ranges.
+
+\paragraph{Map View Filtering.} Test that the VMS properly hides vessels with a type unselected in the filter list.
+
+\paragraph{VMS Access Levels.} Test that the following features are only available when logged-in as administrator: Filtering, Sorting.
+
+\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in both the table and the map views. Test that all vessels involved in a high-risk alert are highlighted in red in both the table and the map views.
+
+\paragraph{Alert Icon Indicator.} Check that the upper-left icon always indicates the most serious alert level at any given time.
+
+\subsubsection{Untested Items of Interest} % STATUS: COMPLETE
 
 % [List all untested items that you find would necessitate testing. Explain how it could be tested, and why it would be important to test.]
+
+\paragraph{Command-line argument parsing}. We did not write extensive tests for command-line argument parsing, even though it can be considered input to the system (and therefore unsafe). It would be important to test this more thoroughly in the future.
+
+\paragraph{Large client update data}. We did not test the case when client data exceeds 1mb in size (example: an extremely large number of update data sent sequentially in one shot). Theoretically, it would cause the data to be truncated at 1mb, and therefore result in some of the updates to be flagged as ``invalid'' and ignored.
 
 \subsection{Test Cases}
 
@@ -134,11 +168,12 @@ Check that when ships drift outside the radar range, they are no longer tracked 
 \paragraph{Requirement 1: Vessel list displays latest information.}
 
 
-\subsubsection{Stress Testing}
+\subsubsection{Stress Testing} % STATUS: COMPLETE
 
 % Describe potential extreme situations of system usage. Describe the design of tests that would verify system performance under these extreme conditions. Do not perform the tests.
 
-\pagebreak
+The system was stress-tested with up to 150 vessels tracked simultaneously, using three distinct connected clients. The system has not been proven to be reliable beyond these limits.
+
 \section{System Delivery}
 
 % [This section provides instructions as to how to install and use the software.]
