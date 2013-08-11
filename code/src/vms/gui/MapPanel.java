@@ -277,6 +277,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		center = correctOutOfBounds(convertMouseToCoords(e.getX(), e.getY()));
+		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
 		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 		this.repaint();
 	}
@@ -309,7 +310,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 			RANGE = 500;
 		if (RANGE > 2*MAX_RANGE)
 			RANGE = 10000;
-		previousMouseCoords = currentMouseCoords;
 		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
 		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 		this.repaint();
@@ -333,7 +333,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		previousMouseCoords = currentMouseCoords;
 		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
 		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 	}
