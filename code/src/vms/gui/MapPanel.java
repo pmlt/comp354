@@ -149,10 +149,10 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		int cy = p.y;
 		int vx = (int) v.xVel();
 		int vy = (int) v.yVel();
-		int dx = cx - vx;
-		int dy = cy - vy;
-		int lenBody = (int) Math.sqrt( Math.pow((double) dx, 2.0) + Math.pow((double) dy, 2.0)) /4;
-		final int RATIO = RANGE/500;
+		int RATIO = RANGE/500;
+		
+		if (RATIO <= 0)
+			RATIO = 1;
 		g.drawLine(cx+vx*-1/RATIO, cy+vy/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Body of arrow
 		g.drawLine(cx+vx*-1/RATIO, cy+vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Arrow Head of Diagnol
 		g.drawLine(cx-vx*-1/RATIO, cy-vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); 
