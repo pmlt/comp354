@@ -5,6 +5,8 @@ import java.net.SocketException;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import common.UpdateData;
 import common.Vessel;
 
@@ -22,7 +24,7 @@ public class Simulator {
 	public void start(ConnectionClient client) {
 		if (!client.isReady()) 
 			throw new RuntimeException("Must connect client before calling start()!");
-		
+
 		Calendar startTime = Calendar.getInstance(); //Record time start
 		long timeElapsed = getTimeElapsed(startTime);
 		while (timeElapsed <= _Configuration.getTotalTime()) {
@@ -35,23 +37,19 @@ public class Simulator {
 				}
 				Thread.sleep((int)(_Configuration.getTimeInterval() * 1000));
 				timeElapsed = getTimeElapsed(startTime);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				break; //User pressed ctrl-c; we exit
 			}
 			catch(SocketException e){
 				System.exit(0);
 			}
-			
 			catch (IOException e) {
 				e.printStackTrace();
 				// XXX TODO We need to decide what happens here!
 				// If a transmission error occurs, print error and keep going
 				// or do we print error and exit?
 			}
-			
-				
-				
-			
 		}
 	}
 	

@@ -62,7 +62,7 @@ public class Mainfunction {
 			Simulator sim = new Simulator(config);
 			if (cc.isReady()){
 				// Call simulator.start(), passing the connection client instance.
-				sim.start(cc);	
+				sim.start(cc);
 			}
 			// When start() returns, we are done; close ConnectionClient and exit
 			cc.close();
@@ -109,10 +109,12 @@ public class Mainfunction {
 					ret.Port = Integer.parseInt(args[i+1]);
 				}
 				catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "You must supply a number for the port.", "File Error", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, ret.Port + "is not a valid port number!", "File Error", JOptionPane.WARNING_MESSAGE);
+					return null;
 				}
 				if ((ret.Port < 0)||(ret.Port > 99999)){
-					JOptionPane.showMessageDialog(null, "You must provide a positive integer for the port.", "File Error", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, ret.Port + "is not a valid port number!", "File Error", JOptionPane.WARNING_MESSAGE);
+					return null;
 				}
 				break;
 			case "--input":
@@ -125,9 +127,11 @@ public class Mainfunction {
 				ret.InputFile = new File(args[i+1]);
 				if (!ret.InputFile.exists()) {
 					JOptionPane.showMessageDialog(null, "File " + args[i+1] + " does not exist.", "File Error", JOptionPane.WARNING_MESSAGE);
+					return null;
 				}
-				if (!ret.InputFile.canRead()) {
+				else if (!ret.InputFile.canRead()) {
 					JOptionPane.showMessageDialog(null, "File " + args[i+1] + " is not readable.", "File Error", JOptionPane.WARNING_MESSAGE);
+					return null;
 				}
 				break;
 			case "--help":
@@ -144,6 +148,7 @@ public class Mainfunction {
 			ret.Address = new InetSocketAddress(ret.Host, ret.Port);
 			if (ret.Address.isUnresolved()) {
 				JOptionPane.showMessageDialog(null, "Cannot resolve address " + ret.Host + ":" + ret.Port, "File Error", JOptionPane.WARNING_MESSAGE);
+				return null;
 			}
 		}
 		
