@@ -37,6 +37,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	private final int HIGH_RISK = 50;
 	private final int LOW_RISK = 200;
 	private Coord center;
+	private Coord currentMouseCoords;
+	private Coord previousMouseCoords;
 	private double scale;
 	
 	private List<Vessel> _Vessels;
@@ -91,6 +93,38 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	public Coord getCenter() {
 		return center;
+	}
+	
+	public Coord convertMouseToCoords(int x, int y) {
+		double width = (double) this.getWidth();
+		double height = (double) this.getHeight();
+		double xPos = center.x();
+		double yPos = center.y();
+		if (width > height) {
+			xPos = (x*2*RANGE*(1+(width-height)/height)/width - RANGE*(width-height)/height - RANGE + center.x());
+			yPos = (y*(-2)*RANGE/height + RANGE + center.y());
+		}
+		else {
+			xPos = (x*2*RANGE/width - RANGE + center.x());
+			yPos = (y*(-2)*RANGE*(1+(height-width)/width)/height + RANGE*(height-width)/width + RANGE + center.y());
+		}
+		
+		return new Coord(xPos, yPos);
+	}
+	
+	public Coord correctOutOfBounds(Coord coords) {
+		double xPos = coords.x();
+		double yPos = coords.y();
+		if (xPos > MAX_RANGE)
+			xPos = MAX_RANGE;
+		if (xPos < -MAX_RANGE)
+			xPos = -MAX_RANGE;
+		if (yPos > MAX_RANGE)
+			yPos = MAX_RANGE;
+		if (yPos < -MAX_RANGE)
+			yPos = -MAX_RANGE;
+		
+		return new Coord(xPos, yPos);
 	}
 	
 	public Rectangle getDrawableArea(int width, int height) {
@@ -242,8 +276,9 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		center = correctOutOfBounds(convertMouseToCoords(e.getX(), e.getY()));
+		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
+		this.repaint();
 	}
 	
 	public void mouseEntered(MouseEvent e) {
@@ -258,39 +293,8 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-//		System.out.println("Mouse clicked!");
-//		System.out.println(e.getX());
-//		System.out.println(e.getY());
-		double width = (double) this.getWidth();
-		double height = (double) this.getHeight();
-//		System.out.println(width);
-//		System.out.println(height);
-		int xPos = (int)center.x();
-		int yPos = (int)center.y();
-		if (width > height) {
-			xPos = (int)(e.getX()*2*RANGE*(1+(width-height)/height)/width - RANGE*(width-height)/height - RANGE + center.x());
-			yPos = (int)(e.getY()*(-2)*RANGE/height + RANGE + center.y());
-//			System.out.println(xPos);
-//			System.out.println(yPos);
-		}
-		else {
-			xPos = (int)(e.getX()*2*RANGE/width - RANGE + center.x());
-			yPos = (int)(e.getY()*(-2)*RANGE*(1+(height-width)/width)/height + RANGE*(height-width)/width + RANGE + center.y());
-//			System.out.println(xPos);
-//			System.out.println(yPos);
-		}
-		if (xPos > MAX_RANGE)
-			xPos = MAX_RANGE;
-		if (xPos < -MAX_RANGE)
-			xPos = -MAX_RANGE;
-		if (yPos > MAX_RANGE)
-			yPos = MAX_RANGE;
-		if (yPos < -MAX_RANGE)
-			yPos = -MAX_RANGE;
+		// TODO Auto-generated method stub
 		
-		center = new Coord(xPos, yPos);
-		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
-		this.repaint();
 	}
 	
 	public void mouseReleased(MouseEvent e) {
@@ -305,18 +309,33 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 			RANGE = 500;
 		if (RANGE > 2*MAX_RANGE)
 			RANGE = 10000;
-		
-		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
+		previousMouseCoords = currentMouseCoords;
+		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
+		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 		this.repaint();
 	}
 	
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getX() < 0 || e.getY() < 0 || e.getX() > this.getWidth() || e.getY() > this.getHeight())
+			return;
 		
+		previousMouseCoords = currentMouseCoords;
+		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
+		
+		double xPos, yPos;
+		xPos = center.x() - (currentMouseCoords.x() - previousMouseCoords.x());
+		yPos = center.y() - (currentMouseCoords.y() - previousMouseCoords.y());
+		center = correctOutOfBounds(new Coord(xPos, yPos));
+			
+		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
+		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
+		this.repaint();
 	}
 	
 	public void mouseMoved(MouseEvent e) {
-		updateObservers(center, new Coord(e.getX(), e.getY()), RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
+		previousMouseCoords = currentMouseCoords;
+		currentMouseCoords = convertMouseToCoords(e.getX(), e.getY());
+		updateObservers(center, currentMouseCoords, RANGE, MAX_RANGE, this.getWidth(), this.getHeight());
 	}
 	
 }

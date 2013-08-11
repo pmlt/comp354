@@ -51,33 +51,9 @@ public class DataPanel extends JPanel implements MapPanel.Observer {
 
 	@Override
 	public void update(Coord center, Coord pointer, int range, int maxRange, double width, double height) {
-//		System.out.println(center.x() + ", " + center.y());
-//		centerPanel.remove(centerData);
 		centerData.setText("(" + (int)center.x() + ", " + (int)center.y() + ")");
-//		centerPanel.add(centerData);
-		
-		int xPos, yPos;
-		if (width > height) {
-			xPos = (int)(pointer.x()*2*range*(1+(width-height)/height)/width - range*(width-height)/height - range + center.x());
-			yPos = (int)(pointer.y()*(-2)*range/height + range + center.y());
-//			System.out.println(xPos);
-//			System.out.println(yPos);
-		}
-		else {
-			xPos = (int)(pointer.x()*2*range/width - range + center.x());
-			yPos = (int)(pointer.y()*(-2)*range*(1+(height-width)/width)/height + range*(height-width)/width + range + center.y());
-//			System.out.println(xPos);
-//			System.out.println(yPos);
-		}
-//		System.out.println(xPos + ", " + yPos);
-//		pointerPanel.remove(pointerData);
-		pointerData.setText("(" + xPos + ", " + yPos + ")");
-//		pointerPanel.add(pointerData);
-		
-//		zoomPanel.remove(zoomData);
+		pointerData.setText("(" + (int)pointer.x() + ", " + (int)pointer.y() + ")");
 		zoomData.setText(100*maxRange/range + "%");
-//		zoomPanel.add(zoomData);
-		
 		this.repaint();
 	}
 
