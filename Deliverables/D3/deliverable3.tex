@@ -54,6 +54,8 @@ Date & Version & Description & Author \\
 \hline
 11/08/13 & 0.43 & Added feature of map panel & Rigil Malubay \\
 \hline
+12/08/13 & 0.44 & Completed Section 3 & Stefanie Lavoie \\
+\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -209,14 +211,15 @@ This is all that needs to be done in order to run the Vessel Monitoring System c
 \subsection{Users Manual}
 \paragraph{Brief Overview \\ \\}
 
-The Vessel Monitoring System(VMS) is a Java based application that allows its users to check the positions of various kinds of vessels. This application can only be access by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System is the only one that should be selected to run as it will connect itself to the Radar Simulator when necessary.
+The Vessel Monitoring System(VMS) is a Java based application that allows its users to check the positions of various kinds of vessels. This application can only be access by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first followed shortly by the Radar Simulator once the user is logged in the VMS.
 
+\subsubsection{Vessel Monitoring System}
 \paragraph{Login Screen \\ \\}
 The Login screen is directly accessed as soon as the VMS program start. A valid password is required to be allowed to use the program. Only two types of users are available: normal user and administrators.% [Not sure if we should just say what the passwords are here??]
 
 	\begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.70]{images/userManual1.jpg}
+	\includegraphics[scale=0.80]{images/userManual1.jpg}
 	\end{figure}
 
 \paragraph{Main Screen \\ \\}
@@ -233,27 +236,21 @@ After loging in, the Main Screen will appear. This is where all the important in
 	\centering
 	\includegraphics[scale=0.35]{images/userManual2_user.jpg}
 	\end{figure}
-\break
+
 \subparagraph{1) Menu \\ \\}
 
-The menu is where the user can, amongst other things, select to logout option or exit the program.
+The menu is where the user can select to logout option or exit the program.
 	\begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.70]{images/userManual4.jpg}
+	\includegraphics[scale=1]{images/userManual4.jpg}
 	\end{figure}
 
-The most important option of the menu is the "Add New Simulator File..."  because it allows the user to select a specific VSF scenario and run it.
-
-	\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.70]{images/userManual5.jpg}
-	\end{figure}
-
-Here, the host and the port are specific to the machine that is running the Radar Simulator. If both are running on the same machine, than the host should be "localhost" and the port number "11233".
+If the logout option is selected, then the program will return to the Login Screen.\\
 
 \subparagraph{2) Table View Tab \\ \\}
 This is where the user can see a list of all the vessels detected by the radar. The vessels can be ordered in ascending or descending order by clicking the top of a column in the table. The color of a row depends on the type of alert this specific vessel is in.
 
+\break
 \subparagraph{3) Map View Tab \\ \\}
 This is where the vessels are shown on the map. Different type of vessels have different colors. The position of the vessels will be updated over time. The color of the small circles will change depending on the alert type of a vessel.
 	
@@ -269,15 +266,23 @@ This is where the vessels are shown on the map. Different type of vessels have d
 	\includegraphics[scale=0.36]{images/userManual3_user.jpg}
 	\end{figure}
 
-There is a zoom functionality in the map tab, it is enabled by scrolling the mouse forward (Zooming in) and backward (Zooming out) of the the point of origin. To change the point of origin of the zoom, it is simply done by click on the map or by dragging the target to the desired location. The map will only go within 5000 meters of the default origin.
-%The user can zoom in and out of the map by using the mouse wheel. 
-%Clicking the map will cause it to move around.
+There is a zoom functionality in the map tab, it is enabled by scrolling the mouse forward (Zooming in) and backward (Zooming out) of the the point of origin. To change the point of origin of the zoom, it is simply done by clicking on the map or by dragging the target to the desired location. The map will only go within 5000 meters of the default origin.
+
 \pagebreak
 \subparagraph{4) Alerts \\ \\}
-The alerts indicates if the vessels are near each other. If the alert circle is green, then all the vessels are far away from each other. If the alert circle is yellow, then this indicates that some vessels are becomimg very close to each other. The circle will turn red when some vessels are dangerously close to each other and an impact might happen.
+The alerts indicates if the vessels are near each other. If the alert circle is green, then all the vessels are far away from each other. If the alert circle is yellow, then this indicates that some vessels are becomimg very close to each other. The circle will turn red when some vessels are dangerously close to each other and an impact might happen.\\
 
 \subparagraph{5) Filters \\ \\}
-This section is only available when the user is an administrator. This allows the user to view only the kind of vessels that are selected.
+This section is only available when the user is an administrator. This allows the user to view only the kind of vessels that are selected.\\
+
+\subsubsection{Radar Simulator}
+The Radar Simulator needs to be run from the command prompt right after the user logged into the Vessel Monitoring System. Using the command prompt, the user should navigate to the folder containing the jar files to run the application. Once in the correct folder, the following line needs to be written in the command line to run the Radar Simulator.
+
+\begin{verbatim}
+java -jar radarsimulator.jar --host localhost --port 11233 --input COMP354_50_demo_500.vsf
+\end{verbatim}
+
+Here, the host and the port are specific to the machine that is running the Radar Simulator. If both are running on the same machine, than the host should be "localhost" and the port number "11233". The name of the vsf file listed above is an example. The user can put any path to a file followed by its complete name to run this file.
 
 \break
 
