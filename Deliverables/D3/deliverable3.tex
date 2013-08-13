@@ -93,35 +93,37 @@ This document will describe in detail the testing process and final delivery for
 
 % [List all tested items, along with the test cases that were applied on this item. For each test item, explain why it was necessary to test it. For instance, all features listed as requirements for each build is a mandatory test item. In addition, identify at least five units (i.e. classes/methods) and explain why they require unit testing due to their importance in the implementation through their frequency of use and/or the severity of the impact of their misbehavior. You can categorize your tested items, e.g. “Requirements”, “Units”, etc.]
 
+This is a list of all tested behaviour in the program. It is ordered by priority, from highest importance to lowest importance. All tests take the form of \verb|JUnit| unit tests, unless otherwise noted.
+
 \paragraph{VSF file parsing.} Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed.
 
 \paragraph{Client-side connection.} Test that the simulator returns a helpful error message when attempting to connect to a non-existing VMS. Test that the simulator correctly connects to an existing VMS.
 
-\paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
-
 \paragraph{Server-side connection.} Test that the VMS can bind to a proper host and port number. Test that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
-
-\paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
 
 \paragraph{VMS Update Rate.} Test that the VMS display is updated as soon as new information comes in. Test that the VMS display is updated at a fixed, regular rate when no data is coming in.
 
+\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, type, X-Y coordinates, speed, course, distance from center of radar, last updated time, and risk level. \emph{Manual test.}
+
+\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as arrows. \emph{Manual test.}
+
+\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view. \emph{Manual test.}
+
+\paragraph{Alert Icon Indicator.} Check that the upper-left circle always indicates the most serious alert level at any given time. \emph{Manual test.}
+
+\paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
+
+\paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list. \emph{Manual test.}
+
+\paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table. \emph{Manual test.}
+
+\paragraph{Map View Filtering.} Test that the VMS properly hides vessels with a type unselected in the filter list. \emph{Manual test.}
+
+\paragraph{VMS Access Levels.} Test that the following features are only available when logged-in as administrator: Filtering, Sorting. \emph{Manual test.}
+
 \paragraph{Out-of-range Vessels.} Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
 
-\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, type, X-Y coordinates, speed, course, distance from center of radar, last updated time, and risk level.
-
-\paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list.
-
-\paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table.
-
-\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as arrows.
-
-\paragraph{Map View Filtering.} Test that the VMS properly hides vessels with a type unselected in the filter list.
-
-\paragraph{VMS Access Levels.} Test that the following features are only available when logged-in as administrator: Filtering, Sorting.
-
-\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view.
-
-\paragraph{Alert Icon Indicator.} Check that the upper-left circle always indicates the most serious alert level at any given time.
+\paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
 
 \subsubsection{Untested Items of Interest} % STATUS: COMPLETE
 
@@ -177,7 +179,33 @@ Check that when ships drift outside the radar range, they are no longer tracked 
 
 % [For each tested requirement, include a list of test cases presented in the form of a concrete scenario of system usage and expected system reaction.]
 
-\paragraph{Requirement 1: Vessel list displays latest information.}
+This is a list of manual tests which cover all basic requirements of the system. The text in normal font is an instruction for the tester. The text in emphasized font is the expected result that the tester must observe for the test to be successful.
+
+\paragraph{Sanity test.}
+
+\begin{enumerate}
+\item Start VMS.
+\item Login as either user. \emph{Table and Radar data should be empty.}
+\item Start simulator with file \verb|demo.cross.vsf|. \emph{Six vessels appear in VMS, converging near one another. Each vessel has a different color in map view. The alert icon is green.}
+\item Wait for the vessels to cross each other's low-risk zones. \emph{All table rows are highlighted yellow; all vessels in map are yellow; the alert icon is yellow.}
+\item Wait for the vessels to cross each other's high-risk zones. \emph{All table rows are highlighted red; all vessels in map are red; the alert icon is red.}
+\item Wait for the vessels to leave each other's high-risk zones. \emph{All table rows are highlighted yellow; all vessels in map are yellow; the alert icon is yellow.}
+\item Wait for the vessels to leave each other's low-risk zones. \emph{Vessels are no longer highlighted in either table or map view; the alert icon is green.}
+\end{enumerate}
+
+\paragraph{Operator-level features.}
+\begin{enumerate}
+\item Start VMS.
+\item Start simulator with file \verb|demo.cross.vsf|.
+\item Login as normal user. \emph{No filtering checkboxes appear.}
+\item Click on table column headers. \emph{No reordering of rows occurs.}
+\item Log out, and log back in as operator. {Filtering checkboxes appear.}
+\item Deselect each checkbox successively. {For every checkbox deselected, every row in table and icon in map view with the deselected type disappear.}
+\item Select each checkbox successively. {For every checkbox selected, every row in table and icon in map view with the selected type appear.}
+\item In table view, click Vessel ID column header. {All rows are ordered by Vessel ID, ascending order.}
+\item In table view, click Vessel ID column header again. {All rows are ordered by Vessel ID, descending order.}
+\item Re-do last two steps for all other column headers. {Rows should be ordered by selected column, first ascending, then descending.}
+\end{enumerate}
 
 
 \subsubsection{Stress Testing} % STATUS: COMPLETE
@@ -185,6 +213,8 @@ Check that when ships drift outside the radar range, they are no longer tracked 
 % Describe potential extreme situations of system usage. Describe the design of tests that would verify system performance under these extreme conditions. Do not perform the tests.
 
 The system was stress-tested with up to 150 vessels tracked simultaneously, using three distinct connected clients. The system has not been proven to be reliable beyond these limits.
+
+\break
 
 \section{System Delivery}
 
