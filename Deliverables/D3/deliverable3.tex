@@ -44,17 +44,25 @@ Date & Version & Description & Author \\
 \hline
 30/07/13 & 0.2 & Finished Section 2.2.1 & Philippe Milot \\
 \hline
-30/07/13 & 0.28 & Worked on Section 4 (almost complete) & Christopher Mukherjee \\
+30/07/13 & 0.28 & Added initial cost estimate to Section 4 & Christopher Mukherjee \\
 \hline
 30/07/13 & 0.38 & Finished Section 1 & Christopher Mukherjee \\
 \hline
 04/08/13 & 0.39 & Started Section 3.2 & Stefanie Lavoie \\
 \hline
-06/08/13 & 0.41 & Added Gantt Chart, Finished Section 4 & Christopher Mukherjee \\
+06/08/13 & 0.41 & Added Gantt Chart to Section 4 & Christopher Mukherjee \\
 \hline
-11/08/13 & 0.43 & Added feature of map panel & Rigil Malubay \\
+11/08/13 & 0.43 & Finished Sections 2.1 \& 2.2.3 & Philippe Milot \\
+\hline
+11/08/13 & 0.43 & Added feature of map panel to Section 3.1 & Rigil Malubay \\
 \hline
 12/08/13 & 0.44 & Completed Section 3 & Stefanie Lavoie \\
+\hline
+12/08/13 & 0.45 & Finalized Cost Estimate in Section 4 & Pinsonn Laverdure \\
+\hline
+13/08/13 & 0.46 & Finished Section 4 & Christopher Mukherjee \\
+\hline
+13/08/13 & 0.48 & Reviewed \& edited entire document & Christopher Mukherjee \\
 \hline
 \end{tabular}
 \end{center}
@@ -81,17 +89,17 @@ This document will describe in detail the testing process and final delivery for
 
 \subsection{Test Coverage}
 
-\subsubsection{Tested Items}
+\subsubsection{Tested Items} % STATUS: COMPLETE
 
 % [List all tested items, along with the test cases that were applied on this item. For each test item, explain why it was necessary to test it. For instance, all features listed as requirements for each build is a mandatory test item. In addition, identify at least five units (i.e. classes/methods) and explain why they require unit testing due to their importance in the implementation through their frequency of use and/or the severity of the impact of their misbehavior. You can categorize your tested items, e.g. “Requirements”, “Units”, etc.]
 
-\paragraph{VSF file parsing.} Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed. This is critical, as 
+\paragraph{VSF file parsing.} Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed.
 
 \paragraph{Client-side connection.} Test that the simulator returns a helpful error message when attempting to connect to a non-existing VMS. Test that the simulator correctly connects to an existing VMS.
 
 \paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
 
-\paragraph{Server-side connection.} Test that the VMS can bind to a proper host and port number. Check that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
+\paragraph{Server-side connection.} Test that the VMS can bind to a proper host and port number. Test that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
 
 \paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
 
@@ -99,21 +107,21 @@ This document will describe in detail the testing process and final delivery for
 
 \paragraph{Out-of-range Vessels.} Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
 
-\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, Type, X-Y coordinates, Speed, Course, Distance from center of radar, last updated time, and risk level.
+\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, type, X-Y coordinates, speed, course, distance from center of radar, last updated time, and risk level.
 
 \paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list.
 
 \paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table.
 
-\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as dots, with circles around them to indicate high-risk and low-risk ranges.
+\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as arrows.
 
 \paragraph{Map View Filtering.} Test that the VMS properly hides vessels with a type unselected in the filter list.
 
 \paragraph{VMS Access Levels.} Test that the following features are only available when logged-in as administrator: Filtering, Sorting.
 
-\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in both the table and the map views. Test that all vessels involved in a high-risk alert are highlighted in red in both the table and the map views.
+\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view.
 
-\paragraph{Alert Icon Indicator.} Check that the upper-left icon always indicates the most serious alert level at any given time.
+\paragraph{Alert Icon Indicator.} Check that the upper-left circle always indicates the most serious alert level at any given time.
 
 \subsubsection{Untested Items of Interest} % STATUS: COMPLETE
 
@@ -144,7 +152,7 @@ Test all basic accessor/mutator methods.
 Project current coordinates based on last-known coordinates, course, and time elapsed.
 
 \subparagraph{Error conditions}
-Test that the class properly throws whenever bad data is supplied.
+Test that the class properly throws exceptions whenever bad data is supplied.
 
 \paragraph{RadarMonitorTest}
 
@@ -184,38 +192,39 @@ The system was stress-tested with up to 150 vessels tracked simultaneously, usin
 
 \subsection{Installation Manual}
 
-This manual will explain the procedures that need to be done in order to make the Vessel Monitoring System run on the user's computer. Since Java is a cross-platform language, this program will run on PCs and Mac.
+This manual will explain the procedures that need to be done in order to allow the Vessel Monitoring System run on the user's computer. Since Java is a cross-platform language, this program will run on any platform (Windows, Mac, or Linux).
 
 \paragraph{Install Java \\}
 \begin{enumerate}[(a)]
-  \item By going on the Java website ( http://www.java.com/en/download/ ) you will be able to download the lastest version of Java. It is important that you download at least Java Version 7 for the program to run.
+  \item By going on the Java website ( http://www.java.com/en/download/ ), you will be able to download the lastet version of Java. It is important that you download Java Version 7 or higher in order for the program to run.
 	\begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=0.55]{images/javaInstall1.jpg}
 	\end{figure}
 \pagebreak
-  \item Once the download is over, run the executable to install Java and follow the on screen instructions.
+  \item Once the download is complete, run the executable file to install Java and follow the on-screen instructions.\footnote{Screenshots are provided for the Windows version of the Java installer.}
 	\begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.55]{images/javaInstall2.jpg}
+	\includegraphics[scale=0.6]{images/javaInstall2.jpg}
 	\end{figure}
-  \item Once the installation is done, you will get pop up message that says that the installation is complete.
+  \item Once the installation is complete, you will get pop up message stating that Java has been successfully installed on your computer.
 	\begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.55]{images/javaInstall3.jpg}
+	\includegraphics[scale=0.6]{images/javaInstall3.jpg}
 	\end{figure}
 \end{enumerate}
 
-This is all that needs to be done in order to run the Vessel Monitoring System correctly.
-\pagebreak
+This is the only installation required in order to run the Vessel Monitoring System correctly.
+\clearpage
+
 \subsection{Users Manual}
 \paragraph{Brief Overview \\ \\}
 
-The Vessel Monitoring System(VMS) is a Java based application that allows its users to check the positions of various kinds of vessels. This application can only be access by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first followed shortly by the Radar Simulator once the user is logged in the VMS.
+The Vessel Monitoring System(VMS) is a Java-based application that allows its users to check the positions of various types of vessels. This application can only be accessed by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first, followed by the Radar Simulator once the user has logged into the VMS.
 
 \subsubsection{Vessel Monitoring System}
 \paragraph{Login Screen \\ \\}
-The Login screen is directly accessed as soon as the VMS program start. A valid password is required to be allowed to use the program. Only two types of users are available: normal user and administrators.% [Not sure if we should just say what the passwords are here??]
+The Login screen is directly accessed as soon as the VMS program start. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator, both of which have separate passwords.% [Not sure if we should just say what the passwords are here??]
 
 	\begin{figure}[!htb]
 	\centering
@@ -223,23 +232,11 @@ The Login screen is directly accessed as soon as the VMS program start. A valid 
 	\end{figure}
 
 \paragraph{Main Screen \\ \\}
-After loging in, the Main Screen will appear. This is where all the important information will be shown. The Main Screen will be different depending on the current user. An administratror will have more options than a normal user. 
+After logging in, the Main Screen will appear. This is where all the important information will be displayed. The Main Screen will be different depending on the current user's access level. An administrator will have more options than a normal user. The main screen consists of:
 
-	\begin{figure}[!htb]
-	\caption{Administrator Main Screen}
-	\centering
-	\includegraphics[scale=0.35]{images/userManual2_admin.jpg}
-	\end{figure}
+\subparagraph{1) Menu bar \\ \\}
 
-	\begin{figure}[!htb]
-	\caption{Normal User Main Screen}
-	\centering
-	\includegraphics[scale=0.35]{images/userManual2_user.jpg}
-	\end{figure}
-
-\subparagraph{1) Menu \\ \\}
-
-The menu is where the user can select to logout option or exit the program.
+The menu is where the user can select to logout or exit the program.
 	\begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=1]{images/userManual4.jpg}
@@ -247,12 +244,26 @@ The menu is where the user can select to logout option or exit the program.
 
 If the logout option is selected, then the program will return to the Login Screen.\\
 
+\pagebreak
+
 \subparagraph{2) Table View Tab \\ \\}
-This is where the user can see a list of all the vessels detected by the radar. The vessels can be ordered in ascending or descending order by clicking the top of a column in the table. The color of a row depends on the type of alert this specific vessel is in.
+In this view, the user can see a list of all the vessels detected by the radar. The color of each row depends on the type of alert this specific vessel is currently involved in. If the user has logged in as an administrator, the vessels can be ordered by any column in ascending or descending order by clicking the header cell at the top of each column in the table.
+
+	\begin{figure}[!htb]
+	\caption{Administrator Table View}
+	\centering
+	\includegraphics[scale=0.4]{images/userManual2_admin.jpg}
+	\end{figure}
+
+	\begin{figure}[!htb]
+	\caption{Normal User Table View}
+	\centering
+	\includegraphics[scale=0.4]{images/userManual2_user.jpg}
+	\end{figure}
 
 \break
 \subparagraph{3) Map View Tab \\ \\}
-This is where the vessels are shown on the map. Different type of vessels have different colors. The position of the vessels will be updated over time. The color of the small circles will change depending on the alert type of a vessel.
+In this view, the user can see the vessels displayed on the map. Different type of vessels have different colors. The position of every vessel will be updated over time. The color and visibility of the circles around the vessels will change depending on the alert type of a vessel.
 	
 	\begin{figure}[!htb]
 	\caption{Administrator Map View}
@@ -266,23 +277,23 @@ This is where the vessels are shown on the map. Different type of vessels have d
 	\includegraphics[scale=0.36]{images/userManual3_user.jpg}
 	\end{figure}
 
-There is a zoom functionality in the map tab, it is enabled by scrolling the mouse forward (Zooming in) and backward (Zooming out) of the the point of origin. To change the point of origin of the zoom, it is simply done by clicking on the map or by dragging the target to the desired location. The map will only go within 5000 meters of the default origin.
+There is also a zoom functionality in the map tab. It is enabled by scrolling the mouse forward (to zoom in) or backward (to zoom out) on the map area. Zooming is performed on the point of origin. There are two ways to change the point of origin. A user can either click on the map to quickly move the point of origin to the location of the click, or click and drag the map to the desired location. The map will only go within 5000 meters of the default point of origin.
 
 \pagebreak
-\subparagraph{4) Alerts \\ \\}
-The alerts indicates if the vessels are near each other. If the alert circle is green, then all the vessels are far away from each other. If the alert circle is yellow, then this indicates that some vessels are becomimg very close to each other. The circle will turn red when some vessels are dangerously close to each other and an impact might happen.\\
+\subparagraph{4) Alert Indicator \\ \\}
+The alert indicator always displays the color of the current most serious alert. A green circle indicates that all the vessels are a safe distance from one another. A yellow circle indicates that some vessels are very close to one another. A red circle indicates that some vessels are dangerously close to one another and that a collision may occur.\\
 
 \subparagraph{5) Filters \\ \\}
-This section is only available when the user is an administrator. This allows the user to view only the kind of vessels that are selected.\\
+This section is only available if the user has logged in as an administrator. The filters allow the user to hide/show certain types of vessels by deselecting/selecting the proper checkboxes.\\
 
 \subsubsection{Radar Simulator}
-The Radar Simulator needs to be run from the command prompt right after the user logged into the Vessel Monitoring System. Using the command prompt, the user should navigate to the folder containing the jar files to run the application. Once in the correct folder, the following line needs to be written in the command line to run the Radar Simulator.
+The Radar Simulator must be run from the command-line after the user has logged into the Vessel Monitoring System. Using the command prompt, the user should navigate to the folder containing the jar files to run the application. Once in the correct folder, the following line must be written in order to run the Radar Simulator.
 
 \begin{verbatim}
 java -jar radarsimulator.jar --host localhost --port 11233 --input COMP354_50_demo_500.vsf
 \end{verbatim}
 
-Here, the host and the port are specific to the machine that is running the Radar Simulator. If both are running on the same machine, than the host should be "localhost" and the port number "11233". The name of the vsf file listed above is an example. The user can put any path to a file followed by its complete name to run this file.
+Here, the host and the port are specific to the machine that is running the Radar Simulator. If both are running on the same machine, then the host should be "localhost" and the port number "11233". The vsf file listed above is an example of a vsf file located in the same folder as the jar files. The user can type the path of any vsf file followed by its complete name to run files in other directories.
 
 \break
 
@@ -308,7 +319,7 @@ Here, the host and the port are specific to the machine that is running the Rada
 %   \item[Buffer:] \$160
 %   \item[Total Cost:] \$1100
 % \end{description}
-
+\clearpage
 \begin{table}[ht]
 \caption{Final Cost estimate table }
 \centering
@@ -359,9 +370,14 @@ Project Total &100&130\\
 \hline
 \end{tabular}
 \label{table:nonlin}
-% is used to refer this table in the te
+% is used to refer this table in the text
 \end{table}
 
 \paragraph{Basis} Costs have been calculated based on the amount of man hours spent working on project (at a normal approximate labor cost of \$15 an hour). There was no cost associated with tools, because all tools used were either freely available or were provided by the University.
+
+\clearpage
+
+\listoffigures
+\clearpage
 
 \end{document}
