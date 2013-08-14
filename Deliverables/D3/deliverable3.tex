@@ -4,6 +4,10 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{indentfirst}
 \usepackage{enumerate}
+\usepackage{color}
+
+\definecolor{royalbluedark}{RGB}{55,95,145}
+\definecolor{royalblue}{RGB}{80,130,190}
 
 \begin{document}
 \title{Project Testing and Delivery Document}
@@ -83,7 +87,7 @@ Date & Version & Description & Author \\
 
 \pagenumbering{arabic}% Arabic page numbers (and reset to 1)
 
-\section{Introduction} % COMPLETE
+{\color{royalbluedark}\section{Introduction}} % COMPLETE
 
 % [The introduction of the document provides an overview of the entire document, briefly introducing what are its goals, and what information is to be found in it.]
 
@@ -91,11 +95,11 @@ This document will describe in detail the testing process and final delivery for
 
 \break
 
-\section{Testing Report}
+{\color{royalbluedark}\section{Testing Report}}
 
 % [This section presents all the testing activities undertaken on the final product, as well as all the individual test cases used.]
 
-\subsection{Test Coverage}
+{\color{royalblue}\subsection{Test Coverage}}
 
 \subsubsection{Tested Items} % STATUS: COMPLETE
 
@@ -103,61 +107,86 @@ This document will describe in detail the testing process and final delivery for
 
 This is a list of all tested behaviour in the program. It is ordered by priority, from highest importance to lowest importance. All tests take the form of \verb|JUnit| unit tests, unless otherwise noted.
 
-\paragraph{VSF file parsing.} Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed.
+\paragraph{VSF file parsing \\}
+Test that valid VSF files were correctly parsed. Test that invalid VSF files cause a helpful program error to be printed.
 
-\paragraph{Client-side connection.} Test that the simulator returns a helpful error message when attempting to connect to a non-existing VMS. Test that the simulator correctly connects to an existing VMS.
+\paragraph{Client-side connection \\}
+Test that the simulator returns a helpful error message when attempting to connect to a non-existing VMS. Test that the simulator correctly connects to an existing VMS.
 
-\paragraph{Server-side connection.} Test that the VMS can bind to a proper host and port number. Test that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
+\paragraph{Server-side connection \\}
+Test that the VMS can bind to a proper host and port number. Test that the VMS returns a helpful error message when trying to bind to an already-bound host and port number.
 
-\paragraph{VMS Update Rate.} Test that the VMS display is updated as soon as new information comes in. Test that the VMS display is updated at a fixed, regular rate when no data is coming in.
+\paragraph{VMS Update Rate \\}
+Test that the VMS display is updated as soon as new information comes in. Test that the VMS display is updated at a fixed, regular rate when no data is coming in.
 
-\paragraph{VMS Table Display.} Test that the VMS displays all possible information about tracked vessels, namely: ID, type, X-Y coordinates, speed, course, distance from center of radar, last updated time, and risk level. \emph{Manual test.}
+\paragraph{VMS Table Display \\}
+Test that the VMS displays all possible information about tracked vessels, namely: ID, type, X-Y coordinates, speed, course, distance from center of radar, last updated time, and risk level. \emph{Manual test.}
 
-\paragraph{Map View Display.} Test that the VMS can display the latest received information in a 2D map containing all vessels as arrows. \emph{Manual test.}
+\paragraph{Map View Display \\}
+Test that the VMS can display the latest received information in a 2D map containing all vessels as arrows. \emph{Manual test.}
 
-\paragraph{Alert Highlighting.} Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view. \emph{Manual test.}
+\paragraph{Alert Highlighting \\}
+Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view. \emph{Manual test.}
 
-\paragraph{Alert Icon Indicator.} Check that the upper-left circle always indicates the most serious alert level at any given time. \emph{Manual test.}
+\paragraph{Alert Icon Indicator \\}
+Check that the upper-left circle always indicates the most serious alert level at any given time. \emph{Manual test.}
 
-\paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
+\paragraph{Client data validation \\}
+Test that any invalid data coming from a connected client will be silently ignored by the VMS.
 
-\paragraph{Map Scrolling.} Test that the map display moves the correct distance and direction when dragged by the mouse. Test that the edges of the map cannot be scrolled beyond the center of the screen. \emph{Manual test.}
+\paragraph{Map Scrolling \\}
+Test that the map display moves the correct distance and direction when dragged by the mouse. Test that the edges of the map cannot be scrolled beyond the center of the screen. \emph{Manual test.}
 
-\paragraph{Zooming.} Test that the map display can zoom in and out while remaining properly centered. Test that the size of all objects on the map changes proportionally to the zoom factor. Test that the zoom factor cannot go below 50\% nor above 1,000\%. \emph{Manual test.}
+\paragraph{Zooming \\}
+Test that the map display can zoom in and out while remaining properly centered. Test that the size of all objects on the map changes proportionally to the zoom factor. Test that the zoom factor cannot go below 50\% nor above 1,000\%. \emph{Manual test.}
 
-\paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list. \emph{Manual test.}
+\paragraph{VMS Table Filtering \\}
+Test that the VMS properly hides rows of vessels with a type unselected in the filter list. \emph{Manual test.}
 
-\paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table. \emph{Manual test.}
+\paragraph{VMS Table Sorting \\}
+Test that all rows are ordered by the currently-selected column in the table. \emph{Manual test.}
 
-\paragraph{Map View Filtering.} Test that the VMS properly hides vessels with a type unselected in the filter list. \emph{Manual test.}
+\paragraph{Map View Filtering \\}
+Test that the VMS properly hides vessels with a type unselected in the filter list. \emph{Manual test.}
 
-\paragraph{VMS Access Levels.} Test that the following features are only available when logged-in as administrator: Filtering, Sorting. \emph{Manual test.}
+\paragraph{VMS Access Levels \\}
+Test that the following features are only available when logged-in as administrator: Filtering, Sorting. \emph{Manual test.}
 
-\paragraph{Out-of-range Vessels.} Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
+\paragraph{Out-of-range Vessels \\}
+Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
 
-\paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
+\paragraph{Time management on simulator side \\}
+Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
 
-\paragraph{Unit Tests}
+\break
+\paragraph{2.1.1.1 Unit Tests}
 
-\paragraph{VSF Reader.} The VSF Reader must be tested to ensure that the Simulator is able to parse any valid VSF file consistently and correctly. Failure to parse even one field of text would generate an error message, and prevent the Simulator program from executing. Parsing incorrect values would result in the Simulator data being corrupt.
+\paragraph{VSF Reader \\}
+The VSF Reader must be tested to ensure that the Simulator is able to parse any valid VSF file consistently and correctly. Failure to parse even one field of text would generate an error message, and prevent the Simulator program from executing. Parsing incorrect values would result in the Simulator data being corrupt.
 
-\paragraph{Server Connection.} The Server Connection has to be tested because it creates the link between the VMS and the client(s). The Server Connection must bind to a valid host and port number. Failure to establish a working connection would prevent the VMS from receiving data from any Simulator.
+\paragraph{Server Connection \\}
+The Server Connection has to be tested because it creates the link between the VMS and the client(s). The Server Connection must bind to a valid host and port number. Failure to establish a working connection would prevent the VMS from receiving data from any Simulator.
 
-\paragraph{Update Data.} The Update Data must be tested, as it contains the vessel data that is transmitted from the Simulator to the VMS. Failure to transmit data from the Simulator correctly would result in the data received by the VMS being incomplete or corrupt.
+\paragraph{Update Data \\}
+The Update Data must be tested, as it contains the vessel data that is transmitted from the Simulator to the VMS. Failure to transmit data from the Simulator correctly would result in the data received by the VMS being incomplete or corrupt.
 
-\paragraph{Radar Monitor.} The Radar Monitor has to be tested to ensure that the User Interface receives the correct data to display. If the Radar Monitor fails to refresh the data, or if the data is not correct, then the data displayed by the VMS will be incomplete or inaccurate. In addition, the Radar Monitor must generate alerts accurately, otherwise the User Interface will not display appropriate alerts.
+\paragraph{Radar Monitor \\}
+The Radar Monitor has to be tested to ensure that the User Interface receives the correct data to display. If the Radar Monitor fails to refresh the data, or if the data is not correct, then the data displayed by the VMS will be incomplete or inaccurate. In addition, the Radar Monitor must generate alerts accurately, otherwise the User Interface will not display appropriate alerts.
 
-\paragraph{Vessel.} The Vessel class must be tested because it represents vessel data and contains the methods by which this data is updated. If the vessel data is initialized incorrectly, or if the methods do not return accurate values, then the data sent to the VMS by the Simulator will be incorrect.
+\paragraph{Vessel \\}
+The Vessel class must be tested because it represents vessel data and contains the methods by which this data is updated. If the vessel data is initialized incorrectly, or if the methods do not return accurate values, then the data sent to the VMS by the Simulator will be incorrect.
 
 \subsubsection{Untested Items of Interest} % STATUS: COMPLETE
 
 % [List all untested items that you find would necessitate testing. Explain how it could be tested, and why it would be important to test.]
 
-\paragraph{Command-line argument parsing}. We did not write extensive tests for command-line argument parsing, even though it can be considered input to the system (and therefore unsafe). It would be important to test this more thoroughly in the future.
+\paragraph{Command-line argument parsing \\}
+We did not write extensive tests for command-line argument parsing, even though it can be considered input to the system (and therefore unsafe). It would be important to test this more thoroughly in the future.
 
-\paragraph{Large client update data}. We did not test the case when client data exceeds 1mb in size (example: an extremely large number of update data sent sequentially in one shot). Theoretically, it would cause the data to be truncated at 1mb, and therefore result in some of the updates to be flagged as ``invalid'' and ignored.
+\paragraph{Large client update data \\}
+We did not test the case when client data exceeds 1mb in size (example: an extremely large number of update data sent sequentially in one shot). Theoretically, it would cause the data to be truncated at 1mb, and therefore result in some of the updates to be flagged as ``invalid'' and ignored.
 
-\subsection{Test Cases}
+{\color{royalblue}\subsection{Test Cases}}
 
 % [Description of all the test cases applied on the tested items using various techniques and testing different aspects of the system. The following sections are mandatory testing perspectives. Other sections can be added to provide appropriate additional testing perspectives. All test cases must be presented as to be reproducible, with the exact data and procedure to convey the test, as well as the expected result.]
 
@@ -171,13 +200,13 @@ This is a list of all tested behaviour in the program. It is ordered by priority
 
 The \verb|Vessel| class was extensively tested using JUnit. All test cases were designed under the black box principle. The test cases were:
 
-\subparagraph{JavaBean functionality}
+\subparagraph{JavaBean functionality \\}
 Test all basic accessor/mutator methods.
 
-\subparagraph{Coordinate calculation}
+\subparagraph{Coordinate calculation \\}
 Project current coordinates based on last-known coordinates, course, and time elapsed.
 
-\subparagraph{Error conditions}
+\subparagraph{Error conditions \\}
 Test that the class properly throws exceptions whenever bad data is supplied.
 
 \paragraph{VesselTest.java:}
@@ -267,23 +296,23 @@ public class VesselTest {
 \end{verbatim}
 \linespread{1.6}
 
-\paragraph{RadarMonitorTest}
+\paragraph{RadarMonitorTest \\}
 
 The \verb|RadarMonitor| class was extensively tested using JUnit. All test cases were designed under the black box principle. The test cases were:
 
-\subparagraph{Manual refresh}
+\subparagraph{Manual refresh \\}
 Check that when the RadarMonitor is manually refreshed, all its observers are also refreshed.
 
-\subparagraph{Manual update}
+\subparagraph{Manual update \\}
 Check that when the RadarMonitor is manually fed new data, the data is forwarded to all observers.
 
-\subparagraph{Active alert detection}
+\subparagraph{Active alert detection \\}
 Check that when the RadarMonitor is manually fed new data, any alerts triggered by the update are properly detected and observers are notified.
 
-\subparagraph{Passive alert detection}
+\subparagraph{Passive alert detection \\}
 Check that when vessels passively drift toward each other over time, all relevant alerts are detected and observers are notified.
 
-\subparagraph{Radar range}
+\subparagraph{Radar range \\}
 Check that when ships drift outside the radar range, they are no longer tracked by the monitor.
 
 \paragraph{RadarMonitorTest.java:}
@@ -373,20 +402,20 @@ public class VesselTest {
 \end{verbatim}
 \linespread{1.6}
 
-\paragraph{ConnectionServerTest}
+\paragraph{ConnectionServerTest \\}
 
 The \verb|ConnectionServer| class was extensively tested using JUnit. All test cases were designed under the black box principle. The test cases were:
 
-\subparagraph{Manual refresh}
+\subparagraph{Manual refresh \\}
 When \verb|refreshObservers| is called, all registered observers are notified.
 
-\subparagraph{Manual update}
+\subparagraph{Manual update \\}
 When \verb|updateObservers| is called with new data, all registered observers receive the new data.
 
-\subparagraph{Automatic refreshing}
+\subparagraph{Automatic refreshing \\}
 When the server is started, all observers are notified at a specified frequency even when no data is received.
 
-\subparagraph{Update on data receival}
+\subparagraph{Update on data receival \\}
 When the server is started and receives data from the network, all observers receive the new data.
 
 \paragraph{ConnectionServerTest.java:}
@@ -586,13 +615,13 @@ public class ConnectionServerTest {
 \end{verbatim}
 \linespread{1.6}
 
-\subsubsection{Requirements Testing}
+{\color{royalblue}\subsubsection{Requirements Testing}}
 
 % [For each tested requirement, include a list of test cases presented in the form of a concrete scenario of system usage and expected system reaction.]
 
 This is a list of manual tests which cover all basic requirements of the system. The text in normal font is an instruction for the tester. The text in emphasized font is the expected result that the tester must observe for the test to be successful.
 
-\paragraph{Sanity test.}
+\paragraph{\\ Sanity test.}
 
 \begin{enumerate}
 \item Start VMS.
@@ -643,7 +672,7 @@ This is a list of manual tests which cover all basic requirements of the system.
 \item Try to drag the map outside of the map GUI display. \emph{The map no longer moves when the mouse is outside the map GUI area.}
 \end{enumerate}
 
-\subsubsection{Stress Testing} % STATUS: COMPLETE
+{\color{royalblue}\subsubsection{Stress Testing}} % STATUS: COMPLETE
 
 % Describe potential extreme situations of system usage. Describe the design of tests that would verify system performance under these extreme conditions. Do not perform the tests.
 
@@ -651,15 +680,15 @@ The system was stress-tested with up to 150 vessels tracked simultaneously, usin
 
 \break
 
-\section{System Delivery}
+{\color{royalbluedark}\section{System Delivery}}
 
 % [This section provides instructions as to how to install and use the software.]
 
-\subsection{Installation Manual}
+{\color{royalblue}\subsection{Installation Manual}}
 
 This manual will explain the procedures that need to be done in order to allow the Vessel Monitoring System run on the user's computer. Since Java is a cross-platform language, this program will run on any platform (Windows, Mac, or Linux).
 
-\paragraph{Install Java \\}
+\paragraph{\\ Install Java}
 \begin{enumerate}[(a)]
   \item By going on the Java website ( http://www.java.com/en/download/ ), you will be able to download the lastet version of Java. It is important that you download Java Version 7 or higher in order for the program to run.
 	\begin{figure}[!htb]
@@ -682,7 +711,7 @@ This manual will explain the procedures that need to be done in order to allow t
 This is the only installation required in order to run the Vessel Monitoring System correctly.
 \clearpage
 
-\subsection{Users Manual}
+{\color{royalblue}\subsection{Users Manual}}
 \paragraph{Brief Overview \\ \\}
 
 The Vessel Monitoring System(VMS) is a Java-based application that allows its users to check the positions of various types of vessels. This application can only be accessed by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first, followed by the Radar Simulator once the user has logged into the VMS.
@@ -762,7 +791,7 @@ Here, the host and the port are specific to the machine that is running the Rada
 
 \break
 
-\section{Final cost estimate} % Status: Work in Progress
+{\color{royalbluedark}\section{Final cost estimate}} % Status: Complete
 
 % [This shall consist of a table listing all components of all phases of this project, including the person hours cost of each component of each phase. This should include documentation, design, implementation and testing. Include the meeting minutes with action item and the time log as well]
 
