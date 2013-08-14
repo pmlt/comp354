@@ -5,8 +5,6 @@ import java.net.SocketException;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import common.UpdateData;
 import common.Vessel;
 
