@@ -21,7 +21,7 @@ public class VSFReaderTest {
 		SimulatorConfiguration sc = getConfig("assets/tests.valid.vsf", reftime);
 		assertEquals("001", sc.getVersion());
 		assertEquals(0, sc.getStartDelay());
-		assertEquals(2, sc.getTimeInterval());
+		assertEquals(2, sc.getTimeInterval(), 0.05);
 		assertEquals(500, sc.getTotalTime());
 		assertEquals(5000, sc.getRadarRange());
 		assertEquals(3, sc.getVessels().size());
