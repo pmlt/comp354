@@ -68,6 +68,9 @@ Date & Version & Description & Author \\
 \hline
 13/08/13 & 0.95 & Reviewed \& edited entire document & Christopher Mukherjee \\
 \hline
+14/08/13 & 1.0 & Added Test Scenario for Map Features in Section 2.2.2 & Ghislain Ledoux \\
+\hline
+
 \end{tabular}
 \end{center}
 \end{table}
@@ -608,6 +611,30 @@ This is a list of manual tests which cover all basic requirements of the system.
 \item Re-do last two steps for all other column headers. {Rows should be ordered by selected column, first ascending, then descending.}
 \end{enumerate}
 
+\paragraph{Map features.}
+\begin{enumerate}
+\item Start VMS.
+\item Start simulator with file \verb|demo.cross.vsf|.
+\item Click on Map View.
+\item Roll the mouse wheel by one notch toward the screen. \emph{The zoom factor increases; the size of all objects on the map increases relative to the scale; the coordinates of the center of the map remain the same.}
+\item Roll the mouse wheel repeatedly in the direction of the screen. \emph{The zoom factor stop increasing at 1000\%.}
+\item Roll the mouse wheel by one notch away from the screen. \emph{The zoom factor decreases; the size of all objects on the map decreases relative to the scale; the coordinates of the center of the map remain the same.}
+\item Roll the mouse wheel repeatedly away from the screen. \emph{The zoom factor stops decreasing at 50\%.}
+\item Move the mouse to any point within the map, except the center. Note the coordinates.
+\item Click and release the left mouse button \emph{The coordinates of the mouse in the previous step are now the coordinates of the center of the map. All objects on the map have moved relative to the new center coordinates.}
+\item Move the mouse to any point within the map. Note the coordinates.
+\item Press and keep down the left mouse button.
+\item Drag the mouse in any direction. \emph{The position of all objects on the map, including the map center coordinates, is translated by the same value as the position of the mouse pointer. The coordinates of the mouse remain the same.}
+\item Click on any point above the upper edge of the map grid. \emph{The upper edge of the map grid is now at the center of the map display.}
+\item Click on any point below the lower edge of the map grid. \emph{The lower edge of the map grid is now at the center of the map display.}
+\item Click on any point to the right of the right edge of the map grid. \emph{The right edge of the map grid is now at the center of the map display.}
+\item Click on any point to the left of the left edge of the map grid. \emph{The left edge of the map grid is now at the center of the map display.}
+\item Try to drag the map so that the upper edge of the map grid is below the center of the map. \emph{The upper edge of the map does not scroll below the center of the screen.}
+\item Try to drag the map so that the lower edge of the map grid is above the center of the map. \emph{The lower edge of the map does not scroll above the center of the screen.}
+\item Try to drag the map so that the right edge of the map grid is left of the center of the map. \emph{The right edge of the map does not scroll to the left of the center of the screen.}
+\item Try to drag the map so that the left edge of the map grid is right of the center of the map. \emph{The left edge of the map does not scroll to the right the center of the screen.}
+\item Try to drag the map outside of the map GUI display. \emph{The map no longer moves when the mouse is outside the map GUI area.}
+\end{enumerate}
 
 \subsubsection{Stress Testing} % STATUS: COMPLETE
 
