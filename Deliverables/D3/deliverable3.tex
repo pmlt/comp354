@@ -64,6 +64,8 @@ Date & Version & Description & Author \\
 \hline
 13/08/13 & 0.46 & Finished Section 4 & Christopher Mukherjee \\
 \hline
+14/08/13 & 0.49 & Added Manual Tests and Unit Tests to Section 2.1.1 & Ghislain Ledoux \\
+\hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -113,6 +115,10 @@ This is a list of all tested behaviour in the program. It is ordered by priority
 
 \paragraph{Client data validation.} Test that any invalid data coming from a connected client will be silently ignored by the VMS.
 
+\paragraph{Map Scrolling.} Test that the map display moves by the correct distance and direction when dragged by the mouse. Test that the edges of the map cannot be scrolled beyond the center of the screen. \emph{Manual test.}
+
+\paragraph{Zooming.} Test that the map display can zoom in and out while remaining properly centered. Test that the size of all objects on the map changes proportionally to the zoom factor. Test that the zoom factor cannot go below 50\% nor above 1,000\%. \emph{Manual test.}
+
 \paragraph{VMS Table Filtering.} Test that the VMS properly hides rows of vessels with a type unselected in the filter list. \emph{Manual test.}
 
 \paragraph{VMS Table Sorting.} Test that all rows are ordered by the currently-selected column in the table. \emph{Manual test.}
@@ -124,6 +130,18 @@ This is a list of all tested behaviour in the program. It is ordered by priority
 \paragraph{Out-of-range Vessels.} Test that the VMS ignores any vessel located outside its tracking range. Test that the VMS removes any vessel from its list of tracked vessels as soon as it moves out of range.
 
 \paragraph{Time management on simulator side.} Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
+
+\subsubsection{Unit Tests}
+
+\paragraph{VSF Reader.} The VSF Reader must be tested to ensure that the Simulator is able to parse any valid VSF file consistently and correctly. Failure to parse even one field of text would generate an error message, and prevent the Simulator program from executing. Parsing incorrect values would result in the Simulator data being corrupt.
+
+\paragraph{Server Connection.} The Server Connection has to be tested because it creates the link between the VMS and the client(s). The Server Connection must bind to a valid host and port number. Failure to establish a working connection would prevent the VMS from receiving data from any Simulator.
+
+\paragraph{Update Data.} The Update Data must be tested, as it contains the vessel data that is transmitted from the Simulator to the VMS. Failure to transmit data from the Simulator correctly would result in the data received by the VMS being incomplete or corrupt.
+
+\paragraph{Radar Monitor.} The Radar Monitor has to be tested to ensure that the User Interface receives the correct data to display. If the Radar Monitor fails to refresh the data, or if the data is not correct, then the data displayed by the VMS will be incomplete or inaccurate. In addition, the Radar Monitor must generate alerts accurately, otherwise the User Interface will not display appropriate alerts.
+
+\paragraph{Vessel.} The Vessel class must be tested because it represents vessel data and contains the methods by which this data is updated. If the vessel data is initialized incorrectly, or if the methods do not return accurate values, then the data sent to the VMS by the Simulator will be incorrect.
 
 \subsubsection{Untested Items of Interest} % STATUS: COMPLETE
 
