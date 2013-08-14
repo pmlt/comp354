@@ -144,29 +144,31 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		return r;
 	}
 	
-	private void drawArrow(Course v, Point p, Graphics2D g) {
+	private void drawArrow(Course v, Point p, Rectangle b, Graphics2D g) {
 		int cx = p.x;
 		int cy = p.y;
-		int vx = (int) v.xVel();
-		int vy = (int) v.yVel();
-		int RATIO = RANGE/500;
+		double vx = v.xVel();
+		double vy = v.yVel();
+		int RATIO = RANGE/100;
 		
-		if (RATIO <= 0)
-			RATIO = 1;
-		g.drawLine(cx+vx*-1/RATIO, cy+vy/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Body of arrow
-		g.drawLine(cx+vx*-1/RATIO, cy+vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); // Arrow Head of Diagnol
-		g.drawLine(cx-vx*-1/RATIO, cy-vy*-1/RATIO, cx-vx*-1/RATIO, cy-vy/RATIO); 
+		if (Math.abs(vx) < 0.0001 && Math.abs(vy) < 0.0001)
+			g.drawOval(cx-b.width/(10*RATIO), cy+b.height/(10*RATIO), cx+b.width/(10*RATIO), cx-b.height/(10*RATIO));
+		else if (vy < 0) {
+			g.drawLine(cx, cy, (int)(cx+b.width*Math.sin(Math.atan(vx/vy))/RATIO), (int)(cy-b.height*Math.cos(Math.atan(vx/vy))/RATIO)); // Body of arrow
+			g.drawLine((int)(cx-(b.width/3)*Math.sin(Math.atan(vx/vy) + 7*Math.PI/8)/RATIO), (int)(cy+(b.height/3)*Math.cos(Math.atan(vx/vy) + 7*Math.PI/8)/RATIO), cx, cy); // Arrow Head of Diagnol
+			g.drawLine((int)(cx-(b.width/3)*Math.sin(Math.atan(vx/vy) - 7*Math.PI/8)/RATIO), (int)(cy+(b.height/3)*Math.cos(Math.atan(vx/vy) - 7*Math.PI/8)/RATIO), cx, cy);
+		}
+		else {
+			g.drawLine((int)(cx-b.width*Math.sin(Math.atan(vx/vy))/RATIO), (int)(cy+b.height*Math.cos(Math.atan(vx/vy))/RATIO), cx, cy); // Body of arrow
+			g.drawLine(cx, cy, (int)(cx+(b.width/3)*Math.sin(Math.atan(vx/vy) + 7*Math.PI/8)/RATIO), (int)(cy-(b.height/3)*Math.cos(Math.atan(vx/vy) + 7*Math.PI/8)/RATIO)); // Arrow Head of Diagnol
+			g.drawLine(cx, cy, (int)(cx+(b.width/3)*Math.sin(Math.atan(vx/vy) - 7*Math.PI/8)/RATIO), (int)(cy-(b.height/3)*Math.cos(Math.atan(vx/vy) - 7*Math.PI/8)/RATIO));
+		}
 	}
 	
 	public Point place(Coord c, Rectangle b, int range) {
 		Point p = new Point();
-//		p.x = (int) Math.ceil(c.x()) * b.width / (range/2) + b.x + (b.width / 2);
-//		p.y = (int) Math.ceil(c.y()) * b.height / (range/2) + b.y + (b.height / 2);
-//		p.x = (int) Math.ceil((c.x()/2) * b.width / (range)) + b.x + (b.width/2);
-//		p.y = (int) Math.ceil((c.y()/-2) * b.height / (range)) + b.y + (b.height/2);
 		p.x = (int) (Math.ceil(c.x())*b.width/(2*range) + b.x + b.width/2 - center.x()*b.width/(2*range));
 		p.y = (int) (Math.ceil(c.y())*b.height/(-2*range) + b.y + b.height/2 + center.y()*b.height/(2*range));
-		//System.out.println("[" + c.x() + "," + c.y() + "] -> [" + p.x + "," + p.y + "]");
 		return p;
 	}
 	
@@ -204,12 +206,6 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 		
 		scale = (double)MAX_RANGE/RANGE;
 		
-		//draw outer range
-		g2.setColor(Color.WHITE);
-		g2.drawOval((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
-				(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
-				(int)(b.width*scale), (int)(b.height*scale));
-		
 		//draw grid
 		g2.setColor(Color.GRAY);
 		for (int i=0; i<=MAX_RANGE/250; i++) {
@@ -227,6 +223,12 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 					(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1) + b.height*scale));
 		}
 		
+		//draw outer range
+		g2.setColor(Color.WHITE);
+		g2.drawOval((int)(b.x - center.x()*scale*b.width/(2*MAX_RANGE) - 0.5*b.width*(scale-1)),
+				(int)(b.y + center.y()*scale*b.height/(2*MAX_RANGE) - 0.5*b.height*(scale-1)),
+				(int)(b.width*scale), (int)(b.height*scale));
+		
 		//draw axis
 		g2.setColor(Color.WHITE);
 		g.drawLine(b.x + (b.width/2), b.y, b.x + (b.width/2), (b.y + b.height));
@@ -240,7 +242,7 @@ public class MapPanel extends JPanel implements MouseListener, MouseWheelListene
 				Coord c = v.getCoord(now);
 				Course co = v.getCourse(now);
 				Point p = place(c, b, RANGE);
-				drawArrow(co, p, g2);
+				drawArrow(co, p, b, g2);
 				g.drawString(v.getId(), p.x+6, p.y+6);
 				
 				//Search for worst alert
