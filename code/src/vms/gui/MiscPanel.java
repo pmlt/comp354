@@ -2,7 +2,6 @@ package vms.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -13,6 +12,10 @@ import javax.swing.BoxLayout;
 import common.Coord;
 
 public class MiscPanel extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5296024281798336054L;
 	private JTextField xCoord;
 	private JTextField yCoord;
 	private JButton center;

@@ -10,6 +10,10 @@ import javax.swing.BoxLayout;
 import common.Coord;
 
 public class DataPanel extends JPanel implements MapPanel.Observer {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4316838442092589081L;
 	private JPanel centerPanel;
 	private JTextField centerData;
 	private JPanel pointerPanel;

@@ -20,7 +20,7 @@ import javax.swing.JComboBox;
 public class Login implements ActionListener, WindowListener {
 	MainGUI _Main;
 	JFrame log;
-	JComboBox user;
+	JComboBox<String> user;
 	JPasswordField password;
 	JButton but[] = {new JButton("Login"), new JButton("Exit")};
 	public Login (MainGUI main) {
@@ -37,7 +37,7 @@ public class Login implements ActionListener, WindowListener {
 		JLabel userLabel = new JLabel("Select Access Level:");
 //		JLabel op = new JLabel("Operator: op123");
 //		JLabel us = new JLabel("User: user123");
-		user = new JComboBox(new String[]{"Normal user", "Administrator"});
+		user = new JComboBox<String>(new String[]{"Normal user", "Administrator"});
 		
 		JLabel passwordLabel = new JLabel("Enter Password:");
 		password = new JPasswordField();

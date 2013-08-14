@@ -20,6 +20,10 @@ import javax.swing.JRootPane;
 import javax.swing.JFileChooser;
 
 public class AddVSF extends JFrame implements ActionListener, WindowListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3951744717887981482L;
 	MainGUI _AddFile;
 	JFrame addFile;
 	JLabel label1;

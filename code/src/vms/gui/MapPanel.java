@@ -14,7 +14,6 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 import vms.*;
 import vms.Alert.AlertType;
-import vms.ConnectionServer.Observer;
 import common.*;
 import common.Vessel.VesselType;
 
