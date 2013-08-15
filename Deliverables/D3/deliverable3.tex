@@ -712,12 +712,12 @@ This is the only installation required in order to run the Vessel Monitoring Sys
 \clearpage
 
 {\color{royalblue}\subsection{Users Manual}}
-\paragraph{Brief Overview \\ \\}
+\paragraph{Brief Overview \\}
 
 The Vessel Monitoring System(VMS) is a Java-based application that allows its users to check the positions of various types of vessels. This application can only be accessed by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first, followed by the Radar Simulator once the user has logged into the VMS.
 
 \subsubsection{Vessel Monitoring System}
-\paragraph{Login Screen \\ \\}
+\paragraph{Login Screen \\}
 The Login screen is directly accessed as soon as the VMS program start. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator, both of which have separate passwords.% [Not sure if we should just say what the passwords are here??]
 
 	\begin{figure}[!htb]
@@ -725,38 +725,36 @@ The Login screen is directly accessed as soon as the VMS program start. A valid 
 	\includegraphics[scale=0.80]{images/userManual1.jpg}
 	\end{figure}
 
-\paragraph{Main Screen \\ \\}
-After logging in, the Main Screen will appear. This is where all the important information will be displayed. The Main Screen will be different depending on the current user's access level. An administrator will have more options than a normal user. The main screen consists of:
+\paragraph{Main Screen \\}
+After logging in, the Main Screen will appear. This is where all the important information will be displayed. The Main Screen will be different depending on the current user's access level. An administrator will have more options than a normal user. The main screen opens in Table View by default and it consists of:
 
-\subparagraph{1) Menu bar \\ \\}
+\subparagraph{1) Menu bar \\}
 
-The menu is where the user can select to logout or exit the program.
+The menu is where the user can select to logout or exit the program. If the logout option is selected, then the program will return to the Login Screen.
 	\begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=1]{images/userManual4.jpg}
 	\end{figure}
 
-If the logout option is selected, then the program will return to the Login Screen.\\
-
 \pagebreak
 
-\subparagraph{2) Table View Tab \\ \\}
+\subparagraph{2) Table View Tab \\}
 In this view, the user can see a list of all the vessels detected by the radar. The color of each row depends on the type of alert this specific vessel is currently involved in. If the user has logged in as an administrator, the vessels can be ordered by any column in ascending or descending order by clicking the header cell at the top of each column in the table.
 
 	\begin{figure}[!htb]
 	\caption{Administrator Table View}
 	\centering
-	\includegraphics[scale=0.4]{images/userManual2_admin.jpg}
+	\includegraphics[scale=0.36]{images/userManual2_admin.jpg}
 	\end{figure}
 
 	\begin{figure}[!htb]
 	\caption{Normal User Table View}
 	\centering
-	\includegraphics[scale=0.4]{images/userManual2_user.jpg}
+	\includegraphics[scale=0.36]{images/userManual2_user.jpg}
 	\end{figure}
 
 \break
-\subparagraph{3) Map View Tab \\ \\}
+\subparagraph{3) Map View Tab \\}
 In this view, the user can see the vessels displayed on the map. Different type of vessels have different colors. The position of every vessel will be updated over time. The color and visibility of the circles around the vessels will change depending on the alert type of a vessel.
 	
 	\begin{figure}[!htb]
@@ -770,14 +768,13 @@ In this view, the user can see the vessels displayed on the map. Different type 
 	\centering
 	\includegraphics[scale=0.36]{images/userManual3_user.jpg}
 	\end{figure}
+\break
+There is also a zoom functionality in the map tab. It is enabled by scrolling the mouse forward (to zoom in) or backward (to zoom out) on the map area. Zooming is performed on the point of origin. There are two ways to change the point of origin. A user can either click on the map to quickly move the point of origin to the location of the click, or click and drag the map to the desired location. The map will only go within 5000 meters of the default point of origin.\\
 
-There is also a zoom functionality in the map tab. It is enabled by scrolling the mouse forward (to zoom in) or backward (to zoom out) on the map area. Zooming is performed on the point of origin. There are two ways to change the point of origin. A user can either click on the map to quickly move the point of origin to the location of the click, or click and drag the map to the desired location. The map will only go within 5000 meters of the default point of origin.
-
-\pagebreak
-\subparagraph{4) Alert Indicator \\ \\}
+\subparagraph{4) Alert Indicator \\}
 The alert indicator always displays the color of the current most serious alert. A green circle indicates that all the vessels are a safe distance from one another. A yellow circle indicates that some vessels are very close to one another. A red circle indicates that some vessels are dangerously close to one another and that a collision may occur.\\
 
-\subparagraph{5) Filters \\ \\}
+\subparagraph{5) Filters \\}
 This section is only available if the user has logged in as an administrator. The filters allow the user to hide/show certain types of vessels by deselecting/selecting the proper checkboxes.\\
 
 \subsubsection{Radar Simulator}
