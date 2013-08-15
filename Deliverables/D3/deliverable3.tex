@@ -69,11 +69,19 @@ Date & Version & Description & Author \\
 \hline
 13/08/13 & 0.87 & Finished Section 4 & Christopher Mukherjee \\
 \hline
-14/08/13 & 0.94 & Added Manual Tests and Unit Tests to Section 2.1.1 & Ghislain Ledoux \\
+14/08/13 & 0.95 & Added Manual Tests and Unit Tests to Section 2.1.1 & Ghislain Ledoux \\
 \hline
-13/08/13 & 0.95 & Reviewed \& edited entire document & Christopher Mukherjee \\
+14/08/14 & 1.0 & Added Test Scenario for Map Features in Section 2.2.2 & Ghislain Ledoux \\
 \hline
-14/08/13 & 1.0 & Added Test Scenario for Map Features in Section 2.2.2 & Ghislain Ledoux \\
+13/08/14 & 1.4 & Added code for test cases to Section 2.2.1 & Philippe Milot \\
+\hline
+04/08/13 & 1.65 & Edited \LaTeX \hspace{0.01cm} formatting of document & Stefanie Lavoie \\
+\hline
+13/08/14 & 1.85 & Created Tables for Section 2.2.2 in Microsoft Word & Pinsonn Laverdure \\
+\hline
+13/08/14 & 1.95 & Added Tables to Section 2.2.2 & Philippe Milot \\
+\hline
+13/08/14 & 2.0 & Finalized document for submission & Christopher Mukherjee \\
 \hline
 
 \end{tabular}
@@ -128,7 +136,7 @@ Test that the VMS can display the latest received information in a 2D map contai
 \paragraph{Alert Highlighting \\}
 Test that all vessels involved in a low-risk alert are highlighted in yellow in the table view, and display a yellow circle around the vessel at the low-risk range in the map view. Test that all vessels involved in a high-risk alert are highlighted in red in the table view, and display a red circle around the vessel at the high-risk range in the map view. \emph{Manual test.}
 
-\paragraph{Alert Icon Indicator \\}
+\paragraph{Alert Indicator \\}
 Check that the upper-left circle always indicates the most serious alert level at any given time. \emph{Manual test.}
 
 \paragraph{Client data validation \\}
@@ -627,10 +635,10 @@ This is a list of manual tests which cover all basic requirements of the system.
 \item Start VMS.
 \item Login as either user. \emph{Table and Radar data should be empty.}
 \item Start simulator with file \verb|demo.cross.vsf|. \emph{Six vessels appear in VMS, converging near one another. Each vessel has a different color in map view. The alert icon is green.}
-\item Wait for the vessels to cross each other's low-risk zones. \emph{All table rows are highlighted yellow; all vessels in map are yellow; the alert icon is yellow.}
-\item Wait for the vessels to cross each other's high-risk zones. \emph{All table rows are highlighted red; all vessels in map are red; the alert icon is red.}
-\item Wait for the vessels to leave each other's high-risk zones. \emph{All table rows are highlighted yellow; all vessels in map are yellow; the alert icon is yellow.}
-\item Wait for the vessels to leave each other's low-risk zones. \emph{Vessels are no longer highlighted in either table or map view; the alert icon is green.}
+\item Wait for the vessels to cross each others' low-risk zones. \emph{All table rows are highlighted yellow; all vessels in map have yellow circles around them; the alert icon is yellow.}
+\item Wait for the vessels to cross each other's high-risk zones. \emph{All table rows are highlighted red; all vessels in map have red circles around them; the alert icon is red.}
+\item Wait for the vessels to leave each other's high-risk zones. \emph{All table rows are highlighted yellow; all vessels in map have yellow circles around them; the alert icon is yellow.}
+\item Wait for the vessels to leave each other's low-risk zones. \emph{Vessels are no longer highlighted in table view; no circles are displayed in map view; the alert icon is green.}
 \end{enumerate}
 
 \paragraph{Login}
@@ -662,12 +670,12 @@ Invalid admin login & User=Administrator, Password=``'' & Remain at login form, 
 \item Start simulator with file \verb|demo.cross.vsf|.
 \item Login as normal user. \emph{No filtering checkboxes appear.}
 \item Click on table column headers. \emph{No reordering of rows occurs.}
-\item Log out, and log back in as operator. {Filtering checkboxes appear.}
-\item Deselect each checkbox successively. {For every checkbox deselected, every row in table and icon in map view with the deselected type disappear.}
-\item Select each checkbox successively. {For every checkbox selected, every row in table and icon in map view with the selected type appear.}
-\item In table view, click Vessel ID column header. {All rows are ordered by Vessel ID, ascending order.}
-\item In table view, click Vessel ID column header again. {All rows are ordered by Vessel ID, descending order.}
-\item Re-do last two steps for all other column headers. {Rows should be ordered by selected column, first ascending, then descending.}
+\item Log out, and log back in as operator. \emph{Filtering checkboxes appear.}
+\item Deselect each checkbox successively. \emph{For each checkbox deselected, all rows in table and icons in map with the deselected type disappear.}
+\item Select each checkbox successively. \emph{For each checkbox selected, all rows in table and icons in map view with the selected type appear.}
+\item In table view, click Vessel ID column header. \emph{All rows are ordered by Vessel ID, ascending order.}
+\item In table view, click Vessel ID column header again. \emph{All rows are ordered by Vessel ID, descending order.}
+\item Re-do last two steps for all other column headers. \emph{Rows should be ordered by selected column, first ascending, then descending.}
 \end{enumerate}
 
 \paragraph{Map features.}
@@ -675,14 +683,14 @@ Invalid admin login & User=Administrator, Password=``'' & Remain at login form, 
 \item Start VMS.
 \item Start simulator with file \verb|demo.cross.vsf|.
 \item Click on Map View.
-\item Roll the mouse wheel by one notch toward the screen. \emph{The zoom factor increases; the size of all objects on the map increases relative to the scale; the coordinates of the center of the map remain the same.}
-\item Roll the mouse wheel repeatedly in the direction of the screen. \emph{The zoom factor stop increasing at 1000\%.}
-\item Roll the mouse wheel by one notch away from the screen. \emph{The zoom factor decreases; the size of all objects on the map decreases relative to the scale; the coordinates of the center of the map remain the same.}
-\item Roll the mouse wheel repeatedly away from the screen. \emph{The zoom factor stops decreasing at 50\%.}
+\item Scroll the mouse wheel one notch toward the screen. \emph{The zoom factor increases; the size of all objects on the map increases relative to the scale; the coordinates of the center of the map remain the same.}
+\item Scroll the mouse wheel repeatedly in the direction of the screen. \emph{The zoom factor stops increasing at 1000\%.}
+\item Scroll the mouse wheel one notch away from the screen. \emph{The zoom factor decreases; the size of all objects on the map decreases relative to the scale; the coordinates of the center of the map remain the same.}
+\item Scroll the mouse wheel repeatedly away from the screen. \emph{The zoom factor stops decreasing at 50\%.}
 \item Move the mouse to any point within the map, except the center. Note the coordinates.
-\item Click and release the left mouse button \emph{The coordinates of the mouse in the previous step are now the coordinates of the center of the map. All objects on the map have moved relative to the new center coordinates.}
+\item Press and release the left mouse button \emph{The coordinates of the mouse in the previous step are now the coordinates of the center of the map. All objects on the map have moved relative to the new center coordinates.}
 \item Move the mouse to any point within the map. Note the coordinates.
-\item Press and keep down the left mouse button.
+\item Press and hold the left mouse button.
 \item Drag the mouse in any direction. \emph{The position of all objects on the map, including the map center coordinates, is translated by the same value as the position of the mouse pointer. The coordinates of the mouse remain the same.}
 \item Click on any point above the upper edge of the map grid. \emph{The upper edge of the map grid is now at the center of the map display.}
 \item Click on any point below the lower edge of the map grid. \emph{The lower edge of the map grid is now at the center of the map display.}
@@ -691,7 +699,7 @@ Invalid admin login & User=Administrator, Password=``'' & Remain at login form, 
 \item Try to drag the map so that the upper edge of the map grid is below the center of the map. \emph{The upper edge of the map does not scroll below the center of the screen.}
 \item Try to drag the map so that the lower edge of the map grid is above the center of the map. \emph{The lower edge of the map does not scroll above the center of the screen.}
 \item Try to drag the map so that the right edge of the map grid is left of the center of the map. \emph{The right edge of the map does not scroll to the left of the center of the screen.}
-\item Try to drag the map so that the left edge of the map grid is right of the center of the map. \emph{The left edge of the map does not scroll to the right the center of the screen.}
+\item Try to drag the map so that the left edge of the map grid is right of the center of the map. \emph{The left edge of the map does not scroll to the right of the center of the screen.}
 \item Try to drag the map outside of the map GUI display. \emph{The map no longer moves when the mouse is outside the map GUI area.}
 \end{enumerate}
 
@@ -739,7 +747,7 @@ The system was stress-tested with up to 150 vessels tracked simultaneously, usin
 
 {\color{royalblue}\subsection{Installation Manual}}
 
-This manual will explain the procedures that need to be done in order to allow the Vessel Monitoring System run on the user's computer. Since Java is a cross-platform language, this program will run on any platform (Windows, Mac, or Linux).
+This manual will explain the procedures that need to be followed in order to allow the Vessel Monitoring System run on the user's computer. Since Java is a cross-platform language, this program will run on any platform (Windows, Mac, or Linux).
 
 \paragraph{\\ Install Java}
 \begin{enumerate}[(a)]
@@ -754,7 +762,7 @@ This manual will explain the procedures that need to be done in order to allow t
 	\centering
 	\includegraphics[scale=0.6]{images/javaInstall2.jpg}
 	\end{figure}
-  \item Once the installation is complete, you will get pop up message stating that Java has been successfully installed on your computer.
+  \item Once the installation is complete, you will get a pop up message stating that Java has been successfully installed on your computer.
 	\begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=0.6]{images/javaInstall3.jpg}
@@ -770,8 +778,13 @@ This is the only installation required in order to run the Vessel Monitoring Sys
 The Vessel Monitoring System(VMS) is a Java-based application that allows its users to check the positions of various types of vessels. This application can only be accessed by current valid users and administrators of the program. To run the program, you will need the two different jar files for the Vessel Monitoring System and the Radar Simulator. The Vessel Monitoring System should be run first, followed by the Radar Simulator once the user has logged into the VMS.
 
 \subsubsection{Vessel Monitoring System}
+<<<<<<< Updated upstream
 \paragraph{Login Screen \\}
 The Login screen is directly accessed as soon as the VMS program start. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator, both of which have separate passwords.% [Not sure if we should just say what the passwords are here??]
+=======
+\paragraph{Login Screen \\ \\}
+The Login screen is directly accessed as soon as the VMS program starts. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator, both of which have separate passwords.% [Not sure if we should just say what the passwords are here??]
+>>>>>>> Stashed changes
 
 	\begin{figure}[!htb]
 	\centering
