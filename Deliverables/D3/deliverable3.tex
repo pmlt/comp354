@@ -633,6 +633,29 @@ This is a list of manual tests which cover all basic requirements of the system.
 \item Wait for the vessels to leave each other's low-risk zones. \emph{Vessels are no longer highlighted in either table or map view; the alert icon is green.}
 \end{enumerate}
 
+\paragraph{Login}
+\begin{enumerate}
+\item Start VMS.
+\item Test login form with input table below.
+\end{enumerate}
+
+\begin{table}[ht]
+\makebox[\textwidth][c]{
+\begin{tabular}{|c |c |c |}
+\hline
+Case & Input & Expected Result \\
+\hline
+Valid normal login & User=Normal, Password=``user123'' & Password is validated, opens VMS display \\
+\hline
+Valid admin login & User=Administrator, Password=``op123'' & Password is validated, opens VMS display \\
+\hline
+Invalid normal login & User=Normal, Password=``'' & Remain at login form, an error is displayed \\
+\hline
+Invalid admin login & User=Administrator, Password=``'' & Remain at login form, an error is displayed \\
+\hline
+\end{tabular}}
+\end{table}
+
 \paragraph{Operator-level features.}
 \begin{enumerate}
 \item Start VMS.
@@ -671,6 +694,36 @@ This is a list of manual tests which cover all basic requirements of the system.
 \item Try to drag the map so that the left edge of the map grid is right of the center of the map. \emph{The left edge of the map does not scroll to the right the center of the screen.}
 \item Try to drag the map outside of the map GUI display. \emph{The map no longer moves when the mouse is outside the map GUI area.}
 \end{enumerate}
+
+\paragraph{Simulator command-line arguments.}
+\begin{enumerate}
+\item Start VMS.
+\item Place Simulator.jar, tests.valid.vsf, and tests.invalid.vsf in your current directory.
+\item Start simulator with the following command: \verb|java -jar Simulator.jar {options}| where ``\{options\}'' is replaced by a row in the input table below.
+\end{enumerate}
+
+\begin{table}[ht]
+\makebox[\textwidth][c]{
+\begin{tabular}{|p{5cm} |c |p{5cm} |}
+\hline
+Case & Input & Expected Result \\
+\hline
+All valid options & -i tests.valid.vsf -h localhost -p 11233 & Simulator connects to VSF and starts sending data.\\
+\hline
+Non-existent VSF file, valid host and port & -i doesntexist.vsf -h localhost -p 11233 & Prints ``File doesntexist.vsf does not exist.'' \\
+\hline
+Invalid VSF file, valid host and port & -i tests.invalid.vsf -h localhost -p 11233 & Prints ``File tests.valid.vsf is not readable.'' \\
+\hline
+Valid VSF file, invalid host, valid port & -i tests.valid.vsf -h 192.168.1.999 -p 11233 & Prints ``Cannot resolve address 192.168.1.999:11233'' \\
+\hline
+Valid VSF file, valid host, invalid port & -i tests.valid.vsf -h localhost -p 9999 & Prints ``Cannot resolve address localhost:9999'' \\
+\hline
+Valid VSF file, valid host, invalid port format & -i tests.valid.vsf -h localhost -p string & Prints ``You must supply a number for the port.'' \\
+\hline
+Valid VSF file, valid host, negative integer port & -i tests.valid.vsf -h localhost -p -1000 & Prints ``You must provide a positive integer for the port.'' \\
+\hline
+\end{tabular}}
+\end{table}
 
 \subsubsection{Stress Testing} % STATUS: COMPLETE
 
