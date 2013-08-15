@@ -167,7 +167,7 @@ Test that the VMS ignores any vessel located outside its tracking range. Test th
 Test that the simulator properly respects the \verb|TIMESTEP|, \verb|STARTTIME|, and \verb|TIME| instructions in the VSF file.
 
 \break
-\paragraph{2.1.1.1 Unit Tests}
+\paragraph{} The following units are particularly important to the correct execution of the program, and so required unit testing. These units were specifically designed to be unit-testable because of their importance.
 
 \paragraph{VSF Reader \\}
 The VSF Reader must be tested to ensure that the Simulator is able to parse any valid VSF file consistently and correctly. Failure to parse even one field of text would generate an error message, and prevent the Simulator program from executing. Parsing incorrect values would result in the Simulator data being corrupt.
