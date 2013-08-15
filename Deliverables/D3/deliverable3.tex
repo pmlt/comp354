@@ -779,7 +779,7 @@ The Vessel Monitoring System(VMS) is a Java-based application that allows its us
 
 \subsubsection{Vessel Monitoring System}
 \paragraph{Login Screen \\}
-The Login screen is directly accessed as soon as the VMS program starts. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator, both of which have separate passwords.% [Not sure if we should just say what the passwords are here??]
+The Login screen is directly accessed as soon as the VMS program starts. A valid password is required to be allowed to use the program. Only two access levels are available, normal user and administrator. The password for normal user is "user123", and the password for administrator is "op123".
 
 	\begin{figure}[!htb]
 	\centering
@@ -842,7 +842,7 @@ This section is only available if the user has logged in as an administrator. Th
 The Radar Simulator must be run from the command-line after the user has logged into the Vessel Monitoring System. Using the command prompt, the user should navigate to the folder containing the jar files to run the application. Once in the correct folder, the following line must be written in order to run the Radar Simulator.
 
 \begin{verbatim}
-java -jar radarsimulator.jar --host localhost --port 11233 --input COMP354_50_demo_500.vsf
+java -jar Simulator.jar --host localhost --port 11233 --input COMP354_50_demo_500.vsf
 \end{verbatim}
 
 Here, the host and the port are specific to the machine that is running the Radar Simulator. If both are running on the same machine, then the host should be "localhost" and the port number "11233". The vsf file listed above is an example of a vsf file located in the same folder as the jar files. The user can type the path of any vsf file followed by its complete name to run files in other directories.
